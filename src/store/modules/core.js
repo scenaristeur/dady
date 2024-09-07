@@ -5,7 +5,7 @@ import { Dady } from '@/lib/dady.js'
 
 const state = () => ({
   dady: new Dady({ name: 'Daddy' }),
-  message: 'Welcome'
+  message: 'Welcome! Use Dady with https://communitysolidserver.github.io/CommunitySolidServer'
   // password: 'ilovellms',
   // memgpt_api_url: 'http://localhost:8283/',
   // memgpt_api_headers: {
