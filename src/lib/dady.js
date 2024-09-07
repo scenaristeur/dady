@@ -28,18 +28,16 @@ export class Dady {
   }
 
   async create_or_update(query) {
-    query.resource.content = query.resource.content.trim()
-    console.log(axios.isCancel('something'))
     let headers = query.params.headers
     let result = 'Inconnu'
 
     let config = {
-      baseURL: query.params.base_url,
-      url: query.params.url,
-      method: query.params.method,
+      baseURL: query.params.base_url.trim(),
+      url: query.params.url.trim(),
+      method: query.params.method.trim(),
       headers: headers,
       responseType: 'json',
-      data: query.resource.content
+      data: query.resource.content.trim()
     }
     console.log(config)
     try {

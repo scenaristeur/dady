@@ -13,7 +13,9 @@
           content: <textarea v-model="resource.content" /><br />
           <b>Params</b><br />
           base_url: <input v-model="params.base_url" /><br />
-          url: <input v-model="params.url" /><br />
+          url: <input v-model="params.url" /> <br />Content-Type:
+          <input v-model="params.headers['Content-Type']" />
+          <br />
           <button @click="create_or_update">Create or Update</button>
           <button @click="reset">Reset</button>
           <button @click="last">Last</button>
@@ -74,7 +76,7 @@ export default {
     return {
       params: {
         method: "GET",
-        headers: { "Content-Type": "text/plain" },
+        headers: { "Content-Type": "" },
         // options: {},
         // body: {},
         // query: {},
@@ -90,55 +92,68 @@ export default {
   },
   methods: {
     create_or_update() {
+      if (this.params.headers["Content-Type"].endsWith("json")) {
+        console.log("is JSON");
+        this.resource.content = JSON.parse(
+          JSON.stringify(this.resource.content, null, 2)
+        );
+      }
       this.$store.dispatch("core/create_or_update", {
         params: this.params,
         resource: this.resource,
       });
     },
     example_put_text() {
-      (this.params.method = "PUT"),
-        (this.params.url = "myfile.txt"),
-        (this.resource = {
-          // id: "",
-          // name: "",
-          content: "bidule",
-        });
+      this.params.method = "PUT";
+      this.params.url = "myfile.txt";
+      this.params.headers["Content-Type"] = "text/plain";
+      this.resource = {
+        // id: "",
+        // name: "",
+        content: "bidule",
+      };
     },
     example_put_turtle() {
-      (this.params.method = "PUT"),
-        (this.params.url = "myfile.ttl"),
-        (this.resource = {
-          // id: "123",
-          // name: "truc",
-          content: "<ex:s> <ex:p> <ex:o>.",
-        });
+      this.params.method = "PUT";
+      this.params.url = "myfile.ttl";
+      this.params.headers["Content-Type"] = "text/turtle";
+      this.resource = {
+        // id: "123",
+        // name: "truc",
+        content: "<ex:s> <ex:p> <ex:o>.",
+      };
     },
     example_put_json() {
-      (this.params.method = "PUT"),
-        (this.params.url = "myfile.json"),
-        (this.resource = {
-          // id: "123",
-          // name: "truc",
-          content: `{
-          nimp: "swing",
-          swop: "tchiboo",
-        }`,
-        });
+      this.params.method = "PUT";
+      this.params.url = "myfile.json";
+      this.params.headers["Content-Type"] = "application/json";
+      let content = JSON.stringify({ nimp: "swing", swop: "tchiboo" }, null, 2);
+      this.resource = {
+        // id: "123",
+        // name: "truc",
+        content: content,
+      };
     },
     example_put_jsonld() {
-      (this.params.method = "PUT"),
-        (this.params.url = "myfile.jsonld"),
-        (this.resource = {
-          // id: "123",
-          // name: "truc",
-          content: `{
-        "@context": "https://json-ld.org/contexts/person.jsonld",
-        "@id": "http://dbpedia.org/resource/John_Lennon",
-        "name": "John Lennon",
-        "born": "1940-10-09",
-        "spouse": "http://dbpedia.org/resource/Cynthia_Lennon"
-        }`,
-        });
+      this.params.method = "PUT";
+      this.params.url = "myfile.jsonld";
+      this.params.headers["Content-Type"] = "application/ld+json";
+      let content = JSON.stringify(
+        {
+          "@context": "https://json-ld.org/contexts/person.jsonld",
+          "@id": "http://dbpedia.org/resource/John_Lennon",
+          name: "John Lennon",
+          born: "1940-10-09",
+          spouse: "http://dbpedia.org/resource/Cynthia_Lennon",
+        },
+        null,
+        2
+      );
+      this.resource = {
+        // id: "123",
+        // name: "truc",
+        content: content,
+      };
     },
   },
 };
