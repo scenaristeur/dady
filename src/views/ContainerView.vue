@@ -14,7 +14,12 @@
           <span :id="r['@id']" @click="select">
             {{ r }}
           </span>
-          <button @click="remove(r['@id'])">Delete</button>
+          <button
+            v-if="r['@id'] != 'http://localhost:3000/index.html'"
+            @click="remove(r['@id'])"
+          >
+            Delete
+          </button>
         </li>
       </ul>
     </div>
