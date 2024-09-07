@@ -2,15 +2,15 @@
   <div v-if="container">
     <hr />
     <!-- deb cont .message.data[0]["@type"] -->
+
     <h2>{{ container["@id"] }}</h2>
+    <div v-if="up != undefined" :id="up" @click="select">up : {{ up }}</div>
+    <div :id="history.slice(-2, -1)[0]" @click="select">
+      prev : {{ history.slice(-2, -1)[0] }}
+    </div>
     <div class="containerBox">
       <ul>
-        <li
-          v-for="r in container['http://www.w3.org/ns/ldp#contains']"
-          :key="r"
-          :id="r['@id']"
-          @click="select"
-        >
+        <li v-for="r in ordered" :key="r" :id="r['@id']" @click="select">
           {{ r }}
         </li>
       </ul>
@@ -30,6 +30,8 @@ export default {
     return {
       container: null,
       history: [],
+      ordered: [],
+      up: null,
     };
   },
   methods: {
@@ -42,7 +44,7 @@ export default {
 
   watch: {
     message() {
-      console.log("LE MESSAGE CONTAINER", Object.assign({}, this.message));
+      // console.log("LE MESSAGE CONTAINER", Object.assign({}, this.message));
       // "http://www.w3.org/ns/pim/space#Storage", "http://www.w3.org/ns/ldp#Container", "http://www.w3.org/ns/ldp#BasicContainer", "http://www.w3.org/ns/ldp#Resource"
       if (
         typeof this.message.message.data == "object" &&
@@ -52,7 +54,10 @@ export default {
         )
       ) {
         this.container = this.message.message.data[0];
+        this.ordered = this.container["http://www.w3.org/ns/ldp#contains"].reverse();
         this.history.push(this.container["@id"]);
+        this.up = this.container["@id"].split("/").slice(0, -2).join("/") + "/";
+        console.log("up", this.up);
       }
       // else {
       //   this.container = null;

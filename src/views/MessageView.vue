@@ -4,7 +4,7 @@
       message.location
     }}</a>
     <br />
-    {{ message }}
+    {{ message.state }}
   </div>
 </template>
 

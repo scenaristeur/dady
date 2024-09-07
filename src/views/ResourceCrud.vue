@@ -288,7 +288,7 @@ export default {
       //     this.container = null;
       //   }
 
-      console.log("LE MESSAGE RESOURCE", Object.assign({}, this.message));
+      //   console.log("LE MESSAGE RESOURCE", Object.assign({}, this.message));
       // console.log(this.result);
       if (this.message.message.data) {
         if (typeof this.message.message.data == "object") {
