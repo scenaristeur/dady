@@ -71,7 +71,13 @@ const actions = {
   async select(context, id) {
     console.log('select', id)
     context.state.message = await context.state.dady.get(id)
-    console.log('MESSAGE FROM SELECT', context.state.message)
+    //console.log('MESSAGE FROM SELECT', context.state.message)
+    // return context.state.message
+  },
+  async remove(context, id) {
+    console.log('remove', id)
+    context.state.message = await context.state.dady.remove(id)
+    console.log('MESSAGE FROM remove', context.state.message)
     // return context.state.message
   }
 

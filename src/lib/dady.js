@@ -75,6 +75,23 @@ export class Dady {
     }
     return await this.create_or_update(query)
   }
+
+  async remove(url) {
+    url = new URL(url)
+    console.log(url)
+    let query = {
+      params: {
+        baseURL: url.origin,
+        method: 'DELETE',
+        url: url.pathname,
+        headers: {}
+      }
+    }
+    let result = await this.create_or_update(query)
+
+    return result
+  }
+
   async head_not_implemented(url) {
     let headers = {
       Accept: 'text/plain'

@@ -10,8 +10,11 @@
     </div>
     <div class="containerBox">
       <ul>
-        <li v-for="r in ordered" :key="r" :id="r['@id']" @click="select">
-          {{ r }}
+        <li v-for="r in ordered" :key="r">
+          <span :id="r['@id']" @click="select">
+            {{ r }}
+          </span>
+          <button @click="remove(r['@id'])">Delete</button>
         </li>
       </ul>
     </div>
@@ -35,10 +38,15 @@ export default {
     };
   },
   methods: {
-    select(e) {
+    async select(e) {
       //   console.log(e.target.id);
 
       this.$store.dispatch("core/select", e.target.id);
+    },
+    async remove(id) {
+      console.log("remove ", id);
+      await this.$store.dispatch("core/remove", id);
+      await this.$store.dispatch("core/select", this.container["@id"]);
     },
   },
 
@@ -54,7 +62,9 @@ export default {
         )
       ) {
         this.container = this.message.message.data[0];
-        this.ordered = this.container["http://www.w3.org/ns/ldp#contains"].reverse();
+        this.ordered =
+          this.container["http://www.w3.org/ns/ldp#contains"] &&
+          this.container["http://www.w3.org/ns/ldp#contains"].reverse();
         this.history.push(this.container["@id"]);
         this.up = this.container["@id"].split("/").slice(0, -2).join("/") + "/";
         console.log("up", this.up);
