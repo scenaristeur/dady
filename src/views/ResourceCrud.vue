@@ -8,11 +8,11 @@
       <tr>
         <td>
           <b>Resource</b><br />
-          <div v-if="params.method != 'PUT'">
+          <div v-if="params.method != 'PUT' && params.method != 'POST'">
             id: <input ref="id" v-model="resource.id" />
           </div>
 
-          <div v-if="params.method != 'PUT'">
+          <div v-if="params.method != 'PUT' && params.method != 'POST'">
             name: <input ref="name" v-model="resource.name" />
           </div>
           <div>
@@ -22,10 +22,11 @@
           <div>url: <input ref="url" v-model="params.url" /> todo : test if exists</div>
           <button
             @click="create_or_update"
-            :disabled="resource.content.trim().length == 0"
+            :disabled="resource.content.trim().length == 0 && params.method != 'GET'"
           >
             Create or Update
           </button>
+
           <hr />
           <b>Params /expert</b><br />
           base_url: <input ref="base_url" v-model="params.base_url" /> <br />Content-Type:
@@ -44,25 +45,25 @@
             >example</a
           ><br />
 
-          <button @click="example_put_text">plain text file</button>
-          <button @click="example_put_turtle">turtle file</button>
-          <button @click="example_put_json">json file</button
-          ><button @click="example_put_jsonld">jsonld file</button>
+          <button @click="example_PUT_text">PUT plain text file</button>
+          <button @click="example_PUT_turtle">PUT turtle file</button>
+          <button @click="example_PUT_json">PUT json file</button
+          ><button @click="example_PUT_jsonld">PUT jsonld file</button>
           <br />
-          POST: Creating resources at a generated URL
+          <b>POST: Creating resources at a generated URL</b><br />
+          <small>the container must exist before!</small>
           <br />
-          <button @click="create_or_update">plain text file</button>
-          <button @click="create_or_update">Create a plain text file:</button>
-          <button @click="create_or_update">turtle file:</button>
-          <button @click="create_or_update">json file:</button
-          ><button @click="create_or_update">jsonld file:</button>
+          <button @click="example_POST_text">POST plain text file</button>
+          <button @click="example_POST_turtle">POST turtle file</button>
+          <button @click="example_POST_json">POST json file</button
+          ><button @click="example_POST_jsonld">POST jsonld file</button>
           <br />
-          GET: Retrieving resources
+          <b> GET: Retrieving resources </b>
           <br />
-
-          <button @click="create_or_update">Create a plain text file:</button
-          ><button @click="create_or_update">Create a plain text file:</button
-          ><button @click="create_or_update">Create a plain text file:</button>
+          <button @click="example_GET_text">GET plain text file</button>
+          <button @click="example_GET_turtle">GET turtle file</button>
+          <button @click="example_GET_json">GET json file</button
+          ><button @click="example_GET_jsonld">GET jsonld file</button>
           <br />
           DELETE: Deleting resources
           <br />
@@ -80,6 +81,7 @@
     </table>
 
     <h2>Show with criteres</h2>
+    RESULT : {{ result }}
   </div>
 </template>
 
@@ -88,9 +90,10 @@ export default {
   name: "ResourceCrud",
   data() {
     return {
+      result: null,
       params: {
         method: "GET",
-        headers: { "Content-Type": "" },
+        headers: { "Content-Type": "", Accept: "" },
         // options: {},
         // body: {},
         // query: {},
@@ -111,19 +114,29 @@ export default {
       this.params.url = "";
       this.resource.content = "";
     },
-    create_or_update() {
+    async create_or_update() {
+      this.result = "WIP";
       if (this.params.headers["Content-Type"].endsWith("json")) {
         console.log("is JSON");
         this.resource.content = JSON.parse(
           JSON.stringify(this.resource.content, null, 2)
         );
       }
-      this.$store.dispatch("core/create_or_update", {
+      this.result = await this.$store.dispatch("core/create_or_update", {
         params: this.params,
         resource: this.resource,
       });
+      console.log(this.result);
+      if (this.result.message.data) {
+        if (typeof this.result.message.data == "object") {
+          this.resource.content = JSON.stringify(this.result.message.data, null, 2);
+        } else {
+          this.resource.content = this.result.message.data;
+        }
+      }
     },
-    example_put_text() {
+    // PUT
+    example_PUT_text() {
       this.params.method = "PUT";
       this.params.url = "myfile.txt";
       this.params.headers["Content-Type"] = "text/plain";
@@ -133,7 +146,7 @@ export default {
         content: "bidule",
       };
     },
-    example_put_turtle() {
+    example_PUT_turtle() {
       this.params.method = "PUT";
       this.params.url = "myfile.ttl";
       this.params.headers["Content-Type"] = "text/turtle";
@@ -143,7 +156,7 @@ export default {
         content: "<ex:s> <ex:p> <ex:o>.",
       };
     },
-    example_put_json() {
+    example_PUT_json() {
       this.params.method = "PUT";
       this.params.url = "myfile.json";
       this.params.headers["Content-Type"] = "application/json";
@@ -154,7 +167,7 @@ export default {
         content: content,
       };
     },
-    example_put_jsonld() {
+    example_PUT_jsonld() {
       this.params.method = "PUT";
       this.params.url = "myfile.jsonld";
       this.params.headers["Content-Type"] = "application/ld+json";
@@ -174,6 +187,112 @@ export default {
         // name: "truc",
         content: content,
       };
+    },
+    //POST
+    example_POST_text() {
+      this.params.method = "POST";
+      this.params.url = "";
+      this.params.headers["Content-Type"] = "text/plain";
+      this.resource = {
+        // id: "",
+        // name: "",
+        content: "bidule",
+      };
+    },
+    example_POST_turtle() {
+      this.params.method = "POST";
+      this.params.url = "";
+      this.params.headers["Content-Type"] = "text/turtle";
+      this.resource = {
+        // id: "123",
+        // name: "truc",
+        content: "<ex:s> <ex:p> <ex:o>.",
+      };
+    },
+    example_POST_json() {
+      this.params.method = "POST";
+      this.params.url = "";
+      this.params.headers["Content-Type"] = "application/json";
+      let content = JSON.stringify({ nimp: "swing", swop: "tchiboo" }, null, 2);
+      this.resource = {
+        // id: "123",
+        // name: "truc",
+        content: content,
+      };
+    },
+    example_POST_jsonld() {
+      this.params.method = "POST";
+      this.params.url = "";
+      this.params.headers["Content-Type"] = "application/ld+json";
+      let content = JSON.stringify(
+        {
+          "@context": "https://json-ld.org/contexts/person.jsonld",
+          "@id": "http://dbpedia.org/resource/John_Lennon",
+          name: "John Lennon",
+          born: "1940-10-09",
+          spouse: "http://dbpedia.org/resource/Cynthia_Lennon",
+        },
+        null,
+        2
+      );
+      this.resource = {
+        // id: "123",
+        // name: "truc",
+        content: content,
+      };
+    },
+    // GET
+    example_GET_text() {
+      this.params.method = "GET";
+      this.params.url = "myfile.txt";
+      this.params.headers["Accept"] = "text/plain";
+      //   this.resource = {
+      //     // id: "123",
+      //     // name: "truc",
+      //     content: "<ex:s> <ex:p> <ex:o>.",
+      //   };
+    },
+    example_GET_turtle() {
+      this.params.method = "GET";
+      this.params.url = "myfile.ttl";
+      this.params.headers["Accept"] = "text/turtle";
+      //   this.resource = {
+      //     // id: "123",
+      //     // name: "truc",
+      //     content: "<ex:s> <ex:p> <ex:o>.",
+      //   };
+    },
+    example_GET_json() {
+      this.params.method = "GET";
+      this.params.url = "myfile.json";
+      this.params.headers["Accept"] = "application/json";
+      //   let content = JSON.stringify({ nimp: "swing", swop: "tchiboo" }, null, 2);
+      //   this.resource = {
+      //     // id: "123",
+      //     // name: "truc",
+      //     content: content,
+      //   };
+    },
+    example_GET_jsonld() {
+      this.params.method = "GET";
+      this.params.url = "myfile.jsonld";
+      this.params.headers["Accept"] = "application/ld+json";
+      //   let content = JSON.stringify(
+      //     {
+      //       "@context": "https://json-ld.org/contexts/person.jsonld",
+      //       "@id": "http://dbpedia.org/resource/John_Lennon",
+      //       name: "John Lennon",
+      //       born: "1940-10-09",
+      //       spouse: "http://dbpedia.org/resource/Cynthia_Lennon",
+      //     },
+      //     null,
+      //     2
+      //   );
+      //   this.resource = {
+      //     // id: "123",
+      //     // name: "truc",
+      //     content: content,
+      //   };
     },
   },
 };

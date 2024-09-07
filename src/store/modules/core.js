@@ -66,6 +66,7 @@ const actions = {
   },
   async create_or_update(contexte, query) {
     contexte.state.message = await contexte.state.dady.create_or_update(query)
+    return contexte.state.message
   }
 
   // async auth(context) {

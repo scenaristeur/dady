@@ -23,6 +23,10 @@ source: source
 }
 });
 
+# TODO POST ne créé pas les folder
+
+- https://communitysolidserver.github.io/CommunitySolidServer/latest/usage/metadata/#impact-on-creating-containers
+
 # redo
 
 - npm create vue@latest
