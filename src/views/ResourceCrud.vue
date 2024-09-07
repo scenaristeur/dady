@@ -8,20 +8,29 @@
       <tr>
         <td>
           <b>Resource</b><br />
-          id: <input v-model="resource.id" /><br />
-          name: <input v-model="resource.name" /><br />
-          content: <textarea v-model="resource.content" /><br />
-          <b>Params</b><br />
-          base_url: <input v-model="params.base_url" /><br />
-          url: <input v-model="params.url" /> <br />Content-Type:
-          <input v-model="params.headers['Content-Type']" />
-          <br />
+          <div v-if="params.method != 'PUT'">
+            id: <input ref="id" v-model="resource.id" />
+          </div>
+
+          <div v-if="params.method != 'PUT'">
+            name: <input ref="name" v-model="resource.name" />
+          </div>
+          <div>
+            content:
+            <textarea ref="content" v-model="resource.content" cols="40" rows="10" />
+          </div>
+          <div>url: <input ref="url" v-model="params.url" /></div>
           <button @click="create_or_update">Create or Update</button>
-          <button @click="reset">Reset</button>
+          <hr />
+          <b>Params /expert</b><br />
+          base_url: <input ref="base_url" v-model="params.base_url" /> <br />Content-Type:
+          <input ref="content_type" v-model="params.headers['Content-Type']" />
+
           <button @click="last">Last</button>
           <button @click="get">Get</button>
         </td>
         <td>
+          <button @click="reset">Reset</button><br />
           <b>PUT: Creating resources for a given URL</b>
           <a
             href="https://communitysolidserver.github.io/CommunitySolidServer/latest/usage/example-requests/"
@@ -91,6 +100,10 @@ export default {
     };
   },
   methods: {
+    reset() {
+      this.params.headers["Content-Type"] = "text/plain";
+      this.params.method = "GET";
+    },
     create_or_update() {
       if (this.params.headers["Content-Type"].endsWith("json")) {
         console.log("is JSON");
