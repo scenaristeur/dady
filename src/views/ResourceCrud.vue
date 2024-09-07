@@ -51,7 +51,10 @@
           ><button @click="example_PUT_jsonld">PUT jsonld file</button>
           <br />
           <b>POST: Creating resources at a generated URL</b><br />
-          <small>the container must exist before!</small>
+          <small
+            >the container MUST exist before! For now, you can PUT and delete a resource
+            in a container to create this container.</small
+          >
           <br />
           <button @click="example_POST_text">POST plain text file</button>
           <button @click="example_POST_turtle">POST turtle file</button>
@@ -65,11 +68,18 @@
           <button @click="example_GET_json">GET json file</button
           ><button @click="example_GET_jsonld">GET jsonld file</button>
           <br />
+          <b> GET: Retrieving containers</b>
+          <br />
+          <small>url MUST end with a '/'!</small><br />
+          <button @click="example_GET_container_turtle">GET container in turtle</button>
+          <button @click="example_GET_container_jsonld">GET container in jsonld</button>
+          <br />
           DELETE: Deleting resources
           <br />
           PATCH: Modifying resources<br />
           HEAD: Retrieve resources headers<br />
           OPTIONS: Retrieve resources communication options<br />
+          TODO: create recursive containers<br />
 
           <button @click="create_or_update">Create a plain text file:</button
           ><button @click="create_or_update">Create a plain text file:</button
@@ -141,8 +151,6 @@ export default {
       this.params.url = "myfile.txt";
       this.params.headers["Content-Type"] = "text/plain";
       this.resource = {
-        // id: "",
-        // name: "",
         content: "bidule",
       };
     },
@@ -151,8 +159,6 @@ export default {
       this.params.url = "myfile.ttl";
       this.params.headers["Content-Type"] = "text/turtle";
       this.resource = {
-        // id: "123",
-        // name: "truc",
         content: "<ex:s> <ex:p> <ex:o>.",
       };
     },
@@ -162,8 +168,6 @@ export default {
       this.params.headers["Content-Type"] = "application/json";
       let content = JSON.stringify({ nimp: "swing", swop: "tchiboo" }, null, 2);
       this.resource = {
-        // id: "123",
-        // name: "truc",
         content: content,
       };
     },
@@ -183,8 +187,6 @@ export default {
         2
       );
       this.resource = {
-        // id: "123",
-        // name: "truc",
         content: content,
       };
     },
@@ -194,8 +196,6 @@ export default {
       this.params.url = "";
       this.params.headers["Content-Type"] = "text/plain";
       this.resource = {
-        // id: "",
-        // name: "",
         content: "bidule",
       };
     },
@@ -204,8 +204,6 @@ export default {
       this.params.url = "";
       this.params.headers["Content-Type"] = "text/turtle";
       this.resource = {
-        // id: "123",
-        // name: "truc",
         content: "<ex:s> <ex:p> <ex:o>.",
       };
     },
@@ -215,8 +213,6 @@ export default {
       this.params.headers["Content-Type"] = "application/json";
       let content = JSON.stringify({ nimp: "swing", swop: "tchiboo" }, null, 2);
       this.resource = {
-        // id: "123",
-        // name: "truc",
         content: content,
       };
     },
@@ -236,8 +232,6 @@ export default {
         2
       );
       this.resource = {
-        // id: "123",
-        // name: "truc",
         content: content,
       };
     },
@@ -246,53 +240,32 @@ export default {
       this.params.method = "GET";
       this.params.url = "myfile.txt";
       this.params.headers["Accept"] = "text/plain";
-      //   this.resource = {
-      //     // id: "123",
-      //     // name: "truc",
-      //     content: "<ex:s> <ex:p> <ex:o>.",
-      //   };
     },
     example_GET_turtle() {
       this.params.method = "GET";
       this.params.url = "myfile.ttl";
       this.params.headers["Accept"] = "text/turtle";
-      //   this.resource = {
-      //     // id: "123",
-      //     // name: "truc",
-      //     content: "<ex:s> <ex:p> <ex:o>.",
-      //   };
     },
     example_GET_json() {
       this.params.method = "GET";
       this.params.url = "myfile.json";
       this.params.headers["Accept"] = "application/json";
-      //   let content = JSON.stringify({ nimp: "swing", swop: "tchiboo" }, null, 2);
-      //   this.resource = {
-      //     // id: "123",
-      //     // name: "truc",
-      //     content: content,
-      //   };
     },
     example_GET_jsonld() {
       this.params.method = "GET";
       this.params.url = "myfile.jsonld";
       this.params.headers["Accept"] = "application/ld+json";
-      //   let content = JSON.stringify(
-      //     {
-      //       "@context": "https://json-ld.org/contexts/person.jsonld",
-      //       "@id": "http://dbpedia.org/resource/John_Lennon",
-      //       name: "John Lennon",
-      //       born: "1940-10-09",
-      //       spouse: "http://dbpedia.org/resource/Cynthia_Lennon",
-      //     },
-      //     null,
-      //     2
-      //   );
-      //   this.resource = {
-      //     // id: "123",
-      //     // name: "truc",
-      //     content: content,
-      //   };
+    },
+    // GET CONTAINER
+    example_GET_container_turtle() {
+      this.params.method = "GET";
+      this.params.url = "/";
+      this.params.headers["Accept"] = "text/turtle";
+    },
+    example_GET_container_jsonld() {
+      this.params.method = "GET";
+      this.params.url = "/";
+      this.params.headers["Accept"] = "application/ld+json";
     },
   },
 };
