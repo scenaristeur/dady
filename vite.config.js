@@ -6,7 +6,7 @@ import vueDevTools from 'vite-plugin-vue-devtools'
 
 // https://vitejs.dev/config/
 export default defineConfig({
-  base: import.meta.env.MODE === 'production' ? '/dady/' : '/',
+  base: '/dady/',
   plugins: [vue(), vueDevTools()],
   resolve: {
     alias: {
