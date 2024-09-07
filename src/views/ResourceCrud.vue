@@ -19,8 +19,13 @@
             content:
             <textarea ref="content" v-model="resource.content" cols="40" rows="10" />
           </div>
-          <div>url: <input ref="url" v-model="params.url" /></div>
-          <button @click="create_or_update">Create or Update</button>
+          <div>url: <input ref="url" v-model="params.url" /> todo : test if exists</div>
+          <button
+            @click="create_or_update"
+            :disabled="resource.content.trim().length == 0"
+          >
+            Create or Update
+          </button>
           <hr />
           <b>Params /expert</b><br />
           base_url: <input ref="base_url" v-model="params.base_url" /> <br />Content-Type:
@@ -103,6 +108,8 @@ export default {
     reset() {
       this.params.headers["Content-Type"] = "text/plain";
       this.params.method = "GET";
+      this.params.url = "";
+      this.resource.content = "";
     },
     create_or_update() {
       if (this.params.headers["Content-Type"].endsWith("json")) {
