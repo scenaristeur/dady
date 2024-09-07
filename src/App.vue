@@ -4,6 +4,7 @@
 import LogDady from "./views/LogDady.vue";
 import ResourceCrud from "./views/ResourceCrud.vue";
 import MessageView from "./views/MessageView.vue";
+import ContainerView from "./views/ContainerView.vue";
 </script>
 
 <template>
@@ -22,6 +23,7 @@ import MessageView from "./views/MessageView.vue";
     </div>
   </header> -->
   <ResourceCrud />
+  <ContainerView />
   <MessageView />
   <LogDady />
   <!-- <RouterView /> -->

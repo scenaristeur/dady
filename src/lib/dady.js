@@ -32,18 +32,18 @@ export class Dady {
     let result = 'Inconnu'
 
     let config = {
-      baseURL: query.params.base_url.trim(),
+      baseURL: query.params.baseURL.trim(),
       url: query.params.url.trim(),
       method: query.params.method.trim(),
       headers: headers,
       responseType: 'json',
-      data: query.resource.content.trim()
+      data: (query.resource && query.resource.content.trim()) || null
     }
     console.log(config)
     try {
       const response = await axios(config)
 
-      console.log(response)
+      //console.log(response)
       result = {
         state: 'ok',
         query: query,
@@ -56,8 +56,51 @@ export class Dady {
       console.error(error)
     }
 
-    console.log('create_or_update', query, Object.assign({}, result))
+    //console.log('create_or_update', query, Object.assign({}, result))
     return Object.assign({}, result)
+  }
+  async get(url) {
+    url = new URL(url)
+    console.log(url)
+    let query = {
+      params: {
+        baseURL: url.origin,
+        method: 'GET',
+        url: url.pathname,
+        headers: {}
+      }
+    }
+    if (url.pathname.endsWith('/')) {
+      query.params.headers.Accept = 'application/ld+json'
+    }
+    return await this.create_or_update(query)
+  }
+  async head_not_implemented(url) {
+    let headers = {
+      Accept: 'text/plain'
+    }
+    let config = {
+      //baseURL: query.params.baseURL.trim(),
+      // url: url,
+      // method: 'HEAD',
+      headers: headers
+    }
+    console.log(config)
+    try {
+      const response = await axios.head(url, config)
+
+      console.log(response)
+      // result = {
+      //   state: 'ok',
+      //   query: query,
+      //   message: response,
+      //   location: response.headers.location,
+      //   notification: response.headers.link
+      // }
+    } catch (error) {
+      // result = { state: 'error', query: query, message: error }
+      console.error(error)
+    }
   }
 
   // await axios

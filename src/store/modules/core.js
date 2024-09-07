@@ -66,7 +66,13 @@ const actions = {
   },
   async create_or_update(contexte, query) {
     contexte.state.message = await contexte.state.dady.create_or_update(query)
-    return contexte.state.message
+    // return contexte.state.message
+  },
+  async select(context, id) {
+    console.log('select', id)
+    context.state.message = await context.state.dady.get(id)
+    console.log('MESSAGE FROM SELECT', context.state.message)
+    // return context.state.message
   }
 
   // async auth(context) {

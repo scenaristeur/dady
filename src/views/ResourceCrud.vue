@@ -24,12 +24,12 @@
             @click="create_or_update"
             :disabled="resource.content.trim().length == 0 && params.method != 'GET'"
           >
-            Create or Update
+            Create / Update or Get
           </button>
 
           <hr />
           <b>Params /expert</b><br />
-          base_url: <input ref="base_url" v-model="params.base_url" /> <br />Content-Type:
+          baseURL: <input ref="baseURL" v-model="params.baseURL" /> <br />Content-Type:
           <input ref="content_type" v-model="params.headers['Content-Type']" />
 
           <button @click="last">Last</button>
@@ -71,8 +71,9 @@
           <b> GET: Retrieving containers</b>
           <br />
           <small>url MUST end with a '/'!</small><br />
-          <button @click="example_GET_container_turtle">GET container in turtle</button>
           <button @click="example_GET_container_jsonld">GET container in jsonld</button>
+          <button @click="example_GET_container_turtle">(GET container in turtle)</button>
+
           <br />
           DELETE: Deleting resources
           <br />
@@ -91,7 +92,7 @@
     </table>
 
     <h2>Show with criteres</h2>
-    RESULT : {{ result }}
+    <!-- RESULT : {{ result }} -->
   </div>
 </template>
 
@@ -100,14 +101,14 @@ export default {
   name: "ResourceCrud",
   data() {
     return {
-      result: null,
+      //   result: null,
       params: {
         method: "GET",
         headers: { "Content-Type": "", Accept: "" },
         // options: {},
         // body: {},
         // query: {},
-        base_url: "http://localhost:3000",
+        baseURL: "http://localhost:3000",
         url: "",
       },
       resource: {
@@ -125,25 +126,17 @@ export default {
       this.resource.content = "";
     },
     async create_or_update() {
-      this.result = "WIP";
+      //   this.result = "WIP";
       if (this.params.headers["Content-Type"].endsWith("json")) {
         console.log("is JSON");
         this.resource.content = JSON.parse(
           JSON.stringify(this.resource.content, null, 2)
         );
       }
-      this.result = await this.$store.dispatch("core/create_or_update", {
+      await this.$store.dispatch("core/create_or_update", {
         params: this.params,
         resource: this.resource,
       });
-      console.log(this.result);
-      if (this.result.message.data) {
-        if (typeof this.result.message.data == "object") {
-          this.resource.content = JSON.stringify(this.result.message.data, null, 2);
-        } else {
-          this.resource.content = this.result.message.data;
-        }
-      }
     },
     // PUT
     example_PUT_text() {
@@ -237,35 +230,78 @@ export default {
     },
     // GET
     example_GET_text() {
+      this.resource.content = "";
       this.params.method = "GET";
       this.params.url = "myfile.txt";
       this.params.headers["Accept"] = "text/plain";
+      this.create_or_update();
     },
     example_GET_turtle() {
+      this.resource.content = "";
       this.params.method = "GET";
       this.params.url = "myfile.ttl";
       this.params.headers["Accept"] = "text/turtle";
+      this.create_or_update();
     },
     example_GET_json() {
+      this.resource.content = "";
       this.params.method = "GET";
       this.params.url = "myfile.json";
       this.params.headers["Accept"] = "application/json";
+      this.create_or_update();
     },
     example_GET_jsonld() {
+      this.resource.content = "";
       this.params.method = "GET";
       this.params.url = "myfile.jsonld";
       this.params.headers["Accept"] = "application/ld+json";
+      this.create_or_update();
     },
     // GET CONTAINER
     example_GET_container_turtle() {
+      this.resource.content = "";
       this.params.method = "GET";
       this.params.url = "/";
       this.params.headers["Accept"] = "text/turtle";
+      this.create_or_update();
     },
     example_GET_container_jsonld() {
+      this.resource.content = "";
       this.params.method = "GET";
       this.params.url = "/";
       this.params.headers["Accept"] = "application/ld+json";
+      this.create_or_update();
+    },
+  },
+  watch: {
+    message() {
+      // "http://www.w3.org/ns/pim/space#Storage", "http://www.w3.org/ns/ldp#Container", "http://www.w3.org/ns/ldp#BasicContainer", "http://www.w3.org/ns/ldp#Resource"
+      //   if (
+      //     typeof this.message.message.data == "object" &&
+      //     this.message.message.data[0] != undefined &&
+      //     this.message.message.data[0]["@type"].includes(
+      //       "http://www.w3.org/ns/ldp#Container"
+      //     )
+      //   ) {
+      //     this.container = this.message.message.data[0];
+      //   } else {
+      //     this.container = null;
+      //   }
+
+      console.log("LE MESSAGE RESOURCE", Object.assign({}, this.message));
+      // console.log(this.result);
+      if (this.message.message.data) {
+        if (typeof this.message.message.data == "object") {
+          this.resource.content = JSON.stringify(this.message.message.data, null, 2);
+        } else {
+          this.resource.content = this.message.message.data;
+        }
+      }
+    },
+  },
+  computed: {
+    message() {
+      return this.$store.state.core.message;
     },
   },
 };
