@@ -75,18 +75,12 @@
           <button @click="example_GET_container_turtle">(GET container in turtle)</button>
 
           <br />
-          DELETE: Deleting resources
+          DELETE: Deleting resources in browser
           <br />
           PATCH: Modifying resources<br />
           HEAD: Retrieve resources headers<br />
           OPTIONS: Retrieve resources communication options<br />
           TODO: create recursive containers<br />
-
-          <button @click="create_or_update">Create a plain text file:</button
-          ><button @click="create_or_update">Create a plain text file:</button
-          ><button @click="create_or_update">Create a plain text file:</button
-          ><button @click="create_or_update">Create a plain text file:</button
-          ><button @click="create_or_update">Create a plain text file:</button>
         </td>
       </tr>
     </table>
