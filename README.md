@@ -1,6 +1,8 @@
 # dady
 
-## solid community server
+![dady_demo](doc/dady_demo.png)
+
+## use it with solid community server
 
 - https://communitysolidserver.github.io/CommunitySolidServer/latest/
 
