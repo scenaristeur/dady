@@ -36,6 +36,8 @@
     <br />
     <b> GET: Retrieving resources </b>
     <br />
+    <button @click="example_GET">GET</button>
+    should transform en radio
     <button @click="example_GET_text">GET plain text file</button>
     <button @click="example_GET_turtle">GET turtle file</button>
     <button @click="example_GET_json">GET json file</button
@@ -139,40 +141,33 @@ export default {
     //POST
     example_POST_text() {
       this.params.method = "POST";
-      this.params.url = "";
+      this.params.url = "/";
       this.params.headers["Content-Type"] = "text/plain";
-      this.resource = {
-        content: "bidule",
-      };
+      this.resource.content = "bidule";
       this.$store.commit("core/setParams", this.params);
       this.$store.commit("core/setResource", this.resource);
     },
     example_POST_turtle() {
       this.params.method = "POST";
-      this.params.url = "";
+      this.params.url = "/";
       this.params.headers["Content-Type"] = "text/turtle";
-      this.resource = {
-        content: "<ex:s> <ex:p> <ex:o>.",
-      };
+      this.resource.content = "<ex:s> <ex:p> <ex:o>.";
       this.$store.commit("core/setParams", this.params);
       this.$store.commit("core/setResource", this.resource);
     },
     example_POST_json() {
       this.params.method = "POST";
-      this.params.url = "";
+      this.params.url = "/";
       this.params.headers["Content-Type"] = "application/json";
-      let content = JSON.stringify({ nimp: "swing", swop: "tchiboo" }, null, 2);
-      this.resource = {
-        content: content,
-      };
+      this.resource.content = JSON.stringify({ nimp: "swing", swop: "tchiboo" }, null, 2);
       this.$store.commit("core/setParams", this.params);
       this.$store.commit("core/setResource", this.resource);
     },
     example_POST_jsonld() {
       this.params.method = "POST";
-      this.params.url = "";
+      this.params.url = "/";
       this.params.headers["Content-Type"] = "application/ld+json";
-      let content = JSON.stringify(
+      this.resource.content = JSON.stringify(
         {
           "@context": "https://json-ld.org/contexts/person.jsonld",
           "@id": "http://dbpedia.org/resource/John_Lennon",
@@ -183,13 +178,18 @@ export default {
         null,
         2
       );
-      this.resource = {
-        content: content,
-      };
       this.$store.commit("core/setParams", this.params);
       this.$store.commit("core/setResource", this.resource);
     },
     // GET
+    example_GET() {
+      this.resource.content = "";
+      this.params.method = "GET";
+      this.params.url = "myfile.txt";
+      this.params.headers["Accept"] = "*";
+      this.$store.commit("core/setParams", this.params);
+      this.$store.commit("core/setResource", this.resource);
+    },
     example_GET_text() {
       this.resource.content = "";
       this.params.method = "GET";

@@ -8,14 +8,16 @@
     <div v-if="params.method != 'PUT' && params.method != 'POST'">
       name: <input ref="name" v-model="resource.name" />
     </div>
-    <div>
-      content:
-      <textarea ref="content" v-model="resource.content" cols="40" rows="10" />
+    <div style="width: 100%">
+      <div>
+        content:
+        <textarea ref="content" v-model="resource.content" cols="40" rows="10" />
+      </div>
     </div>
     <div>url: <input ref="url" v-model="params.url" /> todo : test if exists</div>
     <button
       @click="create_or_update"
-      :disabled="resource.content.trim().length == 0 && params.method != 'GET'"
+      :disabled="resource.content.length == 0 && params.method != 'GET'"
     >
       Create / Update or Get
     </button>
@@ -23,6 +25,7 @@
     <b>Params /expert</b><br />
     baseURL: <input ref="baseURL" v-model="params.baseURL" /> <br />Content-Type:
     <input ref="content_type" v-model="params.headers['Content-Type']" />
+    <br />
     {{ params }}<br />
     {{ resource }}
   </div>
@@ -31,6 +34,7 @@
 <script>
 export default {
   name: "ResourceView.vue",
+
   data() {
     return {
       //   result: null,
@@ -53,7 +57,10 @@ export default {
   methods: {
     async create_or_update() {
       //   this.result = "WIP";
-      if (this.params.headers["Content-Type"].endsWith("json")) {
+      if (
+        this.params.headers["Content-Type"] &&
+        this.params.headers["Content-Type"].endsWith("json")
+      ) {
         console.log("is JSON");
         this.resource.content = JSON.parse(
           JSON.stringify(this.resource.content, null, 2)

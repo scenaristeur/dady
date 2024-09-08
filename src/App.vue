@@ -23,9 +23,9 @@ import ResourceView from "./views/ResourceView.vue";
       </nav>
     </div>
   </header> -->
+  <MessageView />
   <ResourceView />
 
-  <MessageView />
   <ContainerView />
   <ResourceCrud />
 

@@ -26,19 +26,25 @@ const actions = {
   async create_or_update(context) {
     let query = { params: context.state.params, resource: context.state.resource }
     console.log('create_or_update', query)
-    let result = await context.state.dady.create_or_update(query)
-    console.log(result)
-    context.state.message = result
-    // switch (result.status) {
-    //   case 201:
-    //     context.state.message = {status: result.status,
+    try {
+      let result = await context.state.dady.create_or_update(query)
+      console.log(result)
+      context.state.message = result
+      switch (result.status) {
+        case 200:
+          if (result.headers['content-type'] && result.headers['content-type'].endsWith('json')) {
+            context.state.resource.content = JSON.stringify(result.data, null, 2)
+          } else {
+            context.state.resource.content = result.data
+          }
 
-    //     }
-    //     break;
+          break
 
-    //   default:
-    //     console.log("result non traité",result)
-    // }
+        default:
+      }
+    } catch (error) {
+      context.state.message = error
+    }
     // return contexte.state.message
   },
   async select(context, id) {
