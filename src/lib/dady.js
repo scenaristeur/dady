@@ -29,7 +29,7 @@ export class Dady {
 
   async create_or_update(query) {
     let headers = query.params.headers
-    let result = 'Inconnu'
+    // let result = 'Inconnu'
 
     let config = {
       baseURL: query.params.baseURL.trim(),
@@ -42,22 +42,21 @@ export class Dady {
     console.log(config)
     try {
       const response = await axios(config)
-
+      return response
       //console.log(response)
-      result = {
-        state: 'ok',
-        query: query,
-        message: response,
-        location: response.headers.location,
-        notification: response.headers.link
-      }
+      // result = {
+      //   state: 'ok',
+      //   query: query,
+      //   message: response,
+      //   location: response.headers.location,
+      //   notification: response.headers.link
+      // }
     } catch (error) {
-      result = { state: 'ko', query: query, message: error }
-      console.error(error)
+      return error
     }
 
-    console.log('create_or_update', query, Object.assign({}, result))
-    return Object.assign({}, result)
+    // console.log('create_or_update', query, Object.assign({}, result))
+    // return Object.assign({}, result)
   }
   async get(url) {
     url = new URL(url)

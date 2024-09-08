@@ -1,10 +1,11 @@
 <template>
   <div>
-    <a :href="message.location" v-if="message.location" target="_blank">{{
+    {{ message }}
+    <!-- <a :href="message.location" v-if="message.location" target="_blank">{{
       message.location
     }}</a>
     <br />
-    {{ message.state }}
+    {{ message.state }} -->
   </div>
 </template>
 

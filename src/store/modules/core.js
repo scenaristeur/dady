@@ -2,7 +2,7 @@ import { Dady } from '@/lib/dady.js'
 
 const state = () => ({
   dady: new Dady({ name: 'Daddy' }),
-  // message: {},
+  message: null,
   params: { baseURL: 'http://localhost:3000', headers: {} },
   resource: { content: '' }
 })
@@ -28,6 +28,17 @@ const actions = {
     console.log('create_or_update', query)
     let result = await context.state.dady.create_or_update(query)
     console.log(result)
+    context.state.message = result
+    // switch (result.status) {
+    //   case 201:
+    //     context.state.message = {status: result.status,
+
+    //     }
+    //     break;
+
+    //   default:
+    //     console.log("result non traité",result)
+    // }
     // return contexte.state.message
   },
   async select(context, id) {

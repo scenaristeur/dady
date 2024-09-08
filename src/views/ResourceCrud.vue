@@ -94,35 +94,35 @@ export default {
 
     // PUT
     example_PUT_text() {
-      this.params.headers["Content-Type"] = "text/plain";
       this.params.method = "PUT";
       this.params.url = "myfile.txt";
-      (this.resource.content = "bidule"),
-        this.$store.commit("core/setParams", this.params);
+      this.params.headers["Content-Type"] = "text/plain";
+      this.resource.content = "bidule";
+      this.$store.commit("core/setParams", this.params);
       this.$store.commit("core/setResource", this.resource);
     },
     example_PUT_turtle() {
       this.params.method = "PUT";
       this.params.url = "myfile.ttl";
       this.params.headers["Content-Type"] = "text/turtle";
-      this.resource = {
-        content: "<ex:s> <ex:p> <ex:o>.",
-      };
+      this.resource.content = "<ex:s> <ex:p> <ex:o>.";
+      this.$store.commit("core/setParams", this.params);
+      this.$store.commit("core/setResource", this.resource);
     },
     example_PUT_json() {
       this.params.method = "PUT";
       this.params.url = "myfile.json";
       this.params.headers["Content-Type"] = "application/json";
-      let content = JSON.stringify({ nimp: "swing", swop: "tchiboo" }, null, 2);
-      this.resource = {
-        content: content,
-      };
+      this.resource.content = JSON.stringify({ nimp: "swing", swop: "tchiboo" }, null, 2);
+
+      this.$store.commit("core/setParams", this.params);
+      this.$store.commit("core/setResource", this.resource);
     },
     example_PUT_jsonld() {
       this.params.method = "PUT";
       this.params.url = "myfile.jsonld";
       this.params.headers["Content-Type"] = "application/ld+json";
-      let content = JSON.stringify(
+      this.resource.content = JSON.stringify(
         {
           "@context": "https://json-ld.org/contexts/person.jsonld",
           "@id": "http://dbpedia.org/resource/John_Lennon",
@@ -133,9 +133,8 @@ export default {
         null,
         2
       );
-      this.resource = {
-        content: content,
-      };
+      this.$store.commit("core/setParams", this.params);
+      this.$store.commit("core/setResource", this.resource);
     },
     //POST
     example_POST_text() {
@@ -145,6 +144,8 @@ export default {
       this.resource = {
         content: "bidule",
       };
+      this.$store.commit("core/setParams", this.params);
+      this.$store.commit("core/setResource", this.resource);
     },
     example_POST_turtle() {
       this.params.method = "POST";
@@ -153,6 +154,8 @@ export default {
       this.resource = {
         content: "<ex:s> <ex:p> <ex:o>.",
       };
+      this.$store.commit("core/setParams", this.params);
+      this.$store.commit("core/setResource", this.resource);
     },
     example_POST_json() {
       this.params.method = "POST";
@@ -162,6 +165,8 @@ export default {
       this.resource = {
         content: content,
       };
+      this.$store.commit("core/setParams", this.params);
+      this.$store.commit("core/setResource", this.resource);
     },
     example_POST_jsonld() {
       this.params.method = "POST";
@@ -181,6 +186,8 @@ export default {
       this.resource = {
         content: content,
       };
+      this.$store.commit("core/setParams", this.params);
+      this.$store.commit("core/setResource", this.resource);
     },
     // GET
     example_GET_text() {
@@ -188,28 +195,32 @@ export default {
       this.params.method = "GET";
       this.params.url = "myfile.txt";
       this.params.headers["Accept"] = "text/plain";
-      this.create_or_update();
+      this.$store.commit("core/setParams", this.params);
+      this.$store.commit("core/setResource", this.resource);
     },
     example_GET_turtle() {
       this.resource.content = "";
       this.params.method = "GET";
       this.params.url = "myfile.ttl";
       this.params.headers["Accept"] = "text/turtle";
-      this.create_or_update();
+      this.$store.commit("core/setParams", this.params);
+      this.$store.commit("core/setResource", this.resource);
     },
     example_GET_json() {
       this.resource.content = "";
       this.params.method = "GET";
       this.params.url = "myfile.json";
       this.params.headers["Accept"] = "application/json";
-      this.create_or_update();
+      this.$store.commit("core/setParams", this.params);
+      this.$store.commit("core/setResource", this.resource);
     },
     example_GET_jsonld() {
       this.resource.content = "";
       this.params.method = "GET";
       this.params.url = "myfile.jsonld";
       this.params.headers["Accept"] = "application/ld+json";
-      this.create_or_update();
+      this.$store.commit("core/setParams", this.params);
+      this.$store.commit("core/setResource", this.resource);
     },
     // GET CONTAINER
     example_GET_container_turtle() {
@@ -217,14 +228,16 @@ export default {
       this.params.method = "GET";
       this.params.url = "/";
       this.params.headers["Accept"] = "text/turtle";
-      this.create_or_update();
+      this.$store.commit("core/setParams", this.params);
+      this.$store.commit("core/setResource", this.resource);
     },
     example_GET_container_jsonld() {
       this.resource.content = "";
       this.params.method = "GET";
       this.params.url = "/";
       this.params.headers["Accept"] = "application/ld+json";
-      this.create_or_update();
+      this.$store.commit("core/setParams", this.params);
+      this.$store.commit("core/setResource", this.resource);
     },
   },
   // watch: {
