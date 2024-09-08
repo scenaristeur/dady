@@ -20,8 +20,8 @@
 
     <button @click="example_PUT_text">PUT plain text file</button>
     <button @click="example_PUT_turtle">PUT turtle file</button>
-    <button @click="example_PUT_json">PUT json file</button
-    ><button @click="example_PUT_jsonld">PUT jsonld file</button>
+    <button @click="example_PUT_json">PUT json file</button>
+    <button @click="example_PUT_jsonld">PUT jsonld file</button>
     <br />
     <b>POST: Creating resources at a generated URL</b><br />
     <small
@@ -31,8 +31,8 @@
     <br />
     <button @click="example_POST_text">POST plain text file</button>
     <button @click="example_POST_turtle">POST turtle file</button>
-    <button @click="example_POST_json">POST json file</button
-    ><button @click="example_POST_jsonld">POST jsonld file</button>
+    <button @click="example_POST_json">POST json file</button>
+    <button @click="example_POST_jsonld">POST jsonld file</button>
     <br />
     <b> GET: Retrieving resources </b>
     <br />
@@ -40,15 +40,20 @@
     should transform en radio
     <button @click="example_GET_text">GET plain text file</button>
     <button @click="example_GET_turtle">GET turtle file</button>
-    <button @click="example_GET_json">GET json file</button
-    ><button @click="example_GET_jsonld">GET jsonld file</button>
+    <button @click="example_GET_json">GET json file</button>
+    <button @click="example_GET_jsonld">GET jsonld file</button>
     <br />
 
     DELETE: Deleting resources in browser
     <br />
     PATCH: Modifying resources<br />
+    <button @click="example_patch_n3">PATCH N3</button>
+    <button @click="example_patch_sparql">PATCH SPARQL</button>
+    <br />
     HEAD: Retrieve resources headers<br />
+    <button @click="example_head">HEAD</button><br />
     OPTIONS: Retrieve resources communication options<br />
+    <button @click="example_options">OPTIONS</button><br />
     TODO: create recursive containers<br />
 
     <h2>Show with criteres</h2>
@@ -246,6 +251,39 @@ export default {
         params: this.params,
         resource: this.resource,
       });
+    },
+    //PATCH
+    example_patch_n3() {
+      this.resource.content = `@prefix solid: <http://www.w3.org/ns/solid/terms#>. 
+      _:rename a solid:InsertDeletePatch;
+       solid:inserts { <ex:s2> <ex:p2> <ex:o2>. }.`;
+      this.params.method = "PATCH";
+      this.params.url = "myfile.ttl";
+      this.params.headers["Content-Type"] = "text/n3";
+      this.$store.commit("core/setParams", this.params);
+      this.$store.commit("core/setResource", this.resource);
+    },
+    example_patch_sparql() {
+      this.resource.content = "INSERT DATA { <ex:s2> <ex:p2> <ex:o2> }";
+      this.params.method = "PATCH";
+      this.params.url = "myfile.ttl";
+      this.params.headers["Content-Type"] = "application/sparql-update";
+      this.$store.commit("core/setParams", this.params);
+      this.$store.commit("core/setResource", this.resource);
+    },
+    example_head() {
+      this.params.method = "HEAD";
+      this.params.url = "myfile.txt";
+      // this.params.headers["Accept"] = "text/plain";
+      this.$store.commit("core/setParams", this.params);
+      this.$store.commit("core/setResource", this.resource);
+    },
+    example_options() {
+      this.params.method = "OPTIONS";
+      this.params.url = "myfile.txt";
+      // this.params.headers["Accept"] = "text/plain";
+      this.$store.commit("core/setParams", this.params);
+      this.$store.commit("core/setResource", this.resource);
     },
   },
   // watch: {

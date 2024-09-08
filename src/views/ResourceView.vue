@@ -17,7 +17,12 @@
     <div>url: <input ref="url" v-model="params.url" /> todo : test if exists</div>
     <button
       @click="create_or_update"
-      :disabled="resource.content.length == 0 && params.method != 'GET'"
+      :disabled="
+        resource.content.length == 0 &&
+        params.method != 'GET' &&
+        params.method != 'HEAD' &&
+        params.method != 'OPTIONS'
+      "
     >
       Create / Update or Get
     </button>

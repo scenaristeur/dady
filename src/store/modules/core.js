@@ -73,6 +73,7 @@ const actions = {
 
     await context.dispatch('create_or_update') // create_or_update()
     console.log('MESSAGE FROM SELECT', context.state.message)
+    context.state.params.method = 'PUT'
     // return context.state.message
   },
   async remove(context, id) {
