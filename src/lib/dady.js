@@ -42,6 +42,7 @@ export class Dady {
     console.log(config)
     try {
       const response = await axios(config)
+      console.log(response)
       return response
       //console.log(response)
       // result = {
@@ -52,6 +53,7 @@ export class Dady {
       //   notification: response.headers.link
       // }
     } catch (error) {
+      console.log(error)
       return error
     }
 

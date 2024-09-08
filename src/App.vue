@@ -6,6 +6,7 @@ import ResourceCrud from "./views/ResourceCrud.vue";
 import MessageView from "./views/MessageView.vue";
 import ContainerView from "./views/ContainerView.vue";
 import ResourceView from "./views/ResourceView.vue";
+import DadyView from "./views/DadyView.vue";
 </script>
 
 <template>
@@ -24,6 +25,7 @@ import ResourceView from "./views/ResourceView.vue";
     </div>
   </header> -->
   <MessageView />
+  <DadyView />
   <ResourceView />
 
   <ContainerView />
