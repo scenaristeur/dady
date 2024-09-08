@@ -223,21 +223,29 @@ export default {
       this.$store.commit("core/setResource", this.resource);
     },
     // GET CONTAINER
-    example_GET_container_turtle() {
-      this.resource.content = "";
-      this.params.method = "GET";
-      this.params.url = "/";
-      this.params.headers["Accept"] = "text/turtle";
-      this.$store.commit("core/setParams", this.params);
-      this.$store.commit("core/setResource", this.resource);
-    },
-    example_GET_container_jsonld() {
+    async example_GET_container_jsonld() {
       this.resource.content = "";
       this.params.method = "GET";
       this.params.url = "/";
       this.params.headers["Accept"] = "application/ld+json";
       this.$store.commit("core/setParams", this.params);
       this.$store.commit("core/setResource", this.resource);
+      await this.$store.dispatch("core/create_or_update", {
+        params: this.params,
+        resource: this.resource,
+      });
+    },
+    async example_GET_container_turtle() {
+      this.resource.content = "";
+      this.params.method = "GET";
+      this.params.url = "/";
+      this.params.headers["Accept"] = "text/turtle";
+      this.$store.commit("core/setParams", this.params);
+      this.$store.commit("core/setResource", this.resource);
+      await this.$store.dispatch("core/create_or_update", {
+        params: this.params,
+        resource: this.resource,
+      });
     },
   },
   // watch: {

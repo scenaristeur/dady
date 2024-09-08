@@ -26,8 +26,8 @@
     baseURL: <input ref="baseURL" v-model="params.baseURL" /> <br />Content-Type:
     <input ref="content_type" v-model="params.headers['Content-Type']" />
     <br />
-    {{ params }}<br />
-    {{ resource }}
+    <!-- {{ params }}<br />
+    {{ resource }} -->
   </div>
 </template>
 

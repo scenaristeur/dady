@@ -1,6 +1,5 @@
 <template>
   <div v-if="container">
-    <hr />
     <!-- deb cont .message.data[0]["@type"] -->
 
     <h2>{{ container["@id"] }}</h2>
@@ -12,7 +11,7 @@
       <ul>
         <li v-for="r in ordered" :key="r">
           <span :id="r['@id']" @click="select">
-            {{ r }}
+            {{ r["@id"] }}
           </span>
           <button
             v-if="r['@id'] != 'http://localhost:3000/index.html'"
@@ -25,9 +24,9 @@
     </div>
     <!-- {{ message }} -->
     History: {{ history }}
-    <!-- <hr />
+    <hr />
     Container : {{ container }}
-    <hr /> -->
+    <hr />
   </div>
 </template>
 
@@ -36,7 +35,6 @@ export default {
   name: "ContainerView",
   data() {
     return {
-      container: null,
       history: [],
       ordered: [],
       up: null,
@@ -44,8 +42,6 @@ export default {
   },
   methods: {
     async select(e) {
-      //   console.log(e.target.id);
-
       this.$store.dispatch("core/select", e.target.id);
     },
     async remove(id) {
@@ -56,32 +52,19 @@ export default {
   },
 
   watch: {
-    message() {
-      // console.log("LE MESSAGE CONTAINER", Object.assign({}, this.message));
-      // "http://www.w3.org/ns/pim/space#Storage", "http://www.w3.org/ns/ldp#Container", "http://www.w3.org/ns/ldp#BasicContainer", "http://www.w3.org/ns/ldp#Resource"
-      // if (
-      //   typeof this.message.message.data == "object" &&
-      //   this.message.message.data[0] != undefined &&
-      //   this.message.message.data[0]["@type"].includes(
-      //     "http://www.w3.org/ns/ldp#Container"
-      //   )
-      // ) {
-      //   this.container = this.message.message.data[0];
-      //   this.ordered =
-      //     this.container["http://www.w3.org/ns/ldp#contains"] &&
-      //     this.container["http://www.w3.org/ns/ldp#contains"].reverse();
-      //   this.history.push(this.container["@id"]);
-      //   this.up = this.container["@id"].split("/").slice(0, -2).join("/") + "/";
-      //   console.log("up", this.up);
-      // }
-      // else {
-      //   this.container = null;
-      // }
+    container() {
+      //"http://www.w3.org/ns/pim/space#Storage", "http://www.w3.org/ns/ldp#Container", "http://www.w3.org/ns/ldp#BasicContainer", "http://www.w3.org/ns/ldp#Resource"
+      if (this.container["@type"].includes("http://www.w3.org/ns/ldp#Container")) {
+        this.ordered = this.container["http://www.w3.org/ns/ldp#contains"].reverse();
+        this.history.push(this.container["@id"]);
+        this.up = this.container["@id"].split("/").slice(0, -2).join("/") + "/";
+        console.log("up", this.up);
+      }
     },
   },
   computed: {
-    message() {
-      return this.$store.state.core.message;
+    container() {
+      return this.$store.state.core.container;
     },
   },
 };

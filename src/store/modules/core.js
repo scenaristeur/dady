@@ -4,7 +4,8 @@ const state = () => ({
   dady: new Dady({ name: 'Daddy' }),
   message: null,
   params: { baseURL: 'http://localhost:3000', headers: {} },
-  resource: { content: '' }
+  resource: { content: '' },
+  container: null
 })
 
 const mutations = {
@@ -38,6 +39,14 @@ const actions = {
             context.state.resource.content = result.data
           }
 
+          if (
+            Array.isArray(result.data) &&
+            result.data[0]['@type'].includes('http://www.w3.org/ns/ldp#Container')
+          ) {
+            context.state.container = result.data[0]
+            console.log('container', Object.assign({}, context.state.container))
+          }
+
           break
 
         default:
@@ -48,9 +57,22 @@ const actions = {
     // return contexte.state.message
   },
   async select(context, id) {
-    console.log('select', id)
-    context.state.message = await context.state.dady.get(id)
-    //console.log('MESSAGE FROM SELECT', context.state.message)
+    let url = new URL(id)
+    console.log(url)
+    context.state.resource.content = ''
+    context.state.params.baseURL = url.origin
+    context.state.params.method = 'GET'
+    context.state.params.url = url.pathname
+    context.state.params.headers = {}
+
+    if (url.pathname.endsWith('/')) {
+      context.state.params.headers.Accept = 'application/ld+json'
+    }
+
+    console.log('select', context.state.params, context.state.resource)
+
+    await context.dispatch('create_or_update') // create_or_update()
+    console.log('MESSAGE FROM SELECT', context.state.message)
     // return context.state.message
   },
   async remove(context, id) {
