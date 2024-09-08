@@ -27,6 +27,10 @@ source: source
 
 - https://communitysolidserver.github.io/CommunitySolidServer/latest/usage/metadata/#impact-on-creating-containers
 
+# contextMenu /right click
+
+- https://itnext.io/how-to-create-a-custom-right-click-menu-with-javascript-9c368bb58724
+
 # redo
 
 - npm create vue@latest

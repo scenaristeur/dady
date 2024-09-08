@@ -9,9 +9,12 @@ const state = () => ({
 })
 
 const mutations = {
-  // setMessage(state, message) {
-  //   state.message = message
-  // },
+  reset(state) {
+    state.message = null
+    state.params = { baseURL: 'http://localhost:3000', headers: {} }
+    state.resource = { content: '' }
+    state.container = null
+  },
   setParams(state, params) {
     state.params = params
   },

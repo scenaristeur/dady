@@ -14,7 +14,10 @@
         <textarea ref="content" v-model="resource.content" cols="40" rows="10" />
       </div>
     </div>
-    <div>url: <input ref="url" v-model="params.url" /> todo : test if exists</div>
+    <div>
+      url: <input ref="url" v-model="params.url" /> container: file : todo : test if
+      exists
+    </div>
     <button @click="create_or_update">
       <!-- :disabled="
     resource.content.length == 0 &&

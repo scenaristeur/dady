@@ -127,19 +127,11 @@ export default {
     };
   },
   created() {
-    // this.example_GET_container_jsonld();
+    this.example_GET_container_jsonld();
   },
   methods: {
     reset() {
-      let params = {
-        headers: {
-          "Content-Type": "text/plain",
-        },
-        method: "GET",
-        url: "",
-      };
-      let resource = { content: "" };
-      this.$store.commit("core/setMessage", { params: params, resource: resource });
+      this.$store.commit("core/reset");
     },
 
     // PUT

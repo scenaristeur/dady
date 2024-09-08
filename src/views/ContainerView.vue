@@ -54,7 +54,10 @@ export default {
   watch: {
     container() {
       //"http://www.w3.org/ns/pim/space#Storage", "http://www.w3.org/ns/ldp#Container", "http://www.w3.org/ns/ldp#BasicContainer", "http://www.w3.org/ns/ldp#Resource"
-      if (this.container["@type"].includes("http://www.w3.org/ns/ldp#Container")) {
+      if (
+        this.container &&
+        this.container["@type"].includes("http://www.w3.org/ns/ldp#Container")
+      ) {
         if (this.container["http://www.w3.org/ns/ldp#contains"] != undefined) {
           this.ordered = this.container["http://www.w3.org/ns/ldp#contains"].reverse();
         }
