@@ -3,8 +3,9 @@
 // import HelloWorld from "./components/HelloWorld.vue";
 import LogDady from "./views/LogDady.vue";
 import ResourceCrud from "./views/ResourceCrud.vue";
-import MessageView from "./views/MessageView.vue";
+// import MessageView from "./views/MessageView.vue";
 import ContainerView from "./views/ContainerView.vue";
+import ResourceView from "./views/ResourceView.vue";
 </script>
 
 <template>
@@ -22,9 +23,11 @@ import ContainerView from "./views/ContainerView.vue";
       </nav>
     </div>
   </header> -->
-  <ResourceCrud />
+  <ResourceView />
   <ContainerView />
-  <MessageView />
+  <ResourceCrud />
+
+  <!-- <MessageView /> -->
   <LogDady />
   <!-- <RouterView /> -->
 </template>

@@ -52,11 +52,11 @@ export class Dady {
         notification: response.headers.link
       }
     } catch (error) {
-      result = { state: 'error', query: query, message: error }
+      result = { state: 'ko', query: query, message: error }
       console.error(error)
     }
 
-    //console.log('create_or_update', query, Object.assign({}, result))
+    console.log('create_or_update', query, Object.assign({}, result))
     return Object.assign({}, result)
   }
   async get(url) {

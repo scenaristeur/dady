@@ -1,89 +1,53 @@
 <template>
   <div>
-    <h1>ResourceCrud</h1>
+    <h1>Solid Resource CRUD</h1>
 
-    <h2>Create or Update</h2>
+    <button @click="reset">Reset</button><br />
+    <b> GET: Retrieving containers</b>
+    <br />
+    <small>url MUST end with a '/'!</small><br />
+    <button @click="example_GET_container_jsonld">GET container in jsonld</button>
+    <button @click="example_GET_container_turtle">(GET container in turtle)</button>
 
-    <table>
-      <tr>
-        <td>
-          <b>Resource</b><br />
-          <div v-if="params.method != 'PUT' && params.method != 'POST'">
-            id: <input ref="id" v-model="resource.id" />
-          </div>
+    <br />
+    <b>PUT: Creating resources for a given URL</b>
+    <a
+      href="https://communitysolidserver.github.io/CommunitySolidServer/latest/usage/example-requests/"
+      target="_blank"
+      rel="noopener"
+      >example</a
+    ><br />
 
-          <div v-if="params.method != 'PUT' && params.method != 'POST'">
-            name: <input ref="name" v-model="resource.name" />
-          </div>
-          <div>
-            content:
-            <textarea ref="content" v-model="resource.content" cols="40" rows="10" />
-          </div>
-          <div>url: <input ref="url" v-model="params.url" /> todo : test if exists</div>
-          <button
-            @click="create_or_update"
-            :disabled="resource.content.trim().length == 0 && params.method != 'GET'"
-          >
-            Create / Update or Get
-          </button>
+    <button @click="example_PUT_text">PUT plain text file</button>
+    <button @click="example_PUT_turtle">PUT turtle file</button>
+    <button @click="example_PUT_json">PUT json file</button
+    ><button @click="example_PUT_jsonld">PUT jsonld file</button>
+    <br />
+    <b>POST: Creating resources at a generated URL</b><br />
+    <small
+      >the container MUST exist before! For now, you can PUT and delete a resource in a
+      container to create this container.</small
+    >
+    <br />
+    <button @click="example_POST_text">POST plain text file</button>
+    <button @click="example_POST_turtle">POST turtle file</button>
+    <button @click="example_POST_json">POST json file</button
+    ><button @click="example_POST_jsonld">POST jsonld file</button>
+    <br />
+    <b> GET: Retrieving resources </b>
+    <br />
+    <button @click="example_GET_text">GET plain text file</button>
+    <button @click="example_GET_turtle">GET turtle file</button>
+    <button @click="example_GET_json">GET json file</button
+    ><button @click="example_GET_jsonld">GET jsonld file</button>
+    <br />
 
-          <hr />
-          <b>Params /expert</b><br />
-          baseURL: <input ref="baseURL" v-model="params.baseURL" /> <br />Content-Type:
-          <input ref="content_type" v-model="params.headers['Content-Type']" />
-
-          <button @click="last">Last</button>
-          <button @click="get">Get</button>
-        </td>
-        <td>
-          <button @click="reset">Reset</button><br />
-          <b>PUT: Creating resources for a given URL</b>
-          <a
-            href="https://communitysolidserver.github.io/CommunitySolidServer/latest/usage/example-requests/"
-            target="_blank"
-            rel="noopener"
-            >example</a
-          ><br />
-
-          <button @click="example_PUT_text">PUT plain text file</button>
-          <button @click="example_PUT_turtle">PUT turtle file</button>
-          <button @click="example_PUT_json">PUT json file</button
-          ><button @click="example_PUT_jsonld">PUT jsonld file</button>
-          <br />
-          <b>POST: Creating resources at a generated URL</b><br />
-          <small
-            >the container MUST exist before! For now, you can PUT and delete a resource
-            in a container to create this container.</small
-          >
-          <br />
-          <button @click="example_POST_text">POST plain text file</button>
-          <button @click="example_POST_turtle">POST turtle file</button>
-          <button @click="example_POST_json">POST json file</button
-          ><button @click="example_POST_jsonld">POST jsonld file</button>
-          <br />
-          <b> GET: Retrieving resources </b>
-          <br />
-          <button @click="example_GET_text">GET plain text file</button>
-          <button @click="example_GET_turtle">GET turtle file</button>
-          <button @click="example_GET_json">GET json file</button
-          ><button @click="example_GET_jsonld">GET jsonld file</button>
-          <br />
-          <b> GET: Retrieving containers</b>
-          <br />
-          <small>url MUST end with a '/'!</small><br />
-          <button @click="example_GET_container_jsonld">GET container in jsonld</button>
-          <button @click="example_GET_container_turtle">(GET container in turtle)</button>
-
-          <br />
-          DELETE: Deleting resources in browser
-          <br />
-          PATCH: Modifying resources<br />
-          HEAD: Retrieve resources headers<br />
-          OPTIONS: Retrieve resources communication options<br />
-          TODO: create recursive containers<br />
-        </td>
-      </tr>
-    </table>
+    DELETE: Deleting resources in browser
+    <br />
+    PATCH: Modifying resources<br />
+    HEAD: Retrieve resources headers<br />
+    OPTIONS: Retrieve resources communication options<br />
+    TODO: create recursive containers<br />
 
     <h2>Show with criteres</h2>
     <!-- RESULT : {{ result }} -->
@@ -96,50 +60,46 @@ export default {
   data() {
     return {
       //   result: null,
-      params: {
-        method: "GET",
-        headers: { "Content-Type": "", Accept: "" },
-        // options: {},
-        // body: {},
-        // query: {},
-        baseURL: "http://localhost:3000",
-        url: "",
-      },
-      resource: {
-        id: "",
-        name: "",
-        content: "",
-      },
+      // params: {
+      //   method: "GET",
+      //   headers: { "Content-Type": "", Accept: "" },
+      //   // options: {},
+      //   // body: {},
+      //   // query: {},
+      //   baseURL: "http://localhost:3000",
+      //   url: "",
+      // },
+      // resource: {
+      //   id: "",
+      //   name: "",
+      //   content: "",
+      // },
     };
+  },
+  created() {
+    // this.example_GET_container_jsonld();
   },
   methods: {
     reset() {
-      this.params.headers["Content-Type"] = "text/plain";
-      this.params.method = "GET";
-      this.params.url = "";
-      this.resource.content = "";
+      let params = {
+        headers: {
+          "Content-Type": "text/plain",
+        },
+        method: "GET",
+        url: "",
+      };
+      let resource = { content: "" };
+      this.$store.commit("core/setMessage", { params: params, resource: resource });
     },
-    async create_or_update() {
-      //   this.result = "WIP";
-      if (this.params.headers["Content-Type"].endsWith("json")) {
-        console.log("is JSON");
-        this.resource.content = JSON.parse(
-          JSON.stringify(this.resource.content, null, 2)
-        );
-      }
-      await this.$store.dispatch("core/create_or_update", {
-        params: this.params,
-        resource: this.resource,
-      });
-    },
+
     // PUT
     example_PUT_text() {
+      this.params.headers["Content-Type"] = "text/plain";
       this.params.method = "PUT";
       this.params.url = "myfile.txt";
-      this.params.headers["Content-Type"] = "text/plain";
-      this.resource = {
-        content: "bidule",
-      };
+      (this.resource.content = "bidule"),
+        this.$store.commit("core/setParams", this.params);
+      this.$store.commit("core/setResource", this.resource);
     },
     example_PUT_turtle() {
       this.params.method = "PUT";
@@ -267,35 +227,30 @@ export default {
       this.create_or_update();
     },
   },
-  watch: {
-    message() {
-      // "http://www.w3.org/ns/pim/space#Storage", "http://www.w3.org/ns/ldp#Container", "http://www.w3.org/ns/ldp#BasicContainer", "http://www.w3.org/ns/ldp#Resource"
-      //   if (
-      //     typeof this.message.message.data == "object" &&
-      //     this.message.message.data[0] != undefined &&
-      //     this.message.message.data[0]["@type"].includes(
-      //       "http://www.w3.org/ns/ldp#Container"
-      //     )
-      //   ) {
-      //     this.container = this.message.message.data[0];
-      //   } else {
-      //     this.container = null;
-      //   }
-
-      //   console.log("LE MESSAGE RESOURCE", Object.assign({}, this.message));
-      // console.log(this.result);
-      if (this.message.message.data) {
-        if (typeof this.message.message.data == "object") {
-          this.resource.content = JSON.stringify(this.message.message.data, null, 2);
-        } else {
-          this.resource.content = this.message.message.data;
-        }
-      }
-    },
-  },
+  // watch: {
+  //   message() {
+  //     // "http://www.w3.org/ns/pim/space#Storage", "http://www.w3.org/ns/ldp#Container", "http://www.w3.org/ns/ldp#BasicContainer", "http://www.w3.org/ns/ldp#Resource"
+  //     //   if (
+  //     //     typeof this.message.message.data == "object" &&
+  //     //     this.message.message.data[0] != undefined &&
+  //     //     this.message.message.data[0]["@type"].includes(
+  //     //       "http://www.w3.org/ns/ldp#Container"
+  //     //     )
+  //     //   ) {
+  //     //     this.container = this.message.message.data[0];
+  //     //   } else {
+  //     //     this.container = null;
+  //     //   }
+  //     //   console.log("LE MESSAGE RESOURCE", Object.assign({}, this.message));
+  //     // console.log(this.result);
+  //   },
+  // },
   computed: {
-    message() {
-      return this.$store.state.core.message;
+    params() {
+      return this.$store.state.core.params;
+    },
+    resource() {
+      return this.$store.state.core.resource;
     },
   },
 };

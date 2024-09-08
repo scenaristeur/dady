@@ -1,71 +1,33 @@
-// import { User } from '@/lib/user.js';
-// import sdk from '@api/memgpt'
-// import axios from 'axios'
 import { Dady } from '@/lib/dady.js'
 
 const state = () => ({
   dady: new Dady({ name: 'Daddy' }),
-  message: 'Welcome! Use Dady with https://communitysolidserver.github.io/CommunitySolidServer'
-  // password: 'ilovellms',
-  // memgpt_api_url: 'http://localhost:8283/',
-  // memgpt_api_headers: {
-  //   Accept: 'application/json',
-  //   // Authorization: 'Bearer ilovellms',
-  //   'Content-Type': 'application/json'
-  // },
-  // auth: null,
-  // agents: []
-  // user: new User({
-  //   name: "Youri l'UI"
-  //   // , callbacks:{
-  //   //   awarenessChanged: mutations.test
-  //   // }
-  // }),
-  // awareness: null,
-  // agents: null,
-  // messages: [
-  //   // { id: 1, role: "user", content: "Bonjour" },
-  //   // { id: 2, role: "assistant", content: "Bonjour, comment puis-je vous aider aujourd'hui ?" }
-  // ]
+  // message: {},
+  params: { baseURL: 'http://localhost:3000', headers: {} },
+  resource: { content: '' }
 })
 
 const mutations = {
-  // setPassword(state, password) {
-  //   state.password = password
+  // setMessage(state, message) {
+  //   state.message = message
   // },
-  // setMemgptApiUrl(state, memgpt_api_url) {
-  //   state.memgpt_api_url = memgpt_api_url
-  // },
-  //   setAgents(state, agents) {
-  //     console.log("agents", agents.length)
-  // state.agents = agents
-  //   },
-  // listAgents(state) {
-  //   sdk.auth(state.password)
-  //   sdk.server(state.memgpt_api_url)
-  //   sdk
-  //     .list_agents_api_agents_get()
-  //     .then(({ data }) => {
-  //       console.log(data)
-  //       this.commit('core/setAgents', data)
-  //     })
-  //     .catch((err) => console.error(err))
-  //   // // state.agents = [...agents]
-  //   // // console.log(state.agents)
-  //   // this.commit('core/setAgents', agents)
-  // },
-  // setAgents(state, a) {
-  //   state.agents = a
-  //   console.log(state.agents)
-  // }
+  setParams(state, params) {
+    state.params = params
+  },
+  setResource(state, resource) {
+    state.resource = resource
+  }
 }
 
 const actions = {
   logDady(context) {
     context.state.dady.log()
   },
-  async create_or_update(contexte, query) {
-    contexte.state.message = await contexte.state.dady.create_or_update(query)
+  async create_or_update(context) {
+    let query = { params: context.state.params, resource: context.state.resource }
+    console.log('create_or_update', query)
+    let result = await context.state.dady.create_or_update(query)
+    console.log(result)
     // return contexte.state.message
   },
   async select(context, id) {

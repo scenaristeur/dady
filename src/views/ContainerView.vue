@@ -25,9 +25,9 @@
     </div>
     <!-- {{ message }} -->
     History: {{ history }}
-    <hr />
+    <!-- <hr />
     Container : {{ container }}
-    <hr />
+    <hr /> -->
   </div>
 </template>
 
@@ -59,21 +59,21 @@ export default {
     message() {
       // console.log("LE MESSAGE CONTAINER", Object.assign({}, this.message));
       // "http://www.w3.org/ns/pim/space#Storage", "http://www.w3.org/ns/ldp#Container", "http://www.w3.org/ns/ldp#BasicContainer", "http://www.w3.org/ns/ldp#Resource"
-      if (
-        typeof this.message.message.data == "object" &&
-        this.message.message.data[0] != undefined &&
-        this.message.message.data[0]["@type"].includes(
-          "http://www.w3.org/ns/ldp#Container"
-        )
-      ) {
-        this.container = this.message.message.data[0];
-        this.ordered =
-          this.container["http://www.w3.org/ns/ldp#contains"] &&
-          this.container["http://www.w3.org/ns/ldp#contains"].reverse();
-        this.history.push(this.container["@id"]);
-        this.up = this.container["@id"].split("/").slice(0, -2).join("/") + "/";
-        console.log("up", this.up);
-      }
+      // if (
+      //   typeof this.message.message.data == "object" &&
+      //   this.message.message.data[0] != undefined &&
+      //   this.message.message.data[0]["@type"].includes(
+      //     "http://www.w3.org/ns/ldp#Container"
+      //   )
+      // ) {
+      //   this.container = this.message.message.data[0];
+      //   this.ordered =
+      //     this.container["http://www.w3.org/ns/ldp#contains"] &&
+      //     this.container["http://www.w3.org/ns/ldp#contains"].reverse();
+      //   this.history.push(this.container["@id"]);
+      //   this.up = this.container["@id"].split("/").slice(0, -2).join("/") + "/";
+      //   console.log("up", this.up);
+      // }
       // else {
       //   this.container = null;
       // }
