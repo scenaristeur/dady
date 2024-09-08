@@ -8,7 +8,7 @@
     <small>url MUST end with a '/'!</small><br />
     <button @click="example_GET_container_jsonld">GET container in jsonld</button>
     <button @click="example_GET_container_turtle">(GET container in turtle)</button>
-
+    <button @click="example_create_container">Create container</button>
     <br />
     <b>PUT: Creating resources for a given URL</b>
     <a
@@ -29,7 +29,10 @@
       container to create this container.</small
     >
     <br />
-    <button @click="example_POST_text">POST plain text file</button>
+
+    <button type="button" class="btn btn-success" @click="example_POST_text">
+      POST plain text file
+    </button>
     <button @click="example_POST_turtle">POST turtle file</button>
     <button @click="example_POST_json">POST json file</button>
     <button @click="example_POST_jsonld">POST jsonld file</button>
@@ -57,6 +60,46 @@
     TODO: create recursive containers<br />
 
     <h2>Show with criteres</h2>
+    <!-- Button trigger modal -->
+    <button
+      type="button"
+      class="btn btn-primary"
+      data-bs-toggle="modal"
+      data-bs-target="#exampleModal"
+    >
+      Launch demo modal
+    </button>
+
+    <!-- Modal -->
+    <div
+      class="modal fade"
+      id="exampleModal"
+      tabindex="-1"
+      aria-labelledby="exampleModalLabel"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h1 class="modal-title fs-5" id="exampleModalLabel">Modal title</h1>
+            <button
+              type="button"
+              class="btn-close"
+              data-bs-dismiss="modal"
+              aria-label="Close"
+            ></button>
+          </div>
+          <div class="modal-body">...</div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+              Close
+            </button>
+            <button type="button" class="btn btn-primary">Save changes</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
     <!-- RESULT : {{ result }} -->
   </div>
 </template>
@@ -282,6 +325,13 @@ export default {
       this.params.method = "OPTIONS";
       this.params.url = "myfile.txt";
       // this.params.headers["Accept"] = "text/plain";
+      this.$store.commit("core/setParams", this.params);
+      this.$store.commit("core/setResource", this.resource);
+    },
+    example_create_container() {
+      //https://communitysolidserver.github.io/CommunitySolidServer/latest/usage/metadata/#example-of-a-workflow-for-editing-a-description-resource
+      this.params.url = "foo/";
+      this.params.method = "PUT";
       this.$store.commit("core/setParams", this.params);
       this.$store.commit("core/setResource", this.resource);
     },

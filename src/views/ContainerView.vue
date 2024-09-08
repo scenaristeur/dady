@@ -23,9 +23,9 @@
       </ul>
     </div>
     <!-- {{ message }} -->
-    History: {{ history }}
+    History: {{ history[(-3, -1)] }}
     <hr />
-    Container : {{ container }}
+    <!-- Container : {{ container }} -->
     <hr />
   </div>
 </template>
@@ -55,7 +55,10 @@ export default {
     container() {
       //"http://www.w3.org/ns/pim/space#Storage", "http://www.w3.org/ns/ldp#Container", "http://www.w3.org/ns/ldp#BasicContainer", "http://www.w3.org/ns/ldp#Resource"
       if (this.container["@type"].includes("http://www.w3.org/ns/ldp#Container")) {
-        this.ordered = this.container["http://www.w3.org/ns/ldp#contains"].reverse();
+        if (this.container["http://www.w3.org/ns/ldp#contains"] != undefined) {
+          this.ordered = this.container["http://www.w3.org/ns/ldp#contains"].reverse();
+        }
+
         this.history.push(this.container["@id"]);
         this.up = this.container["@id"].split("/").slice(0, -2).join("/") + "/";
         console.log("up", this.up);

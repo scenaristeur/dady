@@ -15,15 +15,14 @@
       </div>
     </div>
     <div>url: <input ref="url" v-model="params.url" /> todo : test if exists</div>
-    <button
-      @click="create_or_update"
-      :disabled="
-        resource.content.length == 0 &&
-        params.method != 'GET' &&
-        params.method != 'HEAD' &&
-        params.method != 'OPTIONS'
-      "
-    >
+    <button @click="create_or_update">
+      <!-- :disabled="
+    resource.content.length == 0 &&
+    params.method != 'GET' &&
+    params.method != 'HEAD' &&
+    params.method != 'OPTIONS' &&
+    params.method != 'CREATE_CONTAINER'
+  " -->
       Create / Update or Get
     </button>
     <hr />

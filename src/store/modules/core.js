@@ -54,8 +54,45 @@ const actions = {
     } catch (error) {
       context.state.message = error
     }
+
     // return contexte.state.message
   },
+  //   async create_container(context) {
+  // https://communitysolidserver.github.io/CommunitySolidServer/latest/usage/metadata/#example-of-a-workflow-for-editing-a-description-resource
+  //     console.log('create_container')
+  //     context.state.params.method = 'HEAD'
+  //     // let baseURL = context.state.params.baseURL
+  //     let container_url = context.state.params.url
+  //     context.state.params.url = ''
+  //     await context.dispatch('create_or_update')
+  //     console.log(container_url, context.state.params, context.state.resource, context.state.message)
+  //     console.log('message', Object.assign({}, context.state.message))
+  //     let link = context.state.message.headers.link
+  //     console.log('link', link)
+  //     let links = context.state.dady.parse_link_header(link)
+  //     console.log(links)
+  //     let meta = links.describedby
+  //     console.log(meta)
+  //     let url = new URL(meta)
+  //     let baseURL = url.origin + '/'
+  //     let meta_pathname = url.pathname
+  //     console.log(baseURL, meta_pathname)
+  //     context.state.params.method = 'PATCH'
+  //     context.state.params.url = '/foo/.meta' //meta_pathname
+  //     context.state.params.headers['Content-Type'] = 'text/n3'
+  //     // context.state.resource.content = `
+  //     // @prefix solid: <http://www.w3.org/ns/solid/terms#>.
+  //     // <> a solid:InsertDeletePatch;
+  //     // solid:inserts {
+  //     //  <${baseURL}> <http://www.w3.org/ns/ldp#contains> <${baseURL}${container_url}>. }.`
+  //     context.state.resource.content = `@prefix solid: <http://www.w3.org/ns/solid/terms#>.
+  // <> a solid:InsertDeletePatch;
+  // solid:inserts {
+  // <http://localhost:3000/foo/> <http://www.w3.org/ns/ldp#inbox> <http://localhost:3000/inbox/>.
+  // <http://localhost:3000/foo/> <http://www.w3.org/ns/ldp#contains> <http://localhost:3000/foo/truc/>.
+  // }.`
+  //     await context.dispatch('create_or_update')
+  //   },
   async select(context, id) {
     let url = new URL(id)
     console.log(url)
