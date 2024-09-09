@@ -7,6 +7,7 @@ import MessageView from "./views/MessageView.vue";
 import ContainerView from "./views/ContainerView.vue";
 import ResourceView from "./views/ResourceView.vue";
 import DadyView from "./views/DadyView.vue";
+import TreeView from "./views/TreeView.vue";
 </script>
 
 <template>
@@ -24,6 +25,7 @@ import DadyView from "./views/DadyView.vue";
       </nav>
     </div>
   </header> -->
+  <TreeView />
   <MessageView />
   <DadyView />
   <ResourceView />

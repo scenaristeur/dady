@@ -17,6 +17,7 @@ export default {
         { name: "Models Folder", path: "models/" },
         { name: "Providers Folder", path: "providers/" },
         { name: "Users Folder", path: "users/" },
+        { name: "Nested Folder", path: "here/is/a/nested/folder/" },
         { name: "README.md", path: "README.md", content: "# Dady Agents System" },
         {
           name: "John User",
@@ -55,14 +56,25 @@ export default {
       this.$store.dispatch("remove");
     },
     createResource(r) {
-      this.params.method = "PUT";
-      this.params.url = r.path;
+      let parts = r.path.split('/')
 
+      console.log(parts)
+      this.params.method = "PUT";
       this.params.headers["Content-Type"] = r["Content-Type"] || "text/plain";
       this.resource.content = r.content || "";
       console.log(this.params.headers);
+
+      let path = ""
+
+      for (let i=0; i<parts.length; i++){
+        path = path+'/'+parts[i]
+        console.log("path", path)
+      }
+
+      this.params.url = path;
       this.$store.commit("core/setParams", this.params);
       this.$store.commit("core/setResource", this.resource);
+      
     },
   },
   computed: {

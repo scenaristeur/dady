@@ -6,6 +6,8 @@
 
 - https://communitysolidserver.github.io/CommunitySolidServer/latest/
 
+```npx @solid/community-server```
+
 ## axios http verbs
 
 - https://github.com/axios/axios#request-config
