@@ -35,12 +35,27 @@ export default {
           name: "Llama3",
           path: "llms/llama3",
           content: `{
-          "@context": "https://scenaristeur.github.io/contexts/llm.jsonld",
+          "@context": "https://json-ld.org/contexts/person.jsonld",
           "@id": "https://www.wikidata.org/wiki/Q116894231",
           "name": "Llama3"
         }`,
-          "Content-Type": "application/ld+json",
+          "Content-Type": "application/ld+json"
         },
+        { name: "Test Link 1", path: "test-link/test-link1", content: `{
+          "@context": "https://json-ld.org/contexts/person.jsonld",
+          "@id": "http://localhost:3000/test-link/test-link1",
+          "knows" : {"@id": "http://localhost:3000/test-link/test-link2"},
+          "name": "Test Link 1"          
+        }`,
+          
+        "Content-Type": "application/ld+json" },
+        { name: "Test Link 2", path: "test-link/test-link2", content: `{
+          "@context": "https://json-ld.org/contexts/person.jsonld",
+          "@id": "http://localhost:3000/test-link/test-link2",
+          "linkto" : {"@id": "http://localhost:3000/test-link/test-link1"},
+          "knows": "Test Link 2"
+        }`, 
+        "Content-Type": "application/ld+json" }
       ],
     };
   },
