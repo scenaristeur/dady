@@ -29,6 +29,9 @@ source: source
 - https://microsoft.github.io/autogen/docs/notebooks/agentchat_function_call_code_writing/
 - https://stephenwalther.com/calling-custom-functions-with-chatgpt/
 
+# js mimetype
+application/javascript https://www.rfc-editor.org/rfc/rfc4329.txt
+
 # TODO POST ne créé pas les folder mais PUT oui
 
 - https://communitysolidserver.github.io/CommunitySolidServer/latest/usage/metadata/#impact-on-creating-containers
