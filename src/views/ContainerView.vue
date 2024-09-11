@@ -19,6 +19,8 @@
           >
             Delete
           </button>
+
+          <a :href="r['@id']" target="_blank">--></a>
         </li>
       </ul>
     </div>

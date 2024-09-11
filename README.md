@@ -25,7 +25,10 @@ source: source
 }
 });
 
-# TODO POST ne créé pas les folder
+# function calling
+- https://microsoft.github.io/autogen/docs/notebooks/agentchat_function_call_code_writing/
+
+# TODO POST ne créé pas les folder mais PUT oui
 
 - https://communitysolidserver.github.io/CommunitySolidServer/latest/usage/metadata/#impact-on-creating-containers
 
