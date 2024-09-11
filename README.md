@@ -27,6 +27,7 @@ source: source
 
 # function calling
 - https://microsoft.github.io/autogen/docs/notebooks/agentchat_function_call_code_writing/
+- https://stephenwalther.com/calling-custom-functions-with-chatgpt/
 
 # TODO POST ne créé pas les folder mais PUT oui
 

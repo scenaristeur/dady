@@ -7,6 +7,17 @@
 </template>
 
 <script>
+
+import * as celcius_functions from './data/functions/celcius_functions.js?raw'
+console.log("CELCIUS functions", celcius_functions)
+import Celcius from './data/classes/Celcius.js?raw'
+console.log("CELCIUS Class", Celcius)
+import Car from './data/classes/Car.js?raw'
+console.log("CAR Class", Car)
+
+// mycar = new Car("Porsche");
+// console.log("my car", mycar)
+
 export default {
   name: "DadyView",
   data() {
@@ -19,6 +30,23 @@ export default {
         { name: "Users Folder", path: "users/" },
         { name: "Nested Folder", path: "here/is/a/nested/folder/" },
         { name: "README.md", path: "README.md", content: "# Dady Agents System" },
+
+// TOOLS JS
+{
+          name: "Celcius Tools JS",
+          path: "tools/CelciusTools",
+          content: `{
+          "@context": "https://json-ld.org/contexts/person.jsonld",
+          "@id": "http://localhost:3000/tools/CelciusTools",
+          "name": "Celcius Tools JS",
+          "created": "1940-10-09",
+          "source": "http://localhost:3000/tools/code/CelciusTools.js",
+            }`,
+          "Content-Type": "application/ld+json",
+        },
+
+
+
         {
           name: "John User",
           path: "users/john",
@@ -64,6 +92,50 @@ export default {
           }
           `,
         },
+        {
+          name: "MemGPT Functions / Tools",
+          path: "actions/Create",
+          "Content-Type": "application/ld+json",
+          content: `{
+          "@context": "https://json-ld.org/contexts/person.jsonld",
+          "@id": "http://localhost:3000/actions/Create",
+          "name": "MemGPT Functions / Tools",
+          "created": "1940-10-09",
+          "version": "0.0.0",
+          "conditions": "http://localhost:3000/conditions/SolidCommunityBackendCondition",
+          "functions": ["http://localhost:3000/functions/JavascriptCreate",
+          "http://localhost:3000/functions/utils.jsonld",
+          "http://localhost:3000/functions/JavascriptDelete",
+          "http://localhost:3000/functions/JavascriptUpdate",
+          "http://localhost:3000/functions/CodeFunctions.py",
+          "http://spoggy-test2/public/functions/JavascriptRemoteFunction"
+          ]
+          }
+          `,
+        },
+        {
+          name: "Crewai Functions",
+          path: "functions/CrewaiFunctions",
+          "Content-Type": "application/ld+json",
+          content: `{
+          "@context": "https://json-ld.org/contexts/person.jsonld",
+          "@id": "http://localhost:3000/functions/CrewaiFunctions",
+          "name": "Create Action",
+          "created": "1940-10-09",
+          "version": "0.0.0",
+          "conditions": "http://localhost:3000/conditions/SolidCommunityBackendCondition",
+          "functions": ["http://localhost:3000/functions/JavascriptCreate",
+          "http://localhost:3000/functions/utils.jsonld",
+          "http://localhost:3000/functions/JavascriptDelete",
+          "http://localhost:3000/functions/JavascriptUpdate",
+          "http://localhost:3000/functions/CodeFunctions.py",
+          "http://spoggy-test2/public/functions/JavascriptRemoteFunction"
+          ]
+          }
+          `,
+        },
+
+
         {
           name: "Javascript Create",
           path: "functions/JavascriptCreate",
