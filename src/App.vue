@@ -1,42 +1,24 @@
 <script setup>
-// import { RouterLink, RouterView } from "vue-router";
-// import HelloWorld from "./components/HelloWorld.vue";
-import LogDady from "./views/LogDady.vue";
-import ResourceCrud from "./views/ResourceCrud.vue";
-import MessageView from "./views/MessageView.vue";
-import ContainerView from "./views/ContainerView.vue";
-import ResourceView from "./views/ResourceView.vue";
-import DadyView from "./views/DadyView.vue";
-import TreeView from "./views/TreeView.vue";
-import JsonEditor from "./views/JsonEditor.vue";
+import { RouterLink, RouterView } from "vue-router";
+import HelloWorld from "./components/HelloWorld.vue";
 </script>
 
 <template>
-  <!-- <header>
+  <header>
     <img alt="Vue logo" class="logo" src="@/assets/logo.svg" width="125" height="125" />
 
     <div class="wrapper">
       <HelloWorld msg="You did it!" />
 
- 
-
       <nav>
         <RouterLink to="/">Home</RouterLink>
         <RouterLink to="/about">About</RouterLink>
+        <RouterLink to="/nodes">Nodes</RouterLink>
       </nav>
     </div>
-  </header> -->
-  <TreeView />
-  <MessageView />
-  <JsonEditor />
-  <DadyView />
-  <ResourceView />
+  </header>
 
-  <ContainerView />
-  <ResourceCrud />
-
-  <LogDady />
-  <!-- <RouterView /> -->
+  <RouterView />
 </template>
 
 <style scoped>
