@@ -41,10 +41,11 @@ export default defineConfig({
             type: 'image/png',
             purpose: 'maskable'
           }
-        ],
-        injectManifest: {
-          maximumFileSizeToCacheInBytes: 5000000
-        }
+        ]
+      },
+      workbox: {
+        globPatterns: ['**/*.{js,css,html,png,svg,woff2,woff,ttf,wasm,zip}'],
+        maximumFileSizeToCacheInBytes: 5000000
       }
     })
   ],
