@@ -1,6 +1,6 @@
 <template>
   <div>
-    Graph nodes {{ nodes }} nodes
+    Graph
     <div id="graph" width="100px" ref="graph">Loading graph...</div>
   </div>
 </template>
@@ -15,6 +15,7 @@ export default {
   },
   methods: {
     update() {
+      console.log("update", this.nodes, this.links);
       if (this.graph != undefined) {
         let nodes = this.nodes.map((a) => {
           return { ...a };
@@ -40,13 +41,13 @@ export default {
   },
   computed: {
     nodes() {
-      return this.$store.state.core.nodes;
+      return this.$store.state.graphstore.nodes;
     },
     links() {
-      return this.$store.state.core.links;
+      return this.$store.state.graphstore.links;
     },
     graph() {
-      return this.$store.state.core.graph;
+      return this.$store.state.graphstore.graph;
     },
   },
 };

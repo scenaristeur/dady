@@ -48,6 +48,7 @@ const actions = {
           ) {
             context.state.container = result.data[0]
             console.log('container', Object.assign({}, context.state.container))
+            context.commit('graphstore/setContainer', context.state.container, { root: true })
           }
 
           break

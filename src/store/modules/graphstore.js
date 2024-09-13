@@ -32,6 +32,73 @@ const mutations = {
   setGraph(state, g) {
     console.log('graph', g)
     state.graph = g
+  },
+  async setContainer(state, c) {
+    /* bootstrap colors
+    $blue:    #0d6efd;
+$indigo:  #6610f2;
+$purple:  #6f42c1;
+$pink:    #d63384;
+$red:     #dc3545;
+$orange:  #fd7e14;
+$yellow:  #ffc107;
+$green:   #198754;
+$teal:    #20c997;
+$cyan:    #0dcaf0;
+
+*/
+    console.log('container', c)
+    let nodes = state.nodes
+    let links = state.links.length > 0 ? state.links : []
+    console.log('links1', links)
+    let node = { id: c['@id'], name: c['@id'].split('/').slice(-2, -1)[0] + '/', color: '#dc3545' }
+
+    let rootExist = nodes.find((n) => n.id === node['id'])
+    if (!rootExist) {
+      nodes = [...nodes, node]
+    }
+
+    let contains = c['http://www.w3.org/ns/ldp#contains']
+    if (contains) {
+      for (let i = 0; i < contains.length; i++) {
+        let r = contains[i]
+        let node = { id: r['@id'] }
+        if (contains[i]['@id'].endsWith('/')) {
+          node.name = r.name || r['@id'].split('/').slice(-2, -1)[0] + '/'
+          node.color = '#fd7e14'
+        } else {
+          node.name = r.name || r['@id'].split('/').pop()
+          node.color = '#0d6efd'
+        }
+
+        let nodeExist = nodes.find((n) => n.id === node['id'])
+        if (!nodeExist) {
+          nodes = [...nodes, node]
+        }
+
+        let link = {
+          source: c['@id'],
+          target: r['@id'],
+          name: 'contains'
+        }
+        links = [...links, link]
+      }
+    }
+    console.log('links', links)
+    console.log('nodes', nodes)
+    await this.commit('graphstore/setNodes', nodes)
+    await this.commit('graphstore/setLinks', links)
+  },
+  async setNodes(state, nodes) {
+    state.nodes = nodes
+  },
+  async setLinks(state, links) {
+    state.links = links
+  },
+  setCurrentNode(state, node) {
+    state.currentNode = node
+    console.log(node)
+    this.dispatch('core/select', node.id, { root: true })
   }
 }
 

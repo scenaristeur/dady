@@ -137,12 +137,15 @@ export default {
           }
           app.config.globalProperties.$updateHighlight()
         })
+        .onBackgroundClick((event) => {
+          console.log('bg click', event)
+        })
       // console.log(graph)
       store.commit('graphstore/setGraph', graph)
     }
 
     app.config.globalProperties.$nodeFocus = function (node) {
-      //  console.log("node",node)
+      console.log('node', node)
 
       const distance = 50
       let pos = { x: distance, y: distance, z: distance }
@@ -189,7 +192,6 @@ export default {
     window.addEventListener('resize', function () {
       if (store.state.graphstore.graph != null) {
         size = getSize()
-        console.log('graph', store.state.graphstore.graph)
         store.state.graphstore.graph.width(size.w)
         store.state.graphstore.graph.height(size.h)
       }
