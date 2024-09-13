@@ -1,15 +1,18 @@
 <template>
   <div class="container-fluid" v-if="container">
     <div class="row">
- 
-      <button   class="col" @click="select(params.baseURL)"> base: {{params.baseURL}}</button>
-      <button  class="col" @click="select(up)"> up: {{up}}</button>
-      <button   class="col" @click="select(container['@id'])"> {{container['@id']}}</button>
-      <hr>
+      <button class="col" @click="select(params.baseURL)">
+        base: {{ params.baseURL }}
+      </button>
+      <button class="col" @click="select(up)" v-if="up != 'http://'">{{ up }}</button>
+      <button class="col" @click="select(container['@id'])">
+        {{ container["@id"] }}
+      </button>
+      <hr />
     </div>
     <!-- {{ container }} -->
 
-    <div class="row">
+    <!-- <div class="row">
       <div class="col">
         Column
       </div>
@@ -20,7 +23,7 @@
         Column
       </div>
       <hr>
-    </div>
+    </div> -->
 
     <!-- <div class="row">
       <div class="col">
@@ -36,26 +39,32 @@
     <hr> -->
     <div class="row">
       <div class="col" v-for="r in ordered" :key="r['@id']">
-       
-        <button v-if="r['@id'].endsWith('/')" type="button" class="btn btn-warning" @click="select(r['@id'])"> {{r['@id'].split('/').slice(-2,-1)[0]+'/'}} </button>
-        <button v-else type="button" class="btn btn-info" @click="select(r['@id'])"> {{r['@id'].split('/').pop()}}</button>
+        <button
+          v-if="r['@id'].endsWith('/')"
+          type="button"
+          class="btn btn-warning"
+          @click="select(r['@id'])"
+        >
+          {{ r["@id"].split("/").slice(-2, -1)[0] + "/" }}
+        </button>
+        <button v-else type="button" class="btn btn-info" @click="select(r['@id'])">
+          {{ r["@id"].split("/").pop() }}
+        </button>
       </div>
     </div>
-    <hr>
+    <hr />
     <!-- {{ container[ "http://www.w3.org/ns/ldp#contains"] }} -->
   </div>
-
 </template>
 
 <script>
-
 export default {
   name: "TreeView.vue",
   data() {
     return {
       history: [],
-      up: null
-    }
+      up: null,
+    };
   },
 
   methods: {
@@ -71,9 +80,9 @@ export default {
         this.container["@type"].includes("http://www.w3.org/ns/ldp#Container")
       ) {
         if (this.container["http://www.w3.org/ns/ldp#contains"] != undefined) {
-          this.ordered = this.container["http://www.w3.org/ns/ldp#contains"].reverse();
-        }else{
-          this.ordered = []
+          this.ordered = this.container["http://www.w3.org/ns/ldp#contains"];
+        } else {
+          this.ordered = [];
         }
         this.history.push(this.container["@id"]);
         this.up = this.container["@id"].split("/").slice(0, -2).join("/") + "/";
@@ -92,7 +101,7 @@ export default {
       return this.$store.state.core.resource;
     },
   },
-}
+};
 </script>
 
 <style scoped></style>

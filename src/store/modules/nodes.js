@@ -1,65 +1,103 @@
-import { Dady } from '@/lib/dady.js'
+// import { Dady } from '@/lib/dady.js'
 
 const state = () => ({
-  dady: new Dady({ name: 'Daddy' }),
-  message: null,
-  params: { baseURL: 'http://localhost:3000/', headers: {} },
-  resource: { content: '' },
-  container: null
+  modele: {
+    '@context': {
+      '@vocab': 'https://www.w3.org/ns/activitystreams#',
+      ve: 'https://scenaristeur.github.io/verse#',
+      id: '@id',
+      type: '@type'
+    },
+    've:name': '',
+    've:age': 0,
+    've:privacy': 'private',
+    've:type': 'node',
+    've:properties': [],
+    test: 'test vocab'
+  },
+  currentNode: null
 })
 
 const mutations = {
-  reset(state) {
-    state.message = null
-    state.params = { baseURL: 'http://localhost:3000/', headers: {} }
-    state.resource = { content: '' }
-    state.container = null
+  // reset(state) {
+
+  newNode(state) {
+    state.currentNode = Object.assign({}, state.modele) // state.modele
   },
-  setParams(state, params) {
-    state.params = params
-  },
-  setResource(state, resource) {
-    state.resource = resource
+  setCurrentNode(state, node) {
+    state.currentNode = Object.assign({}, node)
+    console.log('currentNode', state.currentNode)
   }
+  // setResource(state, resource) {
+  //   state.resource = resource
+  // }
 }
 
 const actions = {
-  logDady(context) {
-    context.state.dady.log()
-  },
-  async create_or_update(context) {
-    let query = { params: context.state.params, resource: context.state.resource }
-    console.log('create_or_update', query)
+  async saveNode({ dispatch, commit }, node) {
     try {
-      let result = await context.state.dady.create_or_update(query)
-      console.log(result)
-      context.state.message = result
-      switch (result.status) {
-        case 200:
-          if (result.headers['content-type'] && result.headers['content-type'].endsWith('json')) {
-            context.state.resource.content = JSON.stringify(result.data, null, 2)
-          } else {
-            context.state.resource.content = result.data
-          }
-
-          if (
-            Array.isArray(result.data) &&
-            result.data[0]['@type'].includes('http://www.w3.org/ns/ldp#Container')
-          ) {
-            context.state.container = result.data[0]
-            console.log('container', Object.assign({}, context.state.container))
-          }
-
-          break
-
-        default:
+      let params = { baseURL: 'http://localhost:3000/', method: 'PUT', headers: {} }
+      console.log('saving', Object.assign({}, node))
+      let filename = Date.now()
+      if (node['@id'] != undefined) {
+        filename = node['@id'].replace('http://localhost:3000/', '')
+      } else {
+        filename = params.baseURL + node['ve:name']
+        node['@id'] = filename
       }
-    } catch (error) {
-      context.state.message = error
-    }
+      params.url = filename
+      console.log(filename)
 
-    // return contexte.state.message
-  },
+      console.log(node)
+      let resource = { content: JSON.stringify(node, null, 2) }
+      console.log(params, resource)
+
+      params.headers['Content-Type'] = 'application/ld+json'
+
+      // call action from another module https://stackoverflow.com/questions/54378118/vuex-dispatch-action-in-a-different-module-from-an-action
+      commit('core/setParams', params, { root: true })
+      commit('core/setResource', resource, { root: true })
+      await dispatch('core/create_or_update', null, { root: true })
+
+      return 'ok'
+    } catch (e) {
+      console.log(e)
+      return 'error'
+    }
+  }
+  // async create_or_update(context) {
+  //   let query = { params: context.state.params, resource: context.state.resource }
+  //   console.log('create_or_update', query)
+  //   try {
+  //     let result = await context.state.dady.create_or_update(query)
+  //     console.log(result)
+  //     context.state.message = result
+  //     switch (result.status) {
+  //       case 200:
+  //         if (result.headers['content-type'] && result.headers['content-type'].endsWith('json')) {
+  //           context.state.resource.content = JSON.stringify(result.data, null, 2)
+  //         } else {
+  //           context.state.resource.content = result.data
+  //         }
+
+  //         if (
+  //           Array.isArray(result.data) &&
+  //           result.data[0]['@type'].includes('http://www.w3.org/ns/ldp#Container')
+  //         ) {
+  //           context.state.container = result.data[0]
+  //           console.log('container', Object.assign({}, context.state.container))
+  //         }
+
+  //         break
+
+  //       default:
+  //     }
+  //   } catch (error) {
+  //     context.state.message = error
+  //   }
+
+  //   // return contexte.state.message
+  // },
   //   async create_container(context) {
   // https://communitysolidserver.github.io/CommunitySolidServer/latest/usage/metadata/#example-of-a-workflow-for-editing-a-description-resource
   //     console.log('create_container')
@@ -96,36 +134,32 @@ const actions = {
   // }.`
   //     await context.dispatch('create_or_update')
   //   },
-  async select(context, id) {
-    let url = new URL(id)
-    console.log(url)
-    context.state.resource.content = ''
-    context.state.params.baseURL = url.origin
-    context.state.params.method = 'GET'
-    context.state.params.url = url.pathname
-    context.state.params.headers = {}
+  // async select(context, id) {
+  //   let url = new URL(id)
+  //   console.log(url)
+  //   context.state.resource.content = ''
+  //   context.state.params.baseURL = url.origin
+  //   context.state.params.method = 'GET'
+  //   context.state.params.url = url.pathname
+  //   context.state.params.headers = {}
 
-    if (url.pathname.endsWith('/')) {
-      context.state.params.headers.Accept = 'application/ld+json'
-    }
+  //   if (url.pathname.endsWith('/')) {
+  //     context.state.params.headers.Accept = 'application/ld+json'
+  //   }
 
-    console.log('select', context.state.params, context.state.resource)
+  //   console.log('select', context.state.params, context.state.resource)
 
-    await context.dispatch('create_or_update') // create_or_update()
-    console.log('MESSAGE FROM SELECT', context.state.message)
-    if (context.state.message.data['@id'] && !context.state.message.data['@id'].endsWith('/')) {
-      console.log('resource', context.state.message.data['@id'])
-      context.commit('nodes/setCurrentNode', context.state.message.data, { root: true })
-    }
-    context.state.params.method = 'PUT'
-    // return context.state.message
-  },
-  async remove(context, id) {
-    console.log('remove', id)
-    context.state.message = await context.state.dady.remove(id)
-    console.log('MESSAGE FROM remove', context.state.message)
-    // return context.state.message
-  }
+  //   await context.dispatch('create_or_update') // create_or_update()
+  //   console.log('MESSAGE FROM SELECT', context.state.message)
+  //   context.state.params.method = 'PUT'
+  //   // return context.state.message
+  // },
+  // async remove(context, id) {
+  //   console.log('remove', id)
+  //   context.state.message = await context.state.dady.remove(id)
+  //   console.log('MESSAGE FROM remove', context.state.message)
+  //   // return context.state.message
+  // }
 
   // async auth(context) {
   //   // state.memgpt_api_headers.Authorization = 'Bearer ' + state.password

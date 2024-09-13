@@ -8,15 +8,15 @@
 
 <script>
 import * as celcius_functions from "./data/functions/celcius_functions.js?raw";
-console.log("CELCIUS functions", celcius_functions);
+// console.log("CELCIUS functions", celcius_functions)
 import CelciusRaw from "./data/classes/Celcius.js?raw";
-console.log("CELCIUS Class raw", CelciusRaw);
+// console.log("CELCIUS Class raw", CelciusRaw)
 import CarRaw from "./data/classes/Car.js?raw";
-console.log("CAR Class raw", CarRaw);
+// console.log("CAR Class raw", CarRaw)
 import PersonRaw from "./data/classes/Person.js?raw";
-console.log("Person Class raw", PersonRaw);
+// console.log("Person Class raw", PersonRaw)
 import SolidToolRaw from "./data/classes/SolidTool.js?raw";
-console.log("SolidTool Class raw", SolidToolRaw);
+// console.log("SolidTool Class raw", SolidToolRaw)
 
 // mycar = new Car("Porsche");
 // console.log("my car", mycar)
@@ -49,7 +49,7 @@ export default {
           "@id": "http://localhost:3000/backends/LocalCommunitySolidServer",
           "name": "Local Community solid Server",
           "created": "1940-10-09",
-          "url": "http://localhost:3000",
+          "url": "http://localhost:3000/",
           "type": "Community Solid Server",
           "doc": [
           "https://communitysolidserver.github.io/CommunitySolidServer/",

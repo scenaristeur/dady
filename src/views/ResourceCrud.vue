@@ -60,45 +60,6 @@
     TODO: create recursive containers<br />
 
     <h2>Show with criteres</h2>
-    <!-- Button trigger modal -->
-    <button
-      type="button"
-      class="btn btn-primary"
-      data-bs-toggle="modal"
-      data-bs-target="#exampleModal"
-    >
-      Launch demo modal
-    </button>
-
-    <!-- Modal -->
-    <div
-      class="modal fade"
-      id="exampleModal"
-      tabindex="-1"
-      aria-labelledby="exampleModalLabel"
-      aria-hidden="true"
-    >
-      <div class="modal-dialog">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h1 class="modal-title fs-5" id="exampleModalLabel">Modal title</h1>
-            <button
-              type="button"
-              class="btn-close"
-              data-bs-dismiss="modal"
-              aria-label="Close"
-            ></button>
-          </div>
-          <div class="modal-body">...</div>
-          <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
-              Close
-            </button>
-            <button type="button" class="btn btn-primary">Save changes</button>
-          </div>
-        </div>
-      </div>
-    </div>
 
     <!-- RESULT : {{ result }} -->
   </div>
@@ -270,10 +231,7 @@ export default {
       this.params.headers["Accept"] = "application/ld+json";
       this.$store.commit("core/setParams", this.params);
       this.$store.commit("core/setResource", this.resource);
-      await this.$store.dispatch("core/create_or_update", {
-        params: this.params,
-        resource: this.resource,
-      });
+      await this.$store.dispatch("core/create_or_update");
     },
     async example_GET_container_turtle() {
       this.resource.content = "";
@@ -282,10 +240,7 @@ export default {
       this.params.headers["Accept"] = "text/turtle";
       this.$store.commit("core/setParams", this.params);
       this.$store.commit("core/setResource", this.resource);
-      await this.$store.dispatch("core/create_or_update", {
-        params: this.params,
-        resource: this.resource,
-      });
+      await this.$store.dispatch("core/create_or_update");
     },
     //PATCH
     example_patch_n3() {
