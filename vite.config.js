@@ -42,8 +42,8 @@ export default defineConfig({
             purpose: 'maskable'
           }
         ],
-        workboxOptions: {
-          maximumFileSizeToCacheInBytes: 5000000 // <---- increasing the file size to cached 5mb
+        injectManifest: {
+          maximumFileSizeToCacheInBytes: 5000000
         }
       }
     })
