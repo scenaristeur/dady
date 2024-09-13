@@ -6,16 +6,19 @@
 
     <div class="container-fluid" v-if="container">
       <div class="row">
-        <button class="col" @click="select(params.baseURL)">
+        <button class="btn btn-primary col" @click="select(params.baseURL)">
           base: {{ params.baseURL }}
         </button>
-        <button class="col" @click="select(up)" v-if="up != 'http://'">
+        <button class="btn btn-primary col" @click="select(up)" v-if="up != 'http://'">
           up: {{ up }}
         </button>
-        <button class="col" @click="select(container['@id'])">
+        <button class="btn btn-primary col" @click="select(container['@id'])">
           {{ container["@id"] }}
         </button>
         <hr />
+        <button class="btn btn-primary" @click="select('')">
+          Use this container as resource
+        </button>
       </div>
       <!-- {{ container }} -->
 
@@ -81,6 +84,9 @@ export default {
     async select(id) {
       if (id.endsWith("/")) {
         this.$store.dispatch("core/select", id);
+      } else if (id == "") {
+        console.log("selecting container", this.container["@id"]);
+        this.currentPropLocal.values.push({ "@id": this.container["@id"] });
       } else {
         console.log("selecting", id);
         this.currentPropLocal.values.push({ "@id": id });

@@ -1,7 +1,7 @@
 <template>
   <div>
     BrainView
-    <button @click="newNode" class="btn btn-primary">New Brain/Node</button> {{ status }}
+    <button @click="newNode" class="btn btn-primary">Edit Node</button> {{ status }}
 
     <!-- Button trigger modal -->
 
@@ -54,7 +54,9 @@
             placeholder="Enter Node Name"
           />
 
-          <label for="name">Name</label>
+          <label for="name"
+            >Name (you can use subfloder, namespace like `a/b/c/thing`)</label
+          >
         </div>
 
         <div class="form-group">
@@ -183,6 +185,7 @@
                       role="tab"
                       aria-controls="text"
                       aria-selected="true"
+                      @click="fieldType = 'text'"
                     >
                       one line Text
                     </button>
@@ -197,6 +200,7 @@
                       role="tab"
                       aria-controls="textarea"
                       aria-selected="false"
+                      @click="fieldType = 'textarea'"
                     >
                       Long Text
                     </button>
@@ -211,6 +215,7 @@
                       role="tab"
                       aria-controls="node"
                       aria-selected="false"
+                      @click="fieldType = 'node'"
                     >
                       Node
                     </button>
@@ -225,6 +230,7 @@
                       role="tab"
                       aria-controls="link"
                       aria-selected="false"
+                      @click="fieldType = 'link'"
                     >
                       Link
                     </button>
@@ -252,8 +258,9 @@
                     <textarea
                       v-model="newvalue"
                       placeholder="Enter something..."
-                      rows="3"
-                      max-rows="6"
+                      rows="6"
+                      max-rows="12"
+                      cols="52"
                       @change="addNewValue"
                     ></textarea>
                   </div>
