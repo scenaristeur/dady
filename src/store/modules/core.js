@@ -53,9 +53,13 @@ const actions = {
           break
 
         default:
+          console.log('error', result.message)
+          return result.message
       }
     } catch (error) {
       context.state.message = error
+      console.log('error', error)
+      return error
     }
 
     // return contexte.state.message

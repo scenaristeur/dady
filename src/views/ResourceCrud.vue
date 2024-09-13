@@ -77,7 +77,7 @@ export default {
       //   // options: {},
       //   // body: {},
       //   // query: {},
-      //   baseURL: "http://localhost:3000",
+      //   baseURL: "http://localhost:3000/",
       //   url: "",
       // },
       // resource: {
@@ -87,8 +87,9 @@ export default {
       // },
     };
   },
-  created() {
-    this.example_GET_container_jsonld();
+  async created() {
+    let available = await this.example_GET_container_jsonld();
+    console.log("available", available);
   },
   methods: {
     reset() {
@@ -231,7 +232,7 @@ export default {
       this.params.headers["Accept"] = "application/ld+json";
       this.$store.commit("core/setParams", this.params);
       this.$store.commit("core/setResource", this.resource);
-      await this.$store.dispatch("core/create_or_update");
+      return await this.$store.dispatch("core/create_or_update");
     },
     async example_GET_container_turtle() {
       this.resource.content = "";
