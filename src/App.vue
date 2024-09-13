@@ -10,6 +10,7 @@ import DadyView from "./views/DadyView.vue";
 import TreeView from "./views/TreeView.vue";
 import JsonEditor from "./views/JsonEditor.vue";
 import BrainView from "./views/BrainView.vue";
+import GraphView from "./views/GraphView.vue";
 
 export default {
   name: "TreeView.vue",
@@ -23,6 +24,7 @@ export default {
     TreeView,
     JsonEditor,
     BrainView,
+    GraphView,
   },
   computed: {
     message() {
@@ -50,6 +52,8 @@ export default {
   <!-- message : {{ message }} -->
 
   <div v-if="message == 'AxiosError: Network Error'">
+    <h1>Dady</h1>
+
     EN : To use this app, you shoud start a "Community Solid Server" (CSS) on your
     computer with the command : <br />
     <br />
@@ -89,10 +93,12 @@ export default {
   </div>
   <div v-else>
     <TreeView />
+    <DadyView />
     <MessageView />
+    <GraphView />
     <BrainView />
     <JsonEditor />
-    <DadyView />
+
     <ResourceView />
 
     <ContainerView />
