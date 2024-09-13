@@ -3,7 +3,7 @@ import { Dady } from '@/lib/dady.js'
 const state = () => ({
   dady: new Dady({ name: 'Daddy' }),
   message: null,
-  params: { baseURL: 'http://localhost:3000', headers: {} },
+  params: { baseURL: 'http://localhost:3000/', headers: {} },
   resource: { content: '' },
   container: null
 })
@@ -11,7 +11,7 @@ const state = () => ({
 const mutations = {
   reset(state) {
     state.message = null
-    state.params = { baseURL: 'http://localhost:3000', headers: {} }
+    state.params = { baseURL: 'http://localhost:3000/', headers: {} }
     state.resource = { content: '' }
     state.container = null
   },

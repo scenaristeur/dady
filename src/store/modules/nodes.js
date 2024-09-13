@@ -16,25 +16,17 @@ const state = () => ({
     test: 'test vocab'
   },
   currentNode: null
-  // dady: new Dady({ name: 'Daddy' }),
-  // message: null,
-  // params: { baseURL: 'http://localhost:3000', headers: {} },
-  // resource: { content: '' },
-  // container: null
 })
 
 const mutations = {
   // reset(state) {
-  //   state.message = null
-  //   state.params = { baseURL: 'http://localhost:3000', headers: {} }
-  //   state.resource = { content: '' }
-  //   state.container = null
-  // },
+
   newNode(state) {
-    state.currentNode = state.modele
+    state.currentNode = Object.assign({}, state.modele) // state.modele
   },
   setCurrentNode(state, node) {
     state.currentNode = node
+    console.log('currentNode', state.currentNode)
   }
   // setResource(state, resource) {
   //   state.resource = resource
@@ -50,7 +42,7 @@ const actions = {
       if (node['@id'] != undefined) {
         filename = node['@id'].replace('http://localhost:3000/', '')
       } else {
-        filename = params.baseURL + node['ve:name'] + '.jsonld'
+        filename = params.baseURL + node['ve:name']
         node['@id'] = filename
       }
       params.url = filename

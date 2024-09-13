@@ -1,107 +1,126 @@
 <template>
-  {{ currentProp }}
-    <!-- <b-form-group>
-      <b-form-tags id="tags-with-dropdown" v-model="value" no-outer-focus class="mb-2">
-        <template v-slot="{ tags, disabled, addTag, removeTag }">
-          <ul v-if="tags.length > 0" class="list-inline d-inline-block mb-2">
-            <li v-for="tag in tags" :key="tag" class="list-inline-item">
-              <b-form-tag
-                @remove="removeTag(tag)"
-                :title="tag"
-                :disabled="disabled"
-                variant="info"
-              >{{ tag }}</b-form-tag>
-            </li>
-          </ul>
+  <div>
+    {{ currentPropLocal.name }}
 
-          <b-dropdown size="sm" variant="outline-secondary" block menu-class="w-100">
-            <template #button-content>
-              <b-icon icon="tag-fill"></b-icon> Choose nodes
-            </template>
-            <b-dropdown-form @submit.stop.prevent="() => {}">
-              <b-form-group
-                label="Search nodes"
-                label-for="tag-search-input"
-                label-cols-md="auto"
-                class="mb-0"
-                label-size="sm"
-                :description="searchDesc"
-                :disabled="disabled"
-              >
-                <b-form-input
-                  v-model="search"
-                  id="tag-search-input"
-                  type="search"
-                  size="sm"
-                  autocomplete="off"
-                 ></b-form-input>
-              </b-form-group>
-            </b-dropdown-form>
-            <b-dropdown-divider></b-dropdown-divider>
-            <b-dropdown-item-button
-              v-for="option in availableOptions"
-              :key="option.id"
-              @click="onOptionClick({ option, addTag })"
-            >
-              {{ option['ve:name'] }}
-            </b-dropdown-item-button>
-            <b-dropdown-text v-if="availableOptions.length === 0">
-              There are no nodes available to select
-            </b-dropdown-text>
-          </b-dropdown>
-        </template>
-      </b-form-tags>
-    </b-form-group> -->
+    {{ currentPropLocal.values }}
+
+    <div class="container-fluid" v-if="container">
+      <div class="row">
+        <button class="col" @click="select(params.baseURL)">
+          base: {{ params.baseURL }}
+        </button>
+        <button class="col" @click="select(up)">up: {{ up }}</button>
+        <button class="col" @click="select(container['@id'])">
+          {{ container["@id"] }}
+        </button>
+        <hr />
+      </div>
+      <!-- {{ container }} -->
+
+      <!-- <div class="row">
+      <div class="col">
+        Column
+      </div>
+      <div class="col">
+        Column
+      </div>
+      <div class="col">
+        Column
+      </div>
+      <hr>
+    </div> -->
+
+      <!-- <div class="row">
+      <div class="col">
+        Column
+      </div>
+      <div class="col">
+        Column
+      </div>
+      <div class="col">
+        Column
+      </div>
+    </div>
+    <hr> -->
+      <div class="row">
+        <div class="col" v-for="r in ordered" :key="r['@id']">
+          <button
+            v-if="r['@id'].endsWith('/')"
+            type="button"
+            class="btn btn-warning"
+            @click="select(r['@id'])"
+          >
+            {{ r["@id"].split("/").slice(-2, -1)[0] + "/" }}
+          </button>
+          <button v-else type="button" class="btn btn-info" @click="select(r['@id'])">
+            {{ r["@id"].split("/").pop() }}
+          </button>
+        </div>
+      </div>
+      <hr />
+      <!-- {{ container[ "http://www.w3.org/ns/ldp#contains"] }} -->
+    </div>
+  </div>
 </template>
 
 <script>
-  export default {
-    name: "NodeSelector",
-    props: ['currentProp'],
-    data() {
-      return {
-        options: [],
-        search: '',
-        value: []
+export default {
+  name: "NodeSelector",
+  props: ["currentProp"],
+  model: {
+    // https://stackoverflow.com/questions/39868963/vue-2-mutating-props-vue-warn
+    prop: "currentProp",
+    event: "currentPropChange",
+  },
+  data() {
+    return { history: [], up: null, ordered: [] };
+  },
+  methods: {
+    async select(id) {
+      if (id.endsWith("/")) {
+        this.$store.dispatch("core/select", id);
+      } else {
+        console.log("selecting", id);
+        this.currentPropLocal.values.push({ "@id": id });
       }
     },
-    computed: {
-      criteria() {
-        // Compute the search criteria
-        return this.search.trim().toLowerCase()
-      },
-      availableOptions() {
-        const criteria = this.criteria
-        // Filter out already selected options
-        const options = this.nodes.filter(opt => this.value.indexOf(opt['ve:name']) === -1)
-
-      //  const options = this.options.filter(opt => this.value.indexOf(opt) === -1)
-        if (criteria) {
-          // Show only options that match criteria
-          return options.filter(opt => opt['ve:name'].toLowerCase().indexOf(criteria) > -1);
+  },
+  watch: {
+    container() {
+      //"http://www.w3.org/ns/pim/space#Storage", "http://www.w3.org/ns/ldp#Container", "http://www.w3.org/ns/ldp#BasicContainer", "http://www.w3.org/ns/ldp#Resource"
+      if (
+        this.container &&
+        this.container["@type"].includes("http://www.w3.org/ns/ldp#Container")
+      ) {
+        if (this.container["http://www.w3.org/ns/ldp#contains"] != undefined) {
+          this.ordered = this.container["http://www.w3.org/ns/ldp#contains"].reverse();
+        } else {
+          this.ordered = [];
         }
-        // Show all options available
-        return options
-      },
-      searchDesc() {
-        if (this.criteria && this.availableOptions.length === 0) {
-          return 'There are no nodes matching your search criteria'
-        }
-        return ''
-      },
-      nodes() {
-        return this.$store.state.nodes.nodes;
+        this.history.push(this.container["@id"]);
+        this.up = this.container["@id"].split("/").slice(0, -2).join("/") + "/";
+        // console.log("up", this.up);
       }
     },
-    methods: {
-      onOptionClick({ option, addTag }) {
-        console.log(option)
-        let n = {id: option.id, type: 'node'}
-        // eslint-disable-next-line
-        this.currentProp.values.push(n)
-        addTag(option['ve:name'])
-        this.search = ''
-      }
-    }
-  }
+  },
+  computed: {
+    currentPropLocal: {
+      get: function () {
+        return this.currentProp;
+      },
+      set: function (value) {
+        this.$emit("currentPropChange", value);
+      },
+    },
+    container() {
+      return this.$store.state.core.container;
+    },
+    params() {
+      return this.$store.state.core.params;
+    },
+    resource() {
+      return this.$store.state.core.resource;
+    },
+  },
+};
 </script>
