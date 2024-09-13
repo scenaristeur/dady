@@ -113,6 +113,10 @@ const actions = {
 
     await context.dispatch('create_or_update') // create_or_update()
     console.log('MESSAGE FROM SELECT', context.state.message)
+    if (context.state.message.data['@id'] && !context.state.message.data['@id'].endsWith('/')) {
+      console.log('resource', context.state.message.data['@id'])
+      context.commit('nodes/setCurrentNode', context.state.message.data, { root: true })
+    }
     context.state.params.method = 'PUT'
     // return context.state.message
   },

@@ -7,17 +7,16 @@
 </template>
 
 <script>
-
-import * as celcius_functions from './data/functions/celcius_functions.js?raw'
-console.log("CELCIUS functions", celcius_functions)
-import CelciusRaw from './data/classes/Celcius.js?raw'
-console.log("CELCIUS Class raw", CelciusRaw)
-import CarRaw from './data/classes/Car.js?raw'
-console.log("CAR Class raw", CarRaw)
-import PersonRaw from './data/classes/Person.js?raw'
-console.log("Person Class raw", PersonRaw)
-import SolidToolRaw from './data/classes/SolidTool.js?raw'
-console.log("SolidTool Class raw", SolidToolRaw)
+import * as celcius_functions from "./data/functions/celcius_functions.js?raw";
+// console.log("CELCIUS functions", celcius_functions)
+import CelciusRaw from "./data/classes/Celcius.js?raw";
+// console.log("CELCIUS Class raw", CelciusRaw)
+import CarRaw from "./data/classes/Car.js?raw";
+// console.log("CAR Class raw", CarRaw)
+import PersonRaw from "./data/classes/Person.js?raw";
+// console.log("Person Class raw", PersonRaw)
+import SolidToolRaw from "./data/classes/SolidTool.js?raw";
+// console.log("SolidTool Class raw", SolidToolRaw)
 
 // mycar = new Car("Porsche");
 // console.log("my car", mycar)
@@ -35,8 +34,6 @@ export default {
         { name: "Nested Folder", path: "here/is/a/nested/folder/" },
         { name: "README.md", path: "README.md", content: "# Dady Agents System" },
 
-
-
         // Backends Definition
 
         {
@@ -47,7 +44,7 @@ export default {
           "@id": "http://localhost:3000/backends/LocalCommunitySolidServer",
           "name": "Local Community solid Server",
           "created": "1940-10-09",
-          "url": "http://localhost:3000",
+          "url": "http://localhost:3000/",
           "type": "Community Solid Server",
           "doc": [
           "https://communitysolidserver.github.io/CommunitySolidServer/",
@@ -60,8 +57,6 @@ export default {
             }`,
           "Content-Type": "application/ld+json",
         },
-
-
 
         // TOOLS JS
         {
@@ -89,7 +84,7 @@ export default {
             }`,
           "Content-Type": "application/ld+json",
         },
-        // Person.js editable file + Jsonld referencing it 
+        // Person.js editable file + Jsonld referencing it
         {
           name: "Javascript Person Class Tool",
           path: "tools/code/Person.js",
@@ -109,7 +104,7 @@ export default {
             }`,
           "Content-Type": "application/ld+json",
         },
-        // Person.js editable file + Jsonld referencing it 
+        // Person.js editable file + Jsonld referencing it
         {
           name: "Javascript SolidTool",
           path: "tools/code/SolidTool.js",
@@ -218,7 +213,6 @@ export default {
                   }
                   `,
         },
-
 
         {
           name: "Javascript Create",
@@ -381,25 +375,24 @@ export default {
       this.$store.dispatch("remove");
     },
     createResource(r) {
-      let parts = r.path.split('/')
+      let parts = r.path.split("/");
 
-      console.log(parts)
+      console.log(parts);
       this.params.method = "PUT";
       this.params.headers["Content-Type"] = r["Content-Type"] || "text/plain";
       this.resource.content = r.content || "";
       console.log(this.params.headers);
 
-      let path = ""
+      let path = "";
 
       for (let i = 0; i < parts.length; i++) {
-        path = path + '/' + parts[i]
-        console.log("path", path)
+        path = path + "/" + parts[i];
+        console.log("path", path);
       }
 
       this.params.url = path;
       this.$store.commit("core/setParams", this.params);
       this.$store.commit("core/setResource", this.resource);
-
     },
   },
   computed: {

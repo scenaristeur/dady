@@ -4,7 +4,7 @@
       <button class="col" @click="select(params.baseURL)">
         base: {{ params.baseURL }}
       </button>
-      <button class="col" @click="select(up)">up: {{ up }}</button>
+      <button class="col" @click="select(up)" v-if="up != 'http://'">{{ up }}</button>
       <button class="col" @click="select(container['@id'])">
         {{ container["@id"] }}
       </button>
@@ -80,7 +80,7 @@ export default {
         this.container["@type"].includes("http://www.w3.org/ns/ldp#Container")
       ) {
         if (this.container["http://www.w3.org/ns/ldp#contains"] != undefined) {
-          this.ordered = this.container["http://www.w3.org/ns/ldp#contains"].reverse();
+          this.ordered = this.container["http://www.w3.org/ns/ldp#contains"];
         } else {
           this.ordered = [];
         }

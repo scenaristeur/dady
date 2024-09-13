@@ -9,7 +9,9 @@
         <button class="col" @click="select(params.baseURL)">
           base: {{ params.baseURL }}
         </button>
-        <button class="col" @click="select(up)">up: {{ up }}</button>
+        <button class="col" @click="select(up)" v-if="up != 'http://'">
+          up: {{ up }}
+        </button>
         <button class="col" @click="select(container['@id'])">
           {{ container["@id"] }}
         </button>

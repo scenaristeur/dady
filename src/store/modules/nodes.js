@@ -25,7 +25,7 @@ const mutations = {
     state.currentNode = Object.assign({}, state.modele) // state.modele
   },
   setCurrentNode(state, node) {
-    state.currentNode = node
+    state.currentNode = Object.assign({}, node)
     console.log('currentNode', state.currentNode)
   }
   // setResource(state, resource) {
