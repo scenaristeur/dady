@@ -2,7 +2,7 @@
   <div><button @click="logDady">log Dady</button>
   
   
-    <button
+    <!-- <button
       type="button"
       class="btn btn-success"
       data-bs-toggle="modal"
@@ -11,7 +11,7 @@
       New Node Brain
     </button>
 
-    <!-- Modal -->
+ 
     <div
       class="modal fade"
       id="NodeModal"
@@ -39,7 +39,7 @@
           </div>
         </div>
       </div>
-    </div>
+    </div> -->
   
   </div>
 </template>

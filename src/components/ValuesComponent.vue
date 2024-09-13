@@ -1,8 +1,8 @@
 <template>
-  <b-list-group>
-    <b-list-group-item v-for="(v,i) in values" :key="i">
-      <b-row>
-      <b-col>
+  <ul class="list-group">
+    <li class="list-group-item" v-for="(v,i) in values" :key="i">
+      <div class="row">
+      <div class="col">
       <span v-if="v.type == 'text'">{{v.value}}</span>
       <div v-else-if="v.type == 'textarea'">
         <pre>{{v.value}}</pre>
@@ -12,13 +12,14 @@
         <a :href="v.value.href" target="_blank">{{v.value.name}}</a>
       </span>
       <div v-else>{{v}}</div>
-    </b-col>
-    <b-col cols="1">
-      <b-button v-if="$router.currentRoute.path == '/edit'" variant="outline-secondary" @click="remove(i)">X</b-button>
-    </b-col>
-  </b-row>
-    </b-list-group-item>
-  </b-list-group>
+    </div>
+    <div class="col-2" >
+      <!-- <b-button v-if="$router.currentRoute.path == '/edit'" variant="outline-secondary" @click="remove(i)">X</b-button> -->
+       if edit <button @click="remove(i)">X</button>
+    </div>
+  </div>
+</li>
+  </ul>
 </template>
 
 <script>

@@ -5,7 +5,7 @@
 
     <!-- Button trigger modal -->
 
-    <div v-if="node">
+    <div v-if="node" class="container">
       <!-- {{ node }} -->
 
       <button class="btn btn-primary" disabled
@@ -27,7 +27,7 @@
 
         <div class="form-group">
           <label for="age">Age</label>
-          <input v-model="node['ve:age']" required type="number"  class="form-control" id="age" placeholder="Age">
+          <input v-model="node['ve:age']" required type="number" class="form-control" id="age" placeholder="Age">
         </div>
 
         <div class="form-check">
@@ -36,11 +36,10 @@
         </div>
 
         <br>
-        <button class="btn btn-primary" @click="saveNode">Save Node</button>
-      </div>
 
 
-      <b-container v-if="node['ve:type'] == 'node'">
+
+
 
         <!-- <div>
           <div sm="3">
@@ -73,7 +72,10 @@
         </b-dropdown>
 
       </button-toolbar> -->
-            <button @click="showFieldModal(p)" variant="outline-primary">+</button>
+            <!-- <button @click="showFieldModal(p)" variant="outline-primary">+</button> -->
+            <button type="button" @click="showFieldModal(p)" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#fieldModal">
+              +
+            </button>
             <!-- {{ p.values}} -->
 
             <ValuesComponent :values="p.values" />
@@ -98,63 +100,85 @@
             <button variant="outline-primary" size="sm" @click="add">+ add a property or a link</button>
           </div>
         </div>
-        <div>
-          <div>
-            <!-- <button  :variant="node['ve:privacy'] == 'public' ? 'warning' : 'outline-success'"
-      @click="node['ve:privacy'] = node['ve:privacy'] == undefined || node['ve:privacy'] == 'public' ? 'private' : 'public'">
-      {{node['ve:privacy']}}</button> -->
 
-            <button variant="success" @click="saveNode">Save Node</button>
-            <PermissionsLayout :permissions="permissions" :url="node['ve:url']" :autorized="autorized" />
+
+        <!-- New Modal-->
+        <div class="modal fade .modal-xl" id="fieldModal" size="xl" :title="node['ve:name'] + ' -> ' + currentProp.name"
+          tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+          <div class="modal-dialog">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h1 class="modal-title fs-5" id="exampleModalLabel">Node</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+              </div>
+              <div class="modal-body">
+                <!-- tab debut-->
+                <ul class="nav nav-tabs" id="myTab" role="tablist">
+                  <li class="nav-item" role="presentation">
+                    <button class="nav-link active" id="text-tab" data-bs-toggle="tab" data-bs-target="#text"
+                      type="button" role="tab" aria-controls="text" aria-selected="true">one line Text</button>
+                  </li>
+                  <li class="nav-item" role="presentation">
+                    <button class="nav-link" id="textarea-tab" data-bs-toggle="tab" data-bs-target="#textarea"
+                      type="button" role="tab" aria-controls="textarea" aria-selected="false">Long Text</button>
+                  </li>
+                  <li class="nav-item" role="presentation">
+                    <button class="nav-link" id="node-tab" data-bs-toggle="tab" data-bs-target="#node"
+                      type="button" role="tab" aria-controls="node" aria-selected="false">Node</button>
+                  </li>
+                  <li class="nav-item" role="presentation">
+                    <button class="nav-link" id="link-tab" data-bs-toggle="tab" data-bs-target="#link"
+                      type="button" role="tab" aria-controls="link" aria-selected="false">Link</button>
+                  </li>
+                </ul>
+                <div class="tab-content" id="myTabContent">
+                  <div class="tab-pane fade show active" id="text" role="tabpanel" aria-labelledby="text-tab">
+                
+                     <input v-model="newvalue" placeholder="new value" @change="addNewValue" />
+                  
+                  </div>
+                  <div class="tab-pane fade" id="textarea" role="tabpanel" aria-labelledby="textarea-tab">
+                    
+                    <textarea v-model="newvalue" placeholder="Enter something..." rows="3" max-rows="6"
+                    @change="addNewValue"></textarea>
+                  </div>
+                  <div class="tab-pane fade" id="node" role="tabpanel" aria-labelledby="node-tab">
+                    <NodeSelector :currentProp.sync="currentProp" />
+                  </div>
+                  <div class="tab-pane fade" id="link" role="tabpanel" aria-labelledby="link-tab">
+                    <input v-model="link.name" placeholder="name" />
+              <input v-model="link.href" placeholder="link" @change="addNewLink" />
+          
+                  </div>
+
+                </div>
+
+
+                <!-- tab fin -->
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                  Close
+                </button>
+                <!-- <button type="button" class="btn btn-primary" @click="newNode">Save changes</button> -->
+              </div>
+            </div>
           </div>
         </div>
 
-        <b-modal id="fieldModal" size="xl" :title="node['ve:name'] + ' -> ' + currentProp.name">
-          <!-- {{ currentProp}} -->
-          <b-tabs content-class="mt-3">
-            <b-tab title="text" active @click="fieldType = 'text'">
-              <input v-model="newvalue" placeholder="new value" @change="addNewValue" />
-            </b-tab>
-            <b-tab title="textarea" @click="fieldType = 'textarea'">
-              <b-form-textarea v-model="newvalue" placeholder="Enter something..." rows="3" max-rows="6"
-                @change="addNewValue"></b-form-textarea>
-            </b-tab>
-            <b-tab title="node" @click="fieldType = 'node'">
-              <NodeSelector :currentProp.sync="currentProp" />
-            </b-tab>
-            <b-tab title="link" @click="fieldType = 'link'">
-              <input v-model="link.name" placeholder="name" />
-              <input v-model="link.href" placeholder="link" @change="addNewLink" />
-            </b-tab>
-            <!-- <b-tab title="tiny" @click="fieldType = 'tiny'">
 
-      <editor
-
-      v-model="tinycontent"
-      :init="{
-      height: 500,
-      menubar: false,
-      plugins: [
-      'advlist autolink lists link image charmap print preview anchor',
-      'searchreplace visualblocks code fullscreen',
-      'insertdatetime media table paste code help wordcount'
-      ],
-      toolbar:
-      'undo redo | formatselect | bold italic backcolor | \
-      alignleft aligncenter alignright alignjustify | \
-      bullist numlist outdent indent | removeformat | help'
-    }"
-    />
-  </b-tab> -->
-          </b-tabs>
-        </b-modal>
-
-      </b-container>
-      <b-container v-else>
+        <button class="btn btn-primary" @click="saveNode">Save Node</button>
+        <br>
+                    <button  :variant="node['ve:privacy'] == 'public' ? 'warning' : 'outline-success'"
+      @click="node['ve:privacy'] = node['ve:privacy'] == undefined || node['ve:privacy'] == 'public' ? 'private' : 'public'">
+      {{node['ve:privacy']}}</button> 
+      <PermissionsLayout :permissions="permissions" :url="node['ve:url']" :autorized="autorized" />
+      </div>
+      <div v-else>
 
         <!-- <Quasar /> -->
         <CKWysiwyg />
-      </b-container>
+      </div>
     </div>
 
   </div>
@@ -203,47 +227,48 @@ export default {
       // this.$store.commit('nodes/newNode', this.modele)
       this.node = this.$store.state.nodes.currentNode || this.$store.state.nodes.modele
     },
-    async save() {
-      console.log("saving",Object.assign({}, this.node))
+    async saveNode() {
+      console.log("saving", Object.assign({}, this.node))
       await this.$store.dispatch('nodes/saveNode', this.node);
       this.$store.commit('nodes/setCurrentNode', null)
       this.$router.push('/');
     },
-    add(){
-      this.field = {name: ""}
+    add() {
+      this.field = { name: "" }
     },
-    fieldNameChanged(field_name){
+    fieldNameChanged(field_name) {
       console.log(field_name)
-      if(this.clearing == false){
-        let p = {name: field_name, values: []}
+      if (this.clearing == false) {
+        let p = { name: field_name.target.value, values: [] }
         this.node['ve:properties'] == undefined ? this.node['ve:properties'] = [] : ""
-        var index = this.node['ve:properties'].findIndex(x => x.name==p.name);
-        index === -1 ? this.node['ve:properties'].push(p) : alert(p.name+" already exist")
+        var index = this.node['ve:properties'].findIndex(x => x.name == p.name);
+        index === -1 ? this.node['ve:properties'].push(p) : alert(p.name + " already exist")
+
       }
     },
-    clear_field(){
+    clear_field() {
       this.clearing = true
       this.field = null
       this.clearing = false
     },
-    showFieldModal(p){
+    showFieldModal(p) {
       console.log(p)
-      this.fieldType= "text"
+      this.fieldType = "text"
       this.currentProp = p
-      this.$bvModal.show("fieldModal")
+      //this.$bvModal.show("fieldModal")
     },
-    addNewValue(){
-      let val = {value: this.newvalue,  type: this.fieldType}
+    addNewValue() {
+      let val = { value: this.newvalue, type: this.fieldType }
       this.currentProp.values.push(val)
       this.newvalue = null
     },
-    addNewLink(){
+    addNewLink() {
       //console.log(this.link)
-      let val = {value: this.link,  type: this.fieldType}
+      let val = { value: this.link, type: this.fieldType }
       this.currentProp.values.push(val)
       this.link = {}
     },
-    async getPermissions(){
+    async getPermissions() {
       this.permissions = this.node['ve:url'] != undefined ? await this.$getPermissions(this.node) : null
       console.log("PERMISSIONS", this.permissions)
     }
