@@ -6,7 +6,9 @@
 
 - https://communitysolidserver.github.io/CommunitySolidServer/latest/
 
-`npx @solid/community-server`
+```
+npx @solid/community-server
+```
 
 ## axios http verbs
 
