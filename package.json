@@ -15,6 +15,7 @@
     "@popperjs/core": "^2.11.8",
     "axios": "^1.7.7",
     "bootstrap": "^5.3.3",
+    "json-editor-vue": "^0.16.0",
     "uuid": "^10.0.0",
     "vite-plugin-pwa": "^0.20.5",
     "vue": "^3.4.29",

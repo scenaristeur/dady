@@ -27,7 +27,22 @@ source: source
 }
 });
 
-# TODO POST ne créé pas les folder
+# function calling
+- https://microsoft.github.io/autogen/docs/notebooks/agentchat_function_call_code_writing/
+- https://stephenwalther.com/calling-custom-functions-with-chatgpt/
+- node-llama-cpp https://github.com/withcatai/node-llama-cpp/pull/139
+- llama-cpp-python function calling https://llama-cpp-python.readthedocs.io/en/stable/#function-calling -> "chatml-function-calling" chat format
+- OpenAI cookbook call functions https://github.com/openai/openai-cookbook/blob/main/examples/How_to_call_functions_with_chat_models.ipynb
+- list of functions https://huggingface.co/datasets/Locutusque/function-calling-chatml
+
+
+# function calling with local LLM
+- https://microsoft.github.io/autogen/blog/2023/07/14/Local-LLMs/
+
+# js mimetype
+application/javascript https://www.rfc-editor.org/rfc/rfc4329.txt
+
+# TODO POST ne créé pas les folder mais PUT oui
 
 - https://communitysolidserver.github.io/CommunitySolidServer/latest/usage/metadata/#impact-on-creating-containers
 

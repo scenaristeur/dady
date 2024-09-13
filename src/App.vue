@@ -8,6 +8,7 @@ import ContainerView from "./views/ContainerView.vue";
 import ResourceView from "./views/ResourceView.vue";
 import DadyView from "./views/DadyView.vue";
 import TreeView from "./views/TreeView.vue";
+import JsonEditor from "./views/JsonEditor.vue";
 </script>
 
 <template>
@@ -27,6 +28,7 @@ import TreeView from "./views/TreeView.vue";
   </header> -->
   <TreeView />
   <MessageView />
+  <JsonEditor />
   <DadyView />
   <ResourceView />
 
