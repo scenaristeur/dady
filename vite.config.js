@@ -9,12 +9,13 @@ const base = process.env.NODE_ENV === 'production' ? '/dady/' : '/'
 // https://vitejs.dev/config/
 export default defineConfig({
   base: base,
-  plugins: [vue(), 
+  plugins: [
+    vue(),
     vueDevTools(),
-    VitePWA({ 
+    VitePWA({
       registerType: 'autoUpdate',
       manifest: {
-        name: "Dady",
+        name: 'Dady',
         includeAssets: ['favicon.ico', 'apple-touch-icon.png', 'mask-icon.svg'],
         theme_color: '#ffffff',
         icons: [
@@ -32,7 +33,7 @@ export default defineConfig({
             src: 'pwa-512x512.png',
             sizes: '512x512',
             type: 'image/png',
-            purpose: 'any'  
+            purpose: 'any'
           },
           {
             src: 'maskable-icon-512x512.png',
@@ -40,9 +41,13 @@ export default defineConfig({
             type: 'image/png',
             purpose: 'maskable'
           }
-        ]
+        ],
+        workboxOptions: {
+          maximumFileSizeToCacheInBytes: 5000000 // <---- increasing the file size to cached 5mb
+        }
       }
-     }),],
+    })
+  ],
   resolve: {
     alias: {
       '@': fileURLToPath(new URL('./src', import.meta.url))
