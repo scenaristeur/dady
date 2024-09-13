@@ -2,18 +2,18 @@
 
 const state = () => ({
   modele: {
-    "@context": {
-      "@vocab": "https://www.w3.org/ns/activitystreams#",
-      "ve": "https://scenaristeur.github.io/verse#",
-      "id": "@id",
-      "type": "@type"
+    '@context': {
+      '@vocab': 'https://www.w3.org/ns/activitystreams#',
+      ve: 'https://scenaristeur.github.io/verse#',
+      id: '@id',
+      type: '@type'
     },
-    "ve:name": "",
-    "ve:age": 0,
-    "ve:privacy": "private",
-    "ve:type": "node",
-    "ve:properties": [],
-    test: "test vocab"
+    've:name': '',
+    've:age': 0,
+    've:privacy': 'private',
+    've:type': 'node',
+    've:properties': [],
+    test: 'test vocab'
   },
   currentNode: null
   // dady: new Dady({ name: 'Daddy' }),
@@ -35,23 +35,44 @@ const mutations = {
   },
   setCurrentNode(state, node) {
     state.currentNode = node
-  },
+  }
   // setResource(state, resource) {
   //   state.resource = resource
   // }
 }
 
 const actions = {
-  saveNode(context, node) {
-    try{
-      console.log("saving", Object.assign({},node))
-      return "ok"
-    }catch(e){
-      return "error"
+  async saveNode({ dispatch, commit }, node) {
+    try {
+      let params = { baseURL: 'http://localhost:3000/', method: 'PUT', headers: {} }
+      console.log('saving', Object.assign({}, node))
+      let filename = Date.now()
+      if (node['@id'] != undefined) {
+        filename = node['@id'].replace('http://localhost:3000/', '')
+      } else {
+        filename = params.baseURL + node['ve:name'] + '.jsonld'
+        node['@id'] = filename
+      }
+      params.url = filename
+      console.log(filename)
+
+      console.log(node)
+      let resource = { content: JSON.stringify(node, null, 2) }
+      console.log(params, resource)
+
+      params.headers['Content-Type'] = 'application/ld+json'
+
+      // call action from another module https://stackoverflow.com/questions/54378118/vuex-dispatch-action-in-a-different-module-from-an-action
+      commit('core/setParams', params, { root: true })
+      commit('core/setResource', resource, { root: true })
+      await dispatch('core/create_or_update', null, { root: true })
+
+      return 'ok'
+    } catch (e) {
+      console.log(e)
+      return 'error'
     }
-
-
-  },
+  }
   // async create_or_update(context) {
   //   let query = { params: context.state.params, resource: context.state.resource }
   //   console.log('create_or_update', query)

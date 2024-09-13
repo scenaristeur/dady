@@ -60,7 +60,6 @@
     TODO: create recursive containers<br />
 
     <h2>Show with criteres</h2>
-   
 
     <!-- RESULT : {{ result }} -->
   </div>
@@ -232,10 +231,7 @@ export default {
       this.params.headers["Accept"] = "application/ld+json";
       this.$store.commit("core/setParams", this.params);
       this.$store.commit("core/setResource", this.resource);
-      await this.$store.dispatch("core/create_or_update", {
-        params: this.params,
-        resource: this.resource,
-      });
+      await this.$store.dispatch("core/create_or_update");
     },
     async example_GET_container_turtle() {
       this.resource.content = "";
@@ -244,10 +240,7 @@ export default {
       this.params.headers["Accept"] = "text/turtle";
       this.$store.commit("core/setParams", this.params);
       this.$store.commit("core/setResource", this.resource);
-      await this.$store.dispatch("core/create_or_update", {
-        params: this.params,
-        resource: this.resource,
-      });
+      await this.$store.dispatch("core/create_or_update");
     },
     //PATCH
     example_patch_n3() {
