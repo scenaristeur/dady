@@ -9,6 +9,7 @@ import ResourceView from "./views/ResourceView.vue";
 import DadyView from "./views/DadyView.vue";
 import TreeView from "./views/TreeView.vue";
 import JsonEditor from "./views/JsonEditor.vue";
+import BrainView from "./views/BrainView.vue";
 </script>
 
 <template>
@@ -28,6 +29,7 @@ import JsonEditor from "./views/JsonEditor.vue";
   </header> -->
   <TreeView />
   <MessageView />
+  <BrainView />
   <JsonEditor />
   <DadyView />
   <ResourceView />
