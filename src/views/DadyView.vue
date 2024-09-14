@@ -2,6 +2,9 @@
   <div>
     <h2>Dady View</h2>
     <button type="button" class="btn btn-success" @click="init">Init</button>
+    <button type="button" class="btn btn-success" @click="initcdr">
+      Init Château des Robots
+    </button>
     <button type="button" class="btn btn-danger" @click="remove">Delete</button>
   </div>
 </template>
@@ -18,6 +21,17 @@ import PersonRaw from "./data/classes/Person.js?raw";
 import SolidToolRaw from "./data/classes/SolidTool.js?raw";
 // console.log("SolidTool Class raw", SolidToolRaw)
 
+import CdrPersonnages from "./data/chateau_des_robots/personages.json";
+console.log("CdrPersonnages raw", CdrPersonnages);
+
+import CdrLieux from "./data/chateau_des_robots/lieux.json";
+console.log("CdrLieux raw", CdrLieux);
+import CdrObjets from "./data/chateau_des_robots/objets.json";
+console.log("CdrObjets raw", CdrObjets);
+
+// import SolidToolRaw from "./data/classes/SolidTool.js?raw";
+// console.log("SolidTool Class raw", SolidToolRaw)
+
 // mycar = new Car("Porsche");
 // console.log("my car", mycar)
 
@@ -25,6 +39,11 @@ export default {
   name: "DadyView",
   data() {
     return {
+      cdr_resources: [
+        { name: "Personnages", path: "personnages/", content: CdrPersonnages },
+        { name: "Lieux", path: "lieux/", content: CdrLieux },
+        { name: "Objets", path: "objets/", content: CdrObjets },
+      ],
       resources: [
         { name: "Agents Folder", path: "agents/" },
         { name: "Teams Folder", path: "teams/" },
@@ -93,7 +112,7 @@ export default {
         {
           name: "Javascript Person Class Tool",
           path: "tools/code/Person.js",
-          content: `${PersonRaw}     
+          content: `${PersonRaw}
           `,
           "Content-Type": "application/javascript",
         },
@@ -113,7 +132,7 @@ export default {
         {
           name: "Javascript SolidTool",
           path: "tools/code/SolidTool.js",
-          content: `${SolidToolRaw}     
+          content: `${SolidToolRaw}
           `,
           "Content-Type": "application/javascript",
         },
@@ -346,7 +365,7 @@ export default {
                   function create(data){
                   console.log("I'm creating something with this data: ",data)
                   console.log("I'm creating something with this name: ",data.name)
-                  }       
+                  }
                   `,
           "Content-Type": "application/javascript",
         },
@@ -373,6 +392,36 @@ export default {
       //   this.$store.dispatch("init");
       for (let r of this.resources) {
         this.createResource(r);
+        await this.$store.dispatch("core/create_or_update");
+      }
+    },
+    async initcdr() {
+      console.log("CdrPersonnages raw", CdrPersonnages);
+      console.log("CdrLieux raw", CdrLieux);
+      console.log("CdrObjets raw", CdrObjets);
+
+      for await (let data of this.cdr_resources) {
+        console.log("data", data);
+        await this.createCDRResources(data);
+      }
+    },
+    async createCDRResources(data) {
+      // let path = data.path;
+      let resources = data.content;
+      let baseURL = this.params.baseURL;
+
+      for (let r of resources) {
+        let params = {
+          baseURL: baseURL,
+          method: "PUT",
+          headers: {
+            "Content-Type": "application/ld+json",
+          },
+          url: r["@id"],
+        };
+        this.resource.content = JSON.stringify(r, null, 2);
+        this.$store.commit("core/setParams", params);
+        this.$store.commit("core/setResource", this.resource);
         await this.$store.dispatch("core/create_or_update");
       }
     },

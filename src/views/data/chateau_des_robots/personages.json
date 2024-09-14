@@ -1,0 +1,35 @@
+[
+  {
+    "@context": "https://json-ld.org/contexts/person.jsonld",
+    "@id": "http://localhost:3000/personnages/Alice_Storia",
+    "name": "Alice Storia",
+    "born": "1940-10-09",
+    "worksAt": "http://localhost:3000/lieux/bibliotheque",
+    "colleague": [
+      "http://localhost:3000/personnages/Anne_Prop",
+      "http://localhost:3000/personnages/Anne_But"
+    ]
+  },
+  {
+    "@context": "https://json-ld.org/contexts/person.jsonld",
+    "@id": "http://localhost:3000/personnages/Anne_Prop",
+    "name": "John Lennon",
+    "born": "1940-10-09",
+    "worksAt": "http://localhost:3000/lieux/bibliotheque",
+    "colleague": [
+      "http://localhost:3000/personnages/Alice_Storia",
+      "http://localhost:3000/personnages/Anne_But"
+    ]
+  },
+  {
+    "@context": "https://json-ld.org/contexts/person.jsonld",
+    "@id": "http://localhost:3000/personnages/Anne_But",
+    "name": "Anne But",
+    "born": "1940-10-09",
+    "worksAt": "http://localhost:3000/lieux/bibliotheque",
+    "colleague": [
+      "http://localhost:3000/personnages/Alice_Storia",
+      "http://localhost:3000/personnages/Anne_Prop"
+    ]
+  }
+]

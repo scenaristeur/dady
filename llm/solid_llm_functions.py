@@ -33,7 +33,7 @@ config_list = autogen.config_list_from_json(
 llm_config = {
     "config_list": config_list,
     "timeout": 120,
-    "cache_seed": 40,  # seed for caching and reproducibility
+    "cache_seed": 38,  # seed for caching and reproducibility
 }
 chatbot = autogen.AssistantAgent(
     name="chatbot",
@@ -239,13 +239,26 @@ with Cache.disk() as cache:
     user_proxy.initiate_chat(
         chatbot,
         message="""Tu es un assistant Solid et un expert en Web semantique.
-          Use the GET function to perform GET operations, and PUT to perform updates on Solid server located at http://localhost:3000/ and provide the results.
-          What can you tell me about the resources on this Solid server?
-          Quels sont les containers et que contiennent-ils ?
-          les requetes vers les containers doivent obligatoirement se terminer par un slash (/)
-          tu as des exemples de requete à l'l'url https://raw.githubusercontent.com/CommunitySolidServer/CommunitySolidServer/refs/heads/main/documentation/markdown/usage/example-requests.md
-          les paramètres pour la fonction GET est 'url', pour la fonction PUT est 'url' et 'body' (au format jsonld)
+        Tu as à ta disposition un serveur Solid à l'adresse http://localhost:3000/ sur lequel tu peux effectuer des requetes  GET
+        pour obtenir des informations et des requestes PUT pour mettre à jour les informations. 
+        les urls pour requeter les containers doivent se terminer par un slash (/) OBLIGATOIREMENT !
+        Les ressources que tu créé ou manipulent sont FORCEMENT au format jsonld   
+       
           """,
+
+
+        # """Tu dois détailler chaque opération que tu comptes faire.
+        #           Use the GET function to perform GET operations, and PUT to perform updates on Solid server located at http://localhost:3000/ and provide the results.
+        #           Utilise la fonction GET pour connaitre les containers à la racine du serveur http://localhost:3000/ .
+        #           Donne-moi la liste des containers et imagine ce que chacun d'eux contient.
+        #           les requetes vers les containers doivent obligatoirement se terminer par un slash (/)
+        #           tu as des exemples de requete à l'l'url https://raw.githubusercontent.com/CommunitySolidServer/CommunitySolidServer/refs/heads/main/documentation/markdown/usage/example-requests.md
+        #           les paramètres pour la fonction GET est 'url', pour la fonction PUT est 'url' et 'body' (au format jsonld)
+        #           avec qui john est-il marié ?
+        #           """
+
+
+        #    Si tu es perdu effectue une requete GET sur http://localhost:3000/ pour retrouver la marche à suivre
         #   Met à jour la resource john pour indiquer qu'il est marié avec Lola via la propriété 'spouse'.
         #          Combien y'at-il de users dans users/ ?
         #  Quels sont leurs noms ?
