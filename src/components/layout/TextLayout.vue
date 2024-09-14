@@ -1,5 +1,5 @@
 <template>
-  <span style="background-color: yellow">{{ node }}</span>
+  <span>{{ node }}</span>
 </template>
 
 <script>

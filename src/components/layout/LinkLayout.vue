@@ -1,5 +1,7 @@
 <template>
-  <div>LINK : {{ node }}</div>
+  <span
+    ><a :href="node" target="_blank">{{ node }}</a></span
+  >
 </template>
 
 <script>

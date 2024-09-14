@@ -2,16 +2,17 @@
   <div v-if="node">
     <!-- *****************NODE LAYOUT
      -->
-    <ArrayLayout v-if="Array.isArray(node)" :node="node" />
+    <!-- <ArrayLayout v-if="Array.isArray(node)" :node="node" /> -->
     <ul v-if="typeof node == 'object'" class="list-group">
       <li v-for="(v, k) in node" :key="k" class="list-group-item">
-        <code>{{ k }} :</code>
+        <code v-if="k != '@id'">{{ k }} :</code>
         <ArrayLayout v-if="Array.isArray(v)" :node="v" />
-        <ResourceLayout v-else-if="v['@id'] != undefined || k == '@id'" :node="v" />
-        <ObjectLayout v-else-if="typeof v == 'object'" :node="v" />
-        <LinkLayout v-else-if="v.type == 'link'" :node="v" />
+
+        <ResourceLayout v-else-if="k == '@id'" :node="v" />
+        <NodeLayout v-else-if="typeof v == 'object'" :node="v" />
+        <LinkLayout v-else-if="typeof v == 'string' && v.startsWith('http')" :node="v" />
         <TextLayout v-else-if="typeof v == 'string'" :node="v" />
-        <pre v-else> {{ v }}</pre>
+        <span v-else> {{ v }} ({{ typeof v }})</span>
       </li>
     </ul>
 
@@ -38,7 +39,7 @@ export default {
   name: "NodeLayout",
   components: {
     ArrayLayout: defineAsyncComponent(() => import("./ArrayLayout.vue")),
-    ObjectLayout: defineAsyncComponent(() => import("./ObjectLayout.vue")),
+    // ObjectLayout: defineAsyncComponent(() => import("./ObjectLayout.vue")),
     ResourceLayout: defineAsyncComponent(() => import("./ResourceLayout.vue")),
     LinkLayout: defineAsyncComponent(() => import("./LinkLayout.vue")),
     TextLayout: defineAsyncComponent(() => import("./TextLayout.vue")),

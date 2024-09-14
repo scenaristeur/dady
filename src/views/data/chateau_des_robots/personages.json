@@ -162,7 +162,12 @@
         "red hair",
         "green eyes",
         "short"
-      ]
+      ],
+      "music": {
+        "composer": "Pomplamoose",
+        "style": "pop",
+        "url": "https://www.youtube.com/watch?v=FlDGFrP4NgI&list=PLiJey_76CkNQr26Tbk2QtYZ-oxRJ4lgKb"
+      }
     }
   },
   {
