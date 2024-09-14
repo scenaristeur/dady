@@ -1,6 +1,8 @@
 <template>
   <!-- <div><button @click="logDady">log Dady</button></div> -->
-  <json-editor-vue v-model="value" class="jse-theme-dark"></json-editor-vue>
+  <div>
+    <json-editor-vue v-model="value" class="jse-theme-dark"></json-editor-vue>
+  </div>
 </template>
 
 <script>

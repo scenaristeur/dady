@@ -58,8 +58,8 @@ export default {
         options.domElement
       ).graphData(graphData)
       graph
-        .width(size.w)
-        .height(size.h)
+        .width(size.w - 60)
+        .height(size.h / 2)
         //.backgroundColor('#eafaff')
         // .nodeId('id')
         .nodeLabel('name')
@@ -192,8 +192,8 @@ export default {
     window.addEventListener('resize', function () {
       if (store.state.graphstore.graph != null) {
         size = getSize()
-        store.state.graphstore.graph.width(size.w)
-        store.state.graphstore.graph.height(size.h)
+        store.state.graphstore.graph.width(size.w - 60)
+        store.state.graphstore.graph.height(size.h / 2)
       }
     })
 

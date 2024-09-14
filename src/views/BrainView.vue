@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="mx-auto mt-5">
     BrainView
     <button @click="newNode" class="btn btn-primary">Edit Node</button> {{ status }}
 
@@ -42,12 +42,12 @@
           <label for="floatingPassword">Password</label>
         </div> -->
 
+        <!-- autofocus -->
         <div class="form form-floating mb-3">
           <input
             type="text"
             v-model="node['ve:name']"
             autocomplete="off"
-            autofocus
             class="form-control"
             id="name"
             aria-describedby="nameHelp"

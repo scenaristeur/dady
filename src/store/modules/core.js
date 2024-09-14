@@ -44,11 +44,17 @@ const actions = {
 
           if (
             Array.isArray(result.data) &&
+            result.data[0]['@type'] &&
             result.data[0]['@type'].includes('http://www.w3.org/ns/ldp#Container')
           ) {
             context.state.container = result.data[0]
             console.log('container', Object.assign({}, context.state.container))
             context.commit('graphstore/setContainer', context.state.container, { root: true })
+          } else {
+            console.info(
+              '!!!!!!!!!!!!! not a container,  what to do with this data ? is it already done ?',
+              result.data
+            )
           }
 
           break
@@ -121,6 +127,13 @@ const actions = {
     if (context.state.message.data['@id'] && !context.state.message.data['@id'].endsWith('/')) {
       console.log('resource', context.state.message.data['@id'])
       context.commit('nodes/setCurrentNode', context.state.message.data, { root: true })
+    } else {
+      console.info(
+        '!!!!!!! we have an array of nodes !!! trying to implement, if its ok  this test can be removed for example patching atelier with a new triplet transform it to array',
+        context.state.message
+      )
+      // alert('array of nodes not implemented yet')
+      // context.commit('nodes/setCurrentNode', context.state.message.data, { root: true })
     }
     context.state.params.method = 'PUT'
     // return context.state.message

@@ -1,13 +1,11 @@
 <template>
   <!-- <div v-if="currentNode">
-    <h2>{{ currentNode["@id"] }}</h2>
+
     <NodeLayout :node="currentNode" />
   </div> -->
   <div v-if="node">
-    ++++++++++++++++++++++++++*****************NODE VIEW
-    <div class="alert alert-light" role="alert">
-      type: {{ typeof node }} , isArray: {{ Array.isArray(node) }}
-    </div>
+    <h2>{{ node.name || node["@id"].split("/").pop() }}</h2>
+    {{ node["@id"].split("/").slice(0, -1).join("/") + "/" }}
 
     <NodeLayout
       v-if="node && typeof node == 'object' && !Array.isArray(node)"
@@ -22,8 +20,7 @@
       </li>
     </ul> -->
     <pre v-else>{{ node }}</pre>
-    *****************END VIEW LAYOUT
-    ++++++++++++++++++++++++++++################################
+    {{ typeof node }} , isArray: {{ Array.isArray(node) }}
   </div>
 </template>
 

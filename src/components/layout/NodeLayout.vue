@@ -5,7 +5,7 @@
     <!-- <ArrayLayout v-if="Array.isArray(node)" :node="node" /> -->
     <ul v-if="typeof node == 'object'" class="list-group">
       <li v-for="(v, k) in node" :key="k" class="list-group-item">
-        <code v-if="k != '@id'">{{ k }} :</code>
+        <code>{{ k }} : </code>
         <ArrayLayout v-if="Array.isArray(v)" :node="v" />
 
         <ResourceLayout v-else-if="k == '@id'" :node="v" />

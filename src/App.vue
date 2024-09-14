@@ -37,68 +37,69 @@ export default {
 </script>
 
 <template>
-  <!-- <header>
-    <img alt="Vue logo" class="logo" src="@/assets/logo.svg" width="125" height="125" />
-
+  <header>
     <div class="wrapper">
+      <!-- <img alt="Vue logo" class="logo" src="@/assets/logo.svg" width="125" height="125" />
       <HelloWorld msg="You did it!" />
-
- 
 
       <nav>
         <RouterLink to="/">Home</RouterLink>
         <RouterLink to="/about">About</RouterLink>
-      </nav>
+      </nav> -->
+
+      <TreeView />
+      <GraphView />
+
+      <DadyView />
+      <MessageView />
     </div>
-  </header> -->
-  <!-- message : {{ message }} -->
+  </header>
+  <!-- message : {{ message }}-->
+  <div>
+    <div v-if="message == 'AxiosError: Network Error'">
+      <h1>Dady</h1>
 
-  <div v-if="message == 'AxiosError: Network Error'">
-    <h1>Dady</h1>
+      EN : To use this app, you shoud start a "Community Solid Server" (CSS) on your
+      computer with the command : <br />
+      <br />
+      "npx @solid/community-server"
+      <br />
+      <br />
+      Take a look at
+      <a
+        href="https://communitysolidserver.github.io/CommunitySolidServer/latest/usage/starting-server/"
+        target="_blank"
+        >https://communitysolidserver.github.io/CommunitySolidServer/latest/usage/starting-server/
+      </a>
+      for more infos.
+      <br />
+      All data will stay on your solid server (your computer) even if the app is online
+      .<br />
+      When your CSS is started, and available at http://localhost:3000/, just refresh this
+      page, and have fun !
+      <hr />
+      FR : Pour utiliser cette appli, vous devez démarrer un "Commuity Solid Server" (CSS)
+      sur votre ordinateur avec la commande : <br />
+      <br />
+      "npx @solid/community-server"
+      <br />
+      <br />
+      Jetez un oeil à l'adresse
+      <a
+        href="https://communitysolidserver.github.io/CommunitySolidServer/latest/usage/starting-server/"
+        target="_blank"
+        >https://communitysolidserver.github.io/CommunitySolidServer/latest/usage/starting-server/
+      </a>
+      pour plus d'infos.
+      <br />
+      Toutes les données restent sur votre serveur solid (votre ordinateur) même si
+      l'appli est en ligne.<br />
+      Lorsque votre CSS est démarré, et disponible à http://localhost:3000/, actualisez
+      cette page, et amusez-vous !
+    </div>
 
-    EN : To use this app, you shoud start a "Community Solid Server" (CSS) on your
-    computer with the command : <br />
-    <br />
-    "npx @solid/community-server"
-    <br />
-    <br />
-    Take a look at
-    <a
-      href="https://communitysolidserver.github.io/CommunitySolidServer/latest/usage/starting-server/"
-      target="_blank"
-      >https://communitysolidserver.github.io/CommunitySolidServer/latest/usage/starting-server/
-    </a>
-    for more infos.
-    <br />
-    All data will stay on your solid server (your computer) even if the app is online .<br />
-    When your CSS is started, and available at http://localhost:3000/, just refresh this
-    page, and have fun !
-    <hr />
-    FR : Pour utiliser cette appli, vous devez démarrer un "Commuity Solid Server" (CSS)
-    sur votre ordinateur avec la commande : <br />
-    <br />
-    "npx @solid/community-server"
-    <br />
-    <br />
-    Jetez un oeil à l'adresse
-    <a
-      href="https://communitysolidserver.github.io/CommunitySolidServer/latest/usage/starting-server/"
-      target="_blank"
-      >https://communitysolidserver.github.io/CommunitySolidServer/latest/usage/starting-server/
-    </a>
-    pour plus d'infos.
-    <br />
-    Toutes les données restent sur votre serveur solid (votre ordinateur) même si l'appli
-    est en ligne.<br />
-    Lorsque votre CSS est démarré, et disponible à http://localhost:3000/, actualisez
-    cette page, et amusez-vous !
-  </div>
-  <div v-else>
-    <TreeView />
     <NodeView />
-    <DadyView />
-    <MessageView />
-    <GraphView />
+
     <BrainView />
     <JsonEditor />
 

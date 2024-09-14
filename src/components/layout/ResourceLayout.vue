@@ -2,7 +2,7 @@
   <span>
     <!-- RESOURCE : {{ node }} -->
 
-    <button class="btn btn-info" @click="select(node)">
+    <button class="btn btn-info btn-sm" @click="select(node)">
       {{ node.split("/").pop() }}
     </button>
     <small

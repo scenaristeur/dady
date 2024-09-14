@@ -2,11 +2,13 @@
   <div>
     <h2>Dady View</h2>
 
-    <button type="button" class="btn btn-success" @click="initcdr">
+    <button type="button" class="btn btn-success btn-sm" @click="initcdr">
       Init Château des Robots
     </button>
-    <button type="button" class="btn btn-danger" disabled @click="remove">Delete</button>
-    <button type="button" class="btn btn-success" @click="init">Init</button>
+    <button type="button" class="btn btn-danger btn-sm" disabled @click="remove">
+      Delete
+    </button>
+    <button type="button" class="btn btn-success btn-sm" @click="init">Init</button>
   </div>
 </template>
 

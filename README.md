@@ -48,6 +48,10 @@ application/javascript https://www.rfc-editor.org/rfc/rfc4329.txt
 
 - https://communitysolidserver.github.io/CommunitySolidServer/latest/usage/metadata/#impact-on-creating-containers
 
+# emojis
+
+- https://symbl.cc/fr/collections/arrow-symbols/
+
 # contextMenu /right click
 
 - https://itnext.io/how-to-create-a-custom-right-click-menu-with-javascript-9c368bb58724
