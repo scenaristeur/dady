@@ -9,7 +9,7 @@ import ResourceView from "./views/ResourceView.vue";
 import DadyView from "./views/DadyView.vue";
 import TreeView from "./views/TreeView.vue";
 import JsonEditor from "./views/JsonEditor.vue";
-import BrainView from "./views/BrainView.vue";
+import VerseView from "./views/VerseView.vue";
 import GraphView from "./views/GraphView.vue";
 import NodeView from "./views/NodeView.vue";
 
@@ -24,7 +24,7 @@ export default {
     DadyView,
     TreeView,
     JsonEditor,
-    BrainView,
+    VerseView,
     GraphView,
     NodeView,
   },
@@ -100,12 +100,10 @@ export default {
 
     <NodeView />
 
-    <BrainView />
     <JsonEditor />
-
-    <ResourceView />
-
+    <VerseView />
     <ContainerView />
+    <ResourceView />
     <ResourceCrud />
 
     <LogDady />

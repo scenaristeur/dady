@@ -1,7 +1,8 @@
 <template>
   <div class="mx-auto mt-5">
-    BrainView
-    <button @click="newNode" class="btn btn-primary">Edit Node</button> {{ status }}
+    Verse
+    <button @click="newNode" class="btn btn-primary">New / Edit Verse Node</button>
+    {{ status }}
 
     <!-- Button trigger modal -->
 
@@ -329,7 +330,7 @@ import ValuesComponent from "../components/ValuesComponent.vue";
 import PermissionsLayout from "../components/layout/PermissionsLayout.vue";
 
 export default {
-  name: "BrainView",
+  name: "VerseView",
   components: {
     NodeSelector,
     // 'NodeLite': () => import('@/components/NodeLite'),

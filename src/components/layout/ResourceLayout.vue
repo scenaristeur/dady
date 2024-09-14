@@ -6,7 +6,9 @@
       {{ node.split("/").pop() }}
     </button>
     <small
-      ><i>{{ node }}</i></small
+      ><i
+        ><a :href="node" target="_blank">{{ node }}</a></i
+      ></small
     >
   </span>
 </template>

@@ -35,7 +35,7 @@ const actions = {
       console.log(result)
       context.state.message = result
       switch (result.status) {
-        case 200:
+        case 200: // create ok
           if (result.headers['content-type'] && result.headers['content-type'].endsWith('json')) {
             context.state.resource.content = JSON.stringify(result.data, null, 2)
           } else {

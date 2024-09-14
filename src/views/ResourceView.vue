@@ -73,10 +73,7 @@ export default {
           JSON.stringify(this.resource.content, null, 2)
         );
       }
-      await this.$store.dispatch("core/create_or_update", {
-        params: this.params,
-        resource: this.resource,
-      });
+      await this.$store.dispatch("core/create_or_update");
     },
   },
   // watch: {
