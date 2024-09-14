@@ -8,7 +8,11 @@
             "@type": "GeoCoordinates",
             "latitude": 48.856614,
             "longitude": 2.362222
-        }
+        },
+        "seller": [
+            "http://localhost:3000/personnages/LeFada",
+            "http://localhost:3000/personnages/BioThek"
+        ]
     },
     {
         "@context": "https://schema.org/",
@@ -35,6 +39,68 @@
             "@type": "GeoCoordinates",
             "latitude": 48.876614,
             "longitude": 2.352222
-        }
+        },
+        "employee": [
+            "http://localhost:3000/personnages/LeFada"
+        ]
+    },
+    {
+        "@context": "https://schema.org/",
+        "@id": "http://localhost:3000/lieux/Brumeville",
+        "name": "Brumeville",
+        "description": "Ville de Brumeville",
+        "geo": {
+            "@type": "GeoCoordinates",
+            "latitude": 48.856614,
+            "longitude": 2.242222
+        },
+        "resident": [
+            "http://localhost:3000/personnages/LeFada"
+        ],
+        "employee": [
+            "http://localhost:3000/personnages/BioThek"
+        ]
+    },
+    {
+        "@context": "https://schema.org/",
+        "@id": "http://localhost:3000/lieux/atelier",
+        "name": "Atelier",
+        "description": "L'atelier est un lieu de travail et de production de biens et de services.",
+        "geo": {
+            "@type": "GeoCoordinates",
+            "latitude": 48.866614,
+            "longitude": 2.322222
+        },
+        "employee": [
+            "http://localhost:3000/personnages/LeFada"
+        ]
+    },
+    {
+        "@context": "https://schema.org/",
+        "@id": "http://localhost:3000/lieux/centre_recherche",
+        "name": "Centre de recherche",
+        "description": "Le centre de recherche est un lieu de recherche et de développement de biens et de services.",
+        "geo": {
+            "@type": "GeoCoordinates",
+            "latitude": 48.846614,
+            "longitude": 2.332222
+        },
+        "employee": [
+            "http://localhost:3000/personnages/BioThek"
+        ]
+    },
+    {
+        "@context": "https://schema.org/",
+        "@id": "http://localhost:3000/lieux/lumineuse",
+        "name": "Lumineuse",
+        "description": "Lumineuse est un lieu de rassemblement et de loisirs.",
+        "geo": {
+            "@type": "GeoCoordinates",
+            "latitude": 48.876614,
+            "longitude": 2.332222
+        },
+        "employee": [
+            "http://localhost:3000/personnages/LeFada"
+        ]
     }
 ]

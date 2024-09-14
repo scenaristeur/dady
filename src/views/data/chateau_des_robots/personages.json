@@ -8,7 +8,18 @@
     "colleague": [
       "http://localhost:3000/personnages/Anne_Prop",
       "http://localhost:3000/personnages/Anne_But"
-    ]
+    ],
+    "traits": {
+      "personality": [
+        "curious",
+        "organized"
+      ],
+      "physical": [
+        "blonde",
+        "blue eyes",
+        "tall"
+      ]
+    }
   },
   {
     "@context": "https://json-ld.org/contexts/person.jsonld",
@@ -19,7 +30,19 @@
     "colleague": [
       "http://localhost:3000/personnages/Alice_Storia",
       "http://localhost:3000/personnages/Anne_But"
-    ]
+    ],
+    "traits": {
+      "personality": [
+        "creative",
+        "dreamy"
+      ],
+      "physical": [
+        "red hair",
+        "green eyes",
+        "short"
+      ]
+    },
+    "fiance": "http://localhost:3000/personnages/BioThek"
   },
   {
     "@context": "https://json-ld.org/contexts/person.jsonld",
@@ -30,6 +53,345 @@
     "colleague": [
       "http://localhost:3000/personnages/Alice_Storia",
       "http://localhost:3000/personnages/Anne_Prop"
-    ]
+    ],
+    "traits": {
+      "personality": [
+        "serious",
+        "ambitious"
+      ],
+      "physical": [
+        "brown hair",
+        "brown eyes",
+        "average height"
+      ]
+    }
+  },
+  {
+    "@context": "https://json-ld.org/contexts/person.jsonld",
+    "@id": "http://localhost:3000/personnages/LeFada",
+    "name": "LeFada",
+    "born": "1940-10-09",
+    "worksAt": "http://localhost:3000/lieux/port",
+    "sellsAt": "http://localhost:3000/lieux/marche",
+    "traits": {
+      "personality": [
+        "talkative",
+        "optimistic"
+      ],
+      "physical": [
+        "gray hair",
+        "blue eyes",
+        "tall"
+      ]
+    }
+  },
+  {
+    "@context": "https://json-ld.org/contexts/person.jsonld",
+    "@id": "http://localhost:3000/personnages/BioThek",
+    "name": "BioThek",
+    "born": "1940-10-09",
+    "worksAt": "http://localhost:3000/lieux/Brumeville",
+    "sellsAt": "http://localhost:3000/lieux/marche",
+    "traits": {
+      "personality": [
+        "kind",
+        "caring"
+      ],
+      "physical": [
+        "black hair",
+        "brown eyes",
+        "average height"
+      ]
+    },
+    "fiance": "http://localhost:3000/personnages/Anne_Prop"
+  },
+  {
+    "@context": "https://json-ld.org/contexts/person.jsonld",
+    "@id": "http://localhost:3000/personnages/Agatha_Wrench",
+    "name": "Agatha Wrench",
+    "born": "1940-10-09",
+    "worksAt": "http://localhost:3000/lieux/atelier",
+    "colleague": [
+      "http://localhost:3000/personnages/Professor_Tinker"
+    ],
+    "traits": {
+      "personality": [
+        "resourceful",
+        "practical"
+      ],
+      "physical": [
+        "red hair",
+        "green eyes",
+        "short"
+      ]
+    }
+  },
+  {
+    "@context": "https://json-ld.org/contexts/person.jsonld",
+    "@id": "http://localhost:3000/personnages/Professor_Tinker",
+    "name": "Professor Tinker",
+    "born": "1940-10-09",
+    "worksAt": "http://localhost:3000/lieux/atelier",
+    "colleague": [
+      "http://localhost:3000/personnages/Agatha_Wrench"
+    ],
+    "traits": {
+      "personality": [
+        "intelligent",
+        "curious"
+      ],
+      "physical": [
+        "gray hair",
+        "blue eyes",
+        "tall"
+      ]
+    }
+  },
+  {
+    "@context": "https://json-ld.org/contexts/person.jsonld",
+    "@id": "http://localhost:3000/personnages/Robbie_Robot",
+    "name": "Robbie Robot",
+    "born": "1940-10-09",
+    "worksAt": "http://localhost:3000/lieux/atelier",
+    "colleague": [
+      "http://localhost:3000/personnages/Professor_Tinker"
+    ],
+    "traits": {
+      "personality": [
+        "loyal",
+        "reliable"
+      ],
+      "physical": [
+        "metal body",
+        "shiny eyes",
+        "medium height"
+      ]
+    }
+  },
+  {
+    "@context": "https://json-ld.org/contexts/person.jsonld",
+    "@id": "http://localhost:3000/personnages/Luna_Lightbulb",
+    "name": "Luna Lightbulb",
+    "born": "1940-10-09",
+    "worksAt": "http://localhost:3000/lieux/lumineuse",
+    "colleague": [
+      "http://localhost:3000/personnages/Mr_Moon"
+    ],
+    "traits": {
+      "personality": [
+        "dreamy",
+        "artistic"
+      ],
+      "physical": [
+        "blonde hair",
+        "blue eyes",
+        "tall"
+      ]
+    }
+  },
+  {
+    "@context": "https://json-ld.org/contexts/person.jsonld",
+    "@id": "http://localhost:3000/personnages/Mr_Moon",
+    "name": "Mr Moon",
+    "born": "1940-10-09",
+    "worksAt": "http://localhost:3000/lieux/lumineuse",
+    "colleague": [
+      "http://localhost:3000/personnages/Luna_Lightbulb"
+    ],
+    "traits": {
+      "personality": [
+        "gentle",
+        "kind"
+      ],
+      "physical": [
+        "gray hair",
+        "brown eyes",
+        "average height"
+      ]
+    }
+  },
+  {
+    "@context": "https://json-ld.org/contexts/person.jsonld",
+    "@id": "http://localhost:3000/personnages/Max_Mechanic",
+    "name": "Max Mechanic",
+    "born": "1940-10-09",
+    "worksAt": "http://localhost:3000/lieux/atelier",
+    "colleague": [
+      "http://localhost:3000/personnages/Professor_Tinker"
+    ],
+    "traits": {
+      "personality": [
+        "practical",
+        "resourceful"
+      ],
+      "physical": [
+        "brown hair",
+        "green eyes",
+        "short"
+      ]
+    }
+  },
+  {
+    "@context": "https://json-ld.org/contexts/person.jsonld",
+    "@id": "http://localhost:3000/personnages/Dr_Dynamo",
+    "name": "Dr Dynamo",
+    "born": "1940-10-09",
+    "worksAt": "http://localhost:3000/lieux/centre_recherche",
+    "colleague": [
+      "http://localhost:3000/personnages/Professor_Tinker"
+    ],
+    "traits": {
+      "personality": [
+        "intelligent",
+        "ambitious"
+      ],
+      "physical": [
+        "gray hair",
+        "blue eyes",
+        "tall"
+      ]
+    }
+  },
+  {
+    "@context": "https://json-ld.org/contexts/person.jsonld",
+    "@id": "http://localhost:3000/personnages/Clara_Clockwork",
+    "name": "Clara Clockwork",
+    "born": "1940-10-09",
+    "worksAt": "http://localhost:3000/lieux/atelier",
+    "colleague": [
+      "http://localhost:3000/personnages/Professor_Tinker"
+    ],
+    "traits": {
+      "personality": [
+        "precise",
+        "methodical"
+      ],
+      "physical": [
+        "brown hair",
+        "brown eyes",
+        "average height"
+      ]
+    }
+  },
+  {
+    "@context": "https://json-ld.org/contexts/person.jsonld",
+    "@id": "http://localhost:3000/personnages/Professor_Perfect",
+    "name": "Professor Perfect",
+    "born": "1940-10-09",
+    "worksAt": "http://localhost:3000/lieux/centre_recherche",
+    "colleague": [
+      "http://localhost:3000/personnages/Dr_Dynamo"
+    ],
+    "traits": {
+      "personality": [
+        "perfectionist",
+        "precise"
+      ],
+      "physical": [
+        "gray hair",
+        "brown eyes",
+        "average height"
+      ]
+    }
+  },
+  {
+    "@context": "https://json-ld.org/contexts/person.jsonld",
+    "@id": "http://localhost:3000/personnages/Miss_Mechanic",
+    "name": "Miss Mechanic",
+    "born": "1940-10-09",
+    "worksAt": "http://localhost:3000/lieux/atelier",
+    "colleague": [
+      "http://localhost:3000/personnages/Professor_Tinker"
+    ],
+    "traits": {
+      "personality": [
+        "resourceful",
+        "inventive"
+      ],
+      "physical": [
+        "red hair",
+        "blue eyes",
+        "tall"
+      ]
+    }
+  },
+  {
+    "@context": "https://json-ld.org/contexts/person.jsonld",
+    "@id": "http://localhost:3000/personnages/Leonard_Lens",
+    "name": "Leonard Lens",
+    "born": "1940-10-09",
+    "worksAt": "http://localhost:3000/lieux/atelier",
+    "colleague": [
+      "http://localhost:3000/personnages/Professor_Tinker"
+    ],
+    "traits": {
+      "personality": [
+        "precise",
+        "meticulous"
+      ],
+      "physical": [
+        "brown hair",
+        "brown eyes",
+        "average height"
+      ]
+    }
+  },
+  {
+    "@context": "https://json-ld.org/contexts/person.jsonld",
+    "@id": "http://localhost:3000/personnages/Captain_Cogsley",
+    "name": "Captain Cogsley",
+    "born": "1940-10-09",
+    "worksAt": "http://localhost:3000/lieux/marche",
+    "sellsAt": "http://localhost:3000/lieux/marche",
+    "traits": {
+      "personality": [
+        "adventurous",
+        "brave"
+      ],
+      "physical": [
+        "gray hair",
+        "blue eyes",
+        "tall"
+      ]
+    }
+  },
+  {
+    "@context": "https://json-ld.org/contexts/person.jsonld",
+    "@id": "http://localhost:3000/personnages/Commander_Clockwork",
+    "name": "Commander Clockwork",
+    "born": "1940-10-09",
+    "worksAt": "http://localhost:3000/lieux/atelier",
+    "colleague": [
+      "http://localhost:3000/personnages/Professor_Tinker"
+    ],
+    "traits": {
+      "personality": [
+        "decisive",
+        "strategic"
+      ],
+      "physical": [
+        "brown hair",
+        "brown eyes",
+        "average height"
+      ]
+    }
+  },
+  {
+    "@context": "https://json-ld.org/contexts/person.jsonld",
+    "@id": "http://localhost:3000/personnages/Major_Mechanic",
+    "name": "Major Mechanic",
+    "born": "1940-10-09",
+    "worksAt": "http://localhost:3000/lieux/atelier",
+    "traits": {
+      "personality": [
+        "responsible",
+        "competent"
+      ],
+      "physical": [
+        "gray hair",
+        "gray eyes",
+        "tall"
+      ]
+    }
   }
 ]

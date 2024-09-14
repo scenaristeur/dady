@@ -5,6 +5,9 @@
         "@type": "Book",
         "name": "Livre des trésors perdus",
         "description": "Un livre qui contient des informations sur les trésors perdus",
+        "author": {
+            "@id": "http://localhost:3000/personnages/Commander_Clockwork"
+        },
         "location": {
             "@type": "Place",
             "@id": "http://localhost:3000/lieux/bibliotheque"
