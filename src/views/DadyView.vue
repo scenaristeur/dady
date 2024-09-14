@@ -1,11 +1,12 @@
 <template>
   <div>
     <h2>Dady View</h2>
-    <button type="button" class="btn btn-success" @click="init">Init</button>
+
     <button type="button" class="btn btn-success" @click="initcdr">
       Init Château des Robots
     </button>
-    <button type="button" class="btn btn-danger" @click="remove">Delete</button>
+    <button type="button" class="btn btn-danger" disabled @click="remove">Delete</button>
+    <button type="button" class="btn btn-success" @click="init">Init</button>
   </div>
 </template>
 

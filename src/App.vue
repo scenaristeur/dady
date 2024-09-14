@@ -11,6 +11,7 @@ import TreeView from "./views/TreeView.vue";
 import JsonEditor from "./views/JsonEditor.vue";
 import BrainView from "./views/BrainView.vue";
 import GraphView from "./views/GraphView.vue";
+import NodeView from "./views/NodeView.vue";
 
 export default {
   name: "TreeView.vue",
@@ -25,6 +26,7 @@ export default {
     JsonEditor,
     BrainView,
     GraphView,
+    NodeView,
   },
   computed: {
     message() {
@@ -93,6 +95,7 @@ export default {
   </div>
   <div v-else>
     <TreeView />
+    <NodeView />
     <DadyView />
     <MessageView />
     <GraphView />

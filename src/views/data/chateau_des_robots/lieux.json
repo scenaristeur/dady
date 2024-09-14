@@ -10,8 +10,12 @@
             "longitude": 2.362222
         },
         "seller": [
-            "http://localhost:3000/personnages/LeFada",
-            "http://localhost:3000/personnages/BioThek"
+            {
+                "@id": "http://localhost:3000/personnages/LeFada"
+            },
+            {
+                "@id": "http://localhost:3000/personnages/BioThek"
+            }
         ]
     },
     {
@@ -24,10 +28,17 @@
             "latitude": 48.856614,
             "longitude": 2.352222
         },
+        "url": "https://scenaristeur.github.io/cdr/",
         "employee": [
-            "http://localhost:3000/personnages/Alice_Storia",
-            "http://localhost:3000/personnages/Anne_Prop",
-            "http://localhost:3000/personnages/Anne_But"
+            {
+                "@id": "http://localhost:3000/personnages/Alice_Storia"
+            },
+            {
+                "@id": "http://localhost:3000/personnages/Anne_Prop"
+            },
+            {
+                "@id": "http://localhost:3000/personnages/Anne_But"
+            }
         ]
     },
     {
@@ -41,7 +52,9 @@
             "longitude": 2.352222
         },
         "employee": [
-            "http://localhost:3000/personnages/LeFada"
+            {
+                "@id": "http://localhost:3000/personnages/LeFada"
+            }
         ]
     },
     {
@@ -55,10 +68,14 @@
             "longitude": 2.242222
         },
         "resident": [
-            "http://localhost:3000/personnages/LeFada"
+            {
+                "@id": "http://localhost:3000/personnages/LeFada"
+            }
         ],
         "employee": [
-            "http://localhost:3000/personnages/BioThek"
+            {
+                "@id": "http://localhost:3000/personnages/BioThek"
+            }
         ]
     },
     {
@@ -72,7 +89,9 @@
             "longitude": 2.322222
         },
         "employee": [
-            "http://localhost:3000/personnages/LeFada"
+            {
+                "@id": "http://localhost:3000/personnages/LeFada"
+            }
         ]
     },
     {
@@ -86,7 +105,9 @@
             "longitude": 2.332222
         },
         "employee": [
-            "http://localhost:3000/personnages/BioThek"
+            {
+                "@id": "http://localhost:3000/personnages/BioThek"
+            }
         ]
     },
     {
@@ -100,7 +121,9 @@
             "longitude": 2.332222
         },
         "employee": [
-            "http://localhost:3000/personnages/LeFada"
+            {
+                "@id": "http://localhost:3000/personnages/LeFada"
+            }
         ]
     }
 ]

@@ -4,10 +4,21 @@
     "@id": "http://localhost:3000/personnages/Alice_Storia",
     "name": "Alice Storia",
     "born": "1940-10-09",
-    "worksAt": "http://localhost:3000/lieux/bibliotheque",
+    "worksAt": {
+      "@id": "http://localhost:3000/lieux/bibliotheque"
+    },
+    "url": "http://linkdin.com/personnages/Alice_Storia",
+    "publications": [
+      "http://github.com/scenaristeur/dady",
+      "http://public.com/publications/2"
+    ],
     "colleague": [
-      "http://localhost:3000/personnages/Anne_Prop",
-      "http://localhost:3000/personnages/Anne_But"
+      {
+        "@id": "http://localhost:3000/personnages/Anne_Prop"
+      },
+      {
+        "@id": "http://localhost:3000/personnages/Anne_But"
+      }
     ],
     "traits": {
       "personality": [
@@ -26,10 +37,16 @@
     "@id": "http://localhost:3000/personnages/Anne_Prop",
     "name": "John Lennon",
     "born": "1940-10-09",
-    "worksAt": "http://localhost:3000/lieux/bibliotheque",
+    "worksAt": {
+      "@id": "http://localhost:3000/lieux/bibliotheque"
+    },
     "colleague": [
-      "http://localhost:3000/personnages/Alice_Storia",
-      "http://localhost:3000/personnages/Anne_But"
+      {
+        "@id": "http://localhost:3000/personnages/Alice_Storia"
+      },
+      {
+        "@id": "http://localhost:3000/personnages/Anne_But"
+      }
     ],
     "traits": {
       "personality": [
@@ -42,17 +59,25 @@
         "short"
       ]
     },
-    "fiance": "http://localhost:3000/personnages/BioThek"
+    "fiance": {
+      "@id": "http://localhost:3000/personnages/BioThek"
+    }
   },
   {
     "@context": "https://json-ld.org/contexts/person.jsonld",
     "@id": "http://localhost:3000/personnages/Anne_But",
     "name": "Anne But",
     "born": "1940-10-09",
-    "worksAt": "http://localhost:3000/lieux/bibliotheque",
+    "worksAt": {
+      "@id": "http://localhost:3000/lieux/bibliotheque"
+    },
     "colleague": [
-      "http://localhost:3000/personnages/Alice_Storia",
-      "http://localhost:3000/personnages/Anne_Prop"
+      {
+        "@id": "http://localhost:3000/personnages/Alice_Storia"
+      },
+      {
+        "@id": "http://localhost:3000/personnages/Anne_Prop"
+      }
     ],
     "traits": {
       "personality": [
@@ -71,8 +96,12 @@
     "@id": "http://localhost:3000/personnages/LeFada",
     "name": "LeFada",
     "born": "1940-10-09",
-    "worksAt": "http://localhost:3000/lieux/port",
-    "sellsAt": "http://localhost:3000/lieux/marche",
+    "worksAt": {
+      "@id": "http://localhost:3000/lieux/port"
+    },
+    "sellsAt": {
+      "@id": "http://localhost:3000/lieux/marche"
+    },
     "traits": {
       "personality": [
         "talkative",
@@ -90,8 +119,12 @@
     "@id": "http://localhost:3000/personnages/BioThek",
     "name": "BioThek",
     "born": "1940-10-09",
-    "worksAt": "http://localhost:3000/lieux/Brumeville",
-    "sellsAt": "http://localhost:3000/lieux/marche",
+    "worksAt": {
+      "@id": "http://localhost:3000/lieux/Brumeville"
+    },
+    "sellsAt": {
+      "@id": "http://localhost:3000/lieux/marche"
+    },
     "traits": {
       "personality": [
         "kind",
@@ -103,16 +136,22 @@
         "average height"
       ]
     },
-    "fiance": "http://localhost:3000/personnages/Anne_Prop"
+    "fiance": {
+      "@id": "http://localhost:3000/personnages/Anne_Prop"
+    }
   },
   {
     "@context": "https://json-ld.org/contexts/person.jsonld",
     "@id": "http://localhost:3000/personnages/Agatha_Wrench",
     "name": "Agatha Wrench",
     "born": "1940-10-09",
-    "worksAt": "http://localhost:3000/lieux/atelier",
+    "worksAt": {
+      "@id": "http://localhost:3000/lieux/atelier"
+    },
     "colleague": [
-      "http://localhost:3000/personnages/Professor_Tinker"
+      {
+        "@id": "http://localhost:3000/personnages/Professor_Tinker"
+      }
     ],
     "traits": {
       "personality": [
@@ -131,9 +170,13 @@
     "@id": "http://localhost:3000/personnages/Professor_Tinker",
     "name": "Professor Tinker",
     "born": "1940-10-09",
-    "worksAt": "http://localhost:3000/lieux/atelier",
+    "worksAt": {
+      "@id": "http://localhost:3000/lieux/atelier"
+    },
     "colleague": [
-      "http://localhost:3000/personnages/Agatha_Wrench"
+      {
+        "@id": "http://localhost:3000/personnages/Agatha_Wrench"
+      }
     ],
     "traits": {
       "personality": [
@@ -152,9 +195,13 @@
     "@id": "http://localhost:3000/personnages/Robbie_Robot",
     "name": "Robbie Robot",
     "born": "1940-10-09",
-    "worksAt": "http://localhost:3000/lieux/atelier",
+    "worksAt": {
+      "@id": "http://localhost:3000/lieux/atelier"
+    },
     "colleague": [
-      "http://localhost:3000/personnages/Professor_Tinker"
+      {
+        "@id": "http://localhost:3000/personnages/Professor_Tinker"
+      }
     ],
     "traits": {
       "personality": [
@@ -173,9 +220,13 @@
     "@id": "http://localhost:3000/personnages/Luna_Lightbulb",
     "name": "Luna Lightbulb",
     "born": "1940-10-09",
-    "worksAt": "http://localhost:3000/lieux/lumineuse",
+    "worksAt": {
+      "@id": "http://localhost:3000/lieux/lumineuse"
+    },
     "colleague": [
-      "http://localhost:3000/personnages/Mr_Moon"
+      {
+        "@id": "http://localhost:3000/personnages/Mr_Moon"
+      }
     ],
     "traits": {
       "personality": [
@@ -194,9 +245,13 @@
     "@id": "http://localhost:3000/personnages/Mr_Moon",
     "name": "Mr Moon",
     "born": "1940-10-09",
-    "worksAt": "http://localhost:3000/lieux/lumineuse",
+    "worksAt": {
+      "@id": "http://localhost:3000/lieux/lumineuse"
+    },
     "colleague": [
-      "http://localhost:3000/personnages/Luna_Lightbulb"
+      {
+        "@id": "http://localhost:3000/personnages/Luna_Lightbulb"
+      }
     ],
     "traits": {
       "personality": [
@@ -215,9 +270,13 @@
     "@id": "http://localhost:3000/personnages/Max_Mechanic",
     "name": "Max Mechanic",
     "born": "1940-10-09",
-    "worksAt": "http://localhost:3000/lieux/atelier",
+    "worksAt": {
+      "@id": "http://localhost:3000/lieux/atelier"
+    },
     "colleague": [
-      "http://localhost:3000/personnages/Professor_Tinker"
+      {
+        "@id": "http://localhost:3000/personnages/Professor_Tinker"
+      }
     ],
     "traits": {
       "personality": [
@@ -236,9 +295,13 @@
     "@id": "http://localhost:3000/personnages/Dr_Dynamo",
     "name": "Dr Dynamo",
     "born": "1940-10-09",
-    "worksAt": "http://localhost:3000/lieux/centre_recherche",
+    "worksAt": {
+      "@id": "http://localhost:3000/lieux/centre_recherche"
+    },
     "colleague": [
-      "http://localhost:3000/personnages/Professor_Tinker"
+      {
+        "@id": "http://localhost:3000/personnages/Professor_Tinker"
+      }
     ],
     "traits": {
       "personality": [
@@ -257,9 +320,13 @@
     "@id": "http://localhost:3000/personnages/Clara_Clockwork",
     "name": "Clara Clockwork",
     "born": "1940-10-09",
-    "worksAt": "http://localhost:3000/lieux/atelier",
+    "worksAt": {
+      "@id": "http://localhost:3000/lieux/atelier"
+    },
     "colleague": [
-      "http://localhost:3000/personnages/Professor_Tinker"
+      {
+        "@id": "http://localhost:3000/personnages/Professor_Tinker"
+      }
     ],
     "traits": {
       "personality": [
@@ -278,9 +345,13 @@
     "@id": "http://localhost:3000/personnages/Professor_Perfect",
     "name": "Professor Perfect",
     "born": "1940-10-09",
-    "worksAt": "http://localhost:3000/lieux/centre_recherche",
+    "worksAt": {
+      "@id": "http://localhost:3000/lieux/centre_recherche"
+    },
     "colleague": [
-      "http://localhost:3000/personnages/Dr_Dynamo"
+      {
+        "@id": "http://localhost:3000/personnages/Dr_Dynamo"
+      }
     ],
     "traits": {
       "personality": [
@@ -299,9 +370,13 @@
     "@id": "http://localhost:3000/personnages/Miss_Mechanic",
     "name": "Miss Mechanic",
     "born": "1940-10-09",
-    "worksAt": "http://localhost:3000/lieux/atelier",
+    "worksAt": {
+      "@id": "http://localhost:3000/lieux/atelier"
+    },
     "colleague": [
-      "http://localhost:3000/personnages/Professor_Tinker"
+      {
+        "@id": "http://localhost:3000/personnages/Professor_Tinker"
+      }
     ],
     "traits": {
       "personality": [
@@ -320,9 +395,13 @@
     "@id": "http://localhost:3000/personnages/Leonard_Lens",
     "name": "Leonard Lens",
     "born": "1940-10-09",
-    "worksAt": "http://localhost:3000/lieux/atelier",
+    "worksAt": {
+      "@id": "http://localhost:3000/lieux/atelier"
+    },
     "colleague": [
-      "http://localhost:3000/personnages/Professor_Tinker"
+      {
+        "@id": "http://localhost:3000/personnages/Professor_Tinker"
+      }
     ],
     "traits": {
       "personality": [
@@ -341,8 +420,12 @@
     "@id": "http://localhost:3000/personnages/Captain_Cogsley",
     "name": "Captain Cogsley",
     "born": "1940-10-09",
-    "worksAt": "http://localhost:3000/lieux/marche",
-    "sellsAt": "http://localhost:3000/lieux/marche",
+    "worksAt": {
+      "@id": "http://localhost:3000/lieux/marche"
+    },
+    "sellsAt": {
+      "@id": "http://localhost:3000/lieux/marche"
+    },
     "traits": {
       "personality": [
         "adventurous",
@@ -360,9 +443,13 @@
     "@id": "http://localhost:3000/personnages/Commander_Clockwork",
     "name": "Commander Clockwork",
     "born": "1940-10-09",
-    "worksAt": "http://localhost:3000/lieux/atelier",
+    "worksAt": {
+      "@id": "http://localhost:3000/lieux/atelier"
+    },
     "colleague": [
-      "http://localhost:3000/personnages/Professor_Tinker"
+      {
+        "@id": "http://localhost:3000/personnages/Professor_Tinker"
+      }
     ],
     "traits": {
       "personality": [
@@ -381,7 +468,9 @@
     "@id": "http://localhost:3000/personnages/Major_Mechanic",
     "name": "Major Mechanic",
     "born": "1940-10-09",
-    "worksAt": "http://localhost:3000/lieux/atelier",
+    "worksAt": {
+      "@id": "http://localhost:3000/lieux/atelier"
+    },
     "traits": {
       "personality": [
         "responsible",
