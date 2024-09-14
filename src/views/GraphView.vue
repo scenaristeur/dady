@@ -2,7 +2,6 @@
   <div class="mx-auto mb-5">
     Graph
     <div id="graph" ref="graph">Loading graph...</div>
-    <hr />
   </div>
 </template>
 
