@@ -137,6 +137,56 @@ memgpt configure
 5432/memgpt
 ```
 
+# avec functions preview
+
+- limites & quotas https://console.groq.com/settings/limits
+
+[defaults]
+preset = memgpt_chat
+persona = sam_pov
+human = basic
+
+[model]
+model = llama3-groq-70b-8192-tool-use-preview
+model_endpoint = https://api.groq.com/openai
+model_endpoint_type = groq
+model_wrapper = llama3
+context_window = 8192
+
+[embedding]
+embedding_endpoint_type = hugging-face
+embedding_endpoint = https://embeddings.memgpt.ai
+embedding_model = BAAI/bge-large-en-v1.5
+embedding_dim = 1024
+embedding_chunk_size = 300
+
+[archival_storage]
+type = postgres
+path = /home/smag/.memgpt/chroma
+uri = postgresql+pg8000://memgpt:memgpt@127.0.0.1:5432/memgpt
+
+[recall_storage]
+type = postgres
+path = /home/smag/.memgpt
+uri = postgresql+pg8000://memgpt:memgpt@127.0.0.1:5432/memgpt
+
+[metadata_storage]
+type = postgres
+path = /home/smag/.memgpt
+uri = postgresql+pg8000://memgpt:memgpt@127.0.0.1:5432/memgpt
+
+[version]
+memgpt_version = 0.4.0
+
+[client]
+anon_clientid = user-78925e54-7ff7-4389-b4ff-1abab36ff0f2
+
+# Enter your message:
+
+parle en français . tu es un assistant expert en LinkedData, nous avons un serveur http://localhost:3000/ dans lequel se trouvent des containers (dont l'url se termine par un '/') et des ressources. Les containers peuvent contenir des ressources ou d'autres containers. les ressources peuvent possédent des liens vers
+d'autres ressources. Tout ceci est au format jsonld. Pour accéder aux ressources (voir le contenu d'un conteneur/container) ou les informations d'une ressources, tu utilisera la fonction http_request.
+baseURL= "http://localhost:3000/", plus d'infos sur les containers : http://localhost:3000/.meta
+
 # redo
 
 - npm create vue@latest
