@@ -30,17 +30,6 @@ functionbot = autogen.AssistantAgent(
     name="functionbot",
     system_message="""Pour les 'http_request' vers le 'serveur solid',
     utilise seulement les fonctions qui t'ont été fournies.
-        tu dois formater les requetes (methode, url et eventuellement payload), les transmettre à funcionbot, 
-    et utiliser le résultat pour avancer dans tes explorations et fournir une information pertinente.
-    le serveur http://localhost:3000/ est un serveur Solid. Fortement structuré en LinkedData, jsonld.
-    chaque container se termine toujours par '/' et contient des ressources qu'il faut explorer avec 'http_request'.
-    dans chaque ressource, il y a des liens vers d'autres ressources
-      qu'il faut aussi explorer pour comprendre les relations entre ces ressources.  
-    une http_request sur http://localhost:3000/ te permet de trouver
-      le container approprié dans lequel il faut chercher les ressources.
-      stocke une synthèse des informations dans ta mémoire.
-      Si tu ne trouve pas une ressource, repart de la racine http://localhost:3000/ 
-      pour trouver le container approprié, et explorer les ressources qu'il contient avec http_request.
     Pour finir dis simplement 'TERMINATE'""",
     is_termination_msg=lambda x: x.get("content", "") and (x.get(
         "content", "").rstrip().endswith("TERMINATE") or x.get("content", "") == ""),
@@ -52,19 +41,15 @@ functionbot = autogen.AssistantAgent(
 # when we have the information we need.
 user_proxy = autogen.UserProxyAgent(
     name="user_proxy",
-    system_message="""Pour les 'http_request' vers le 'serveur solid',
-    utilise seulement les fonctions qui t'ont été fournies.
-        tu dois formater les requetes (methode, url et eventuellement payload), les transmettre à funcionbot, 
+    system_message=""""
+    Tu es le compagnon d'exploration.
+    tu dois formater les requetes (methode, url et eventuellement payload), les transmettre à funcionbot, 
     et utiliser le résultat pour avancer dans tes explorations et fournir une information pertinente.
-    le serveur http://localhost:3000/ est un serveur Solid. Fortement structuré en LinkedData, jsonld.
     chaque container se termine toujours par '/' et contient des ressources qu'il faut explorer avec 'http_request'.
     dans chaque ressource, il y a des liens vers d'autres ressources
       qu'il faut aussi explorer pour comprendre les relations entre ces ressources.  
     une http_request sur http://localhost:3000/ te permet de trouver
       le container approprié dans lequel il faut chercher les ressources.
-      stocke une synthèse des informations dans ta mémoire.
-      Si tu ne trouve pas une ressource, repart de la racine http://localhost:3000/ 
-      pour trouver le container approprié, et explorer les ressources qu'il contient avec http_request.
     Pour finir dis simplement 'TERMINATE'""",
     is_termination_msg=lambda x: x.get("content", "") and (x.get(
         "content", "").rstrip().endswith("TERMINATE") or x.get("content", "") == ""),
@@ -149,10 +134,9 @@ res = user_proxy.initiate_chat(
     message="""
     commence par une http_request sur http://localhost:3000/ pour trouver les containers
     et ressources appropriés. 
-    Trouve la ressource de BioThek.
     Qui est la fiancée de BioThek ?
     Où travaille-t-elle et qui sont ses collègues ?
-
+    Que sais-tu de la famille 'Mechanic' (dans personnages/) ?
     """,
 
 )

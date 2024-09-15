@@ -12,5 +12,19 @@
             "@type": "Place",
             "@id": "http://localhost:3000/lieux/bibliotheque"
         }
+    },
+    {
+        "@context": "https://schema.org/",
+        "@id": "http://localhost:3000/objets/livre_des_tresors_perdus2",
+        "@type": "Book",
+        "name": "Livre des trésors perdus 2",
+        "description": "Un livre qui contient des informations sur les trésors perdus",
+        "author": {
+            "@id": "http://localhost:3000/personnages/Commander_Clockwork"
+        },
+        "location": {
+            "@type": "Place",
+            "@id": "http://localhost:3000/lieux/bibliotheque"
+        }
     }
 ]

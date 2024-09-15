@@ -35,7 +35,7 @@
   {
     "@context": "https://json-ld.org/contexts/person.jsonld",
     "@id": "http://localhost:3000/personnages/Anne_Prop",
-    "name": "John Lennon",
+    "name": "Anne Prop",
     "born": "1940-10-09",
     "worksAt": {
       "@id": "http://localhost:3000/lieux/bibliotheque"
@@ -454,6 +454,11 @@
     "colleague": [
       {
         "@id": "http://localhost:3000/personnages/Professor_Tinker"
+      }
+    ],
+    "publications": [
+      {
+        "@id": "http://localhost:3000/objets/livre_des_tresors_perdus"
       }
     ],
     "traits": {

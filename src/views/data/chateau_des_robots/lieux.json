@@ -39,6 +39,14 @@
             {
                 "@id": "http://localhost:3000/personnages/Anne_But"
             }
+        ],
+        "livres": [
+            {
+                "@id": "http://localhost:3000/objets/livre_des_tresors_perdus"
+            },
+            {
+                "@id": "http://localhost:3000/objets/livre_des_tresors_perdus2"
+            }
         ]
     },
     {
