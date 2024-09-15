@@ -40,6 +40,12 @@ source: source
 
 - https://microsoft.github.io/autogen/blog/2023/07/14/Local-LLMs/
 
+# llm groups
+
+- teach https://microsoft.github.io/autogen/docs/notebooks/agentchat_teachability
+- society # https://microsoft.github.io/autogen/docs/notebooks/agentchat_society_of_mind/
+- functions call https://microsoft.github.io/autogen/blog/2024/06/24/AltModels-Classes#function-calls
+
 # js mimetype
 
 application/javascript https://www.rfc-editor.org/rfc/rfc4329.txt
