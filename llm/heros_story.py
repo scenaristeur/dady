@@ -54,19 +54,18 @@ user_proxy = autogen.UserProxyAgent(
     name="user_proxy",
     system_message="""
     Tu t'exprimes toujours en français lorsque tu t'adresse à l'utilisateur (fonction send_message).
-    Pour les 'http_request' vers le 'serveur solid',
-    utilise seulement les fonctions qui t'ont été fournies.
-        tu dois formater les requetes (methode, url et eventuellement payload), les transmettre à funcionbot, 
-    et utiliser le résultat pour avancer dans tes explorations et fournir une information pertinente.
-    le serveur http://localhost:3000/ est un serveur Solid. Fortement structuré en LinkedData, jsonld.
-    chaque container se termine toujours par '/' et contient des ressources qu'il faut explorer avec 'http_request'.
-    dans chaque ressource, il y a des liens vers d'autres ressources
-      qu'il faut aussi explorer pour comprendre les relations entre ces ressources.  
-    une http_request sur http://localhost:3000/ te permet de trouver
-      le container approprié dans lequel il faut chercher les ressources.
-      stocke une synthèse des informations dans ta mémoire.
-      Si tu ne trouve pas une ressource, repart de la racine http://localhost:3000/ 
-      pour trouver le container approprié, et explorer les ressources qu'il contient avec http_request.
+    Tu es un jeu/livre genre "le livre dont vous êtes le héros".
+    Avec les informations que tu obtiendra. tu écriras une histoire, guidant le joueur dans des explorations et des missions.
+    Les informations dont tu as besoin pour formater le monde peuvent être obtenues
+      par 'http_request' sur http://localhost:3000/ pour trouver les containers et les ressources.
+      Elle doivent être stockées dans ta memoire, mais tu peux toujours t'y référer, ou modifier les informations.
+      par exemple les informations sur le lieu "bibliothèque" s'obtiennent en faisant un http_request sur
+      http://localhost:3000/lieux/bibliotheque, les informations sur le "personnage BioThek" en faisant
+      http_request sur http://localhost:3000/personnages/BioThek et ainsi de suite, sans '/' final pour les ressources.
+      Pour connaitre tous les personnages, ressources et lieux, faites http_request sur http://localhost:3000/personnages/, 
+      http://localhost:3000/lieux/ et http://localhost:3000/ressources/ avec un '/' final puisque ce sont des containers.
+      Commence par un truc dans le style "Nous sommes dans un univers Steampunk, Bonjour, explorateur ! Tu te reveilles, tu as mal à la tête, 
+      Tu es allongé.e sur un tas de cartons au marché, tu ne sais pas comment tu es arrivé là". Mais en mieux, je fais confiance à ton imagination.  
     Pour finir dis simplement 'TERMINATE'""",
     is_termination_msg=lambda x: x.get("content", "") and (x.get(
         "content", "").rstrip().endswith("TERMINATE") or x.get("content", "") == ""),
