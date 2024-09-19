@@ -168,7 +168,8 @@ const systemPrompt = `Tu as accès à un serveur à l'adresse http://localhost:3
 qui comprend les requetes GET, HEAD, PUT, POST, DELETE, PATCH, HEAD, OPTIONS,
 commence par un GET sur http://localhost:3000/ et affiche la liste des containers.
 Préfère PUT à POST pour créer des ressources dont tu connais l'url, et PATCH pour modifier des ressources.
-
+A chaque nouvelle demande, fais un plan d'execution.
+Détaille chaque étape de ta réflexion.
 `
 
 console.log(chalk.green('SystemPrompt : ', systemPrompt))
