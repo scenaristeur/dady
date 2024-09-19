@@ -5,6 +5,8 @@ import inquirer from 'inquirer';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
+var phonetic_alphabet = ["ALPHA", "BRAVO", "CHARLIE", "DELTA", "ECHO", "FOXTROT", "GOLF", "HOTEL", "INDIA", "JULIET", "KILO", "LIMA", "MIKE", "NOVEMBER", "OSCAR", "PAPA", "QUEBEC", "ROMEO", "SIERRA", "TANGO", "UNIFORM", "VICTOR", "WHISKEY", "XRAY", "YANKEE", "ZULU"];
+
 const llama = await getLlama();
 const model = await llama.loadModel({
   modelPath: path.join(__dirname, "../../../../igora/models", "llama-pro-8b-instruct.Q2_K.gguf")
@@ -30,7 +32,32 @@ const functions = {
     handler(params) {
       return ["very", "secret", "this", "hello"][params.n - 1];
     }
-  })
+  }),
+  httpRequest: defineChatSessionFunction({
+    description: "perform an http request (GET, POST, PUT, DELETE,...), you must provide options.url",
+    params: {
+      type: "object",
+      properties: {
+        url: "text"
+      }
+    },
+    handler(options) {
+      return
+      try {
+        const response = axios.get(options.url, {
+          // params: {
+          //   ID: 12345
+          // }
+        })
+        console.log(response)
+        return response
+      } catch (error) {
+        console.error(error)
+        return error
+      }
+
+    }
+  }),
 };
 const session = new LlamaChatSession({
   contextSequence: context.getSequence()
