@@ -5,11 +5,13 @@ import inquirer from 'inquirer';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
-var phonetic_alphabet = ["ALPHA", "BRAVO", "CHARLIE", "DELTA", "ECHO", "FOXTROT", "GOLF", "HOTEL", "INDIA", "JULIET", "KILO", "LIMA", "MIKE", "NOVEMBER", "OSCAR", "PAPA", "QUEBEC", "ROMEO", "SIERRA", "TANGO", "UNIFORM", "VICTOR", "WHISKEY", "XRAY", "YANKEE", "ZULU"];
 
 const llama = await getLlama();
 const model = await llama.loadModel({
-  modelPath: path.join(__dirname, "../../../../igora/models", "llama-pro-8b-instruct.Q2_K.gguf")
+  // modelPath: path.join(__dirname, "../../../../igora/models", "llama-pro-8b-instruct.Q2_K.gguf")
+  // modelPath: path.join(__dirname, "../../../../igora/models", "Meta-Llama-3-8B.Q2_K.gguf")
+  // modelPath: path.join(__dirname, "../../../../igora/models", "dolphin-2.2.1-mistral-7b.Q2_K.gguf")
+  modelPath: path.join(__dirname, "../../../../igora/models", "albertlight-7b.Q2_K.gguf")
 });
 const context = await model.createContext();
 const functions = {
@@ -34,26 +36,26 @@ const functions = {
     }
   }),
   httpRequest: defineChatSessionFunction({
-    description: "perform an http request (GET, POST, PUT, DELETE,...), you must provide options.url",
+    description: "perform an http request (GET, POST, PUT, DELETE,...)",
     params: {
       type: "object",
       properties: {
-        url: "text"
+        url: "url"
       }
     },
-    handler(options) {
-      return
+    handler(params) {
+
       try {
-        const response = axios.get(options.url, {
+        const response = axios.get(params.url, {
           // params: {
           //   ID: 12345
           // }
         })
-        console.log(response)
-        return response
+        // console.log(response)
+        return {"status": "ok cool", response:response}
       } catch (error) {
-        console.error(error)
-        return error
+        // console.error(error)
+        return {"status": "ko", error: error}
       }
 
     }
