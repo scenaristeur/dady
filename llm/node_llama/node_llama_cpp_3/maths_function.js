@@ -9,6 +9,7 @@ import {
   defineChatSessionFunction,
   Llama3_1ChatWrapper
 } from 'node-llama-cpp'
+import { url } from 'inspector'
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url))
 const modelsFolderDirectory = path.join(__dirname, '..', 'models')
@@ -45,29 +46,58 @@ const chat_functions = {}
 // })
 
 const httpRequest = defineChatSessionFunction({
-  description: 'perform an http request (GET, POST, PUT, DELETE,...)',
+  description:
+    'Perform an http request (GET, POST, PUT, DELETE,...) and return the response. It is an asynchronous function.',
   params: {
     type: 'object',
     properties: {
       url: {
         type: 'string',
-        description: 'url to perform the request, e.g. http://localhost:3000/personnages'
+        description: 'url to perform the request, e.g. http://localhost:3000/personnages/BioThek'
       }
     }
   },
-  handler(params) {
-    try {
-      const response = axios.get(params.url, {
-        // params: {
-        //   ID: 12345
-        // }
-      })
-      console.log(response)
-      return { status: 'ok cool', response: response }
-    } catch (error) {
-      // console.error(error)
-      return { status: 'ko', error: error }
+  async handler(params = { url: 'http://localhost:3000/personnages/' }) {
+    // import axios from 'axios'
+    // try {
+    const response = await fetch(params.url)
+    if (response.ok) {
+      return response.text()
+    } else {
+      throw new Error(`Error fetching ${url}: ${response.statusText}`)
     }
+    // // Dynamic import
+    // import('axios')
+    //   .then(async ({ axios }) => {
+    //     const response = await axios.get(params.url, {
+    //       // params: {
+    //       //   ID: 12345
+    //       // }
+    //     })
+    //     console.log(response)
+    //     return { status: 'ok cool', response: response.data }
+    //   })
+    //   .catch((error) => {
+    //     console.log(error)
+    //     return 'import error'
+    //   })
+    // } catch (err) {
+    //   // console.error(error)
+    //   return { status: 'ko', code: err.status, error: err.message, err: err }
+    // }
+
+    // try {
+    //   const response = await axios.get(params.url, {
+    //     // params: {
+    //     //   ID: 12345
+    //     // }
+    //   })
+    //   console.log(response)
+    //   return { status: 'ok cool', response: response }
+    // } catch (error) {
+    //   // console.error(error)
+    //   return { status: 'ko', error: error }
+    // }
   }
 })
 
@@ -102,7 +132,7 @@ const session = new LlamaChatSession({
 })
 console.log()
 
-const q1 = `Can you try to retrieve a list of the containers at http://localhost:3000/`
+const q1 = `Can you try to retrieve a list of the containers at http://localhost:3000/ and find who is BioThek fiancée?`
 // const q1 = `
 // Can you try evaluating this javascript code?
 
