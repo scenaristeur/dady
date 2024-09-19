@@ -1,108 +1,124 @@
 // https://github.com/withcatai/node-llama-cpp/issues/299
 
-import { fileURLToPath } from "url";
-import path from "path";
-import chalk from "chalk";
-import { getLlama, LlamaChatSession, defineChatSessionFunction , Llama3_1ChatWrapper} from "node-llama-cpp";
+import { fileURLToPath } from 'url'
+import path from 'path'
+import chalk from 'chalk'
+import {
+  getLlama,
+  LlamaChatSession,
+  defineChatSessionFunction,
+  Llama3_1ChatWrapper
+} from 'node-llama-cpp'
 
-const __dirname = path.dirname(fileURLToPath(import.meta.url));
-const modelsFolderDirectory = path.join(__dirname, "..", "models");
+const __dirname = path.dirname(fileURLToPath(import.meta.url))
+const modelsFolderDirectory = path.join(__dirname, '..', 'models')
 // const chat_functions: { [function_name: string]: ChatSessionModelFunction<any> } = {};
-const chat_functions = {};
-const evalJavaScript = defineChatSessionFunction({
-    description: "Evaluate a JavaScript code.",
-    params: {
-        type: "object",
-        properties: {
-            code: {
-                type: "string",
-                description: "JavaScript code to evaluate."
-            }
-        }
-    },
-    handler(params) {
-        console.log("[evalJavaScript called]");
-        console.log(params);
+const chat_functions = {}
+// const evalJavaScript = defineChatSessionFunction({
+//   description: 'Evaluate a JavaScript code.',
+//   params: {
+//     type: 'object',
+//     properties: {
+//       code: {
+//         type: 'string',
+//         description: 'JavaScript code to evaluate.'
+//       }
+//     }
+//   },
+//   handler(params) {
+//     console.log('[evalJavaScript called]')
+//     console.log(params)
 
-        try {
-            const hrStart = process.hrtime();
-            const lastResult = eval(params.code);
-            const hrDiff = process.hrtime(hrStart);
-            return { error: false, execution_time: `${hrDiff[0] > 0 ? `${hrDiff[0]}s ` : ''}${hrDiff[1] / 1000000}ms`, result: lastResult }
-        }
-        catch (err) {
-            return { error: true, reason: err }
-        }
+//     try {
+//       const hrStart = process.hrtime()
+//       const lastResult = eval(params.code)
+//       const hrDiff = process.hrtime(hrStart)
+//       return {
+//         error: false,
+//         execution_time: `${hrDiff[0] > 0 ? `${hrDiff[0]}s ` : ''}${hrDiff[1] / 1000000}ms`,
+//         result: lastResult
+//       }
+//     } catch (err) {
+//       return { error: true, reason: err }
+//     }
+//   }
+// })
+
+const httpRequest = defineChatSessionFunction({
+  description: 'perform an http request (GET, POST, PUT, DELETE,...)',
+  params: {
+    type: 'object',
+    properties: {
+      url: {
+        type: 'string',
+        description: 'url to perform the request, e.g. http://localhost:3000/personnages'
+      }
     }
+  },
+  handler(params) {
+    try {
+      const response = axios.get(params.url, {
+        // params: {
+        //   ID: 12345
+        // }
+      })
+      console.log(response)
+      return { status: 'ok cool', response: response }
+    } catch (error) {
+      // console.error(error)
+      return { status: 'ko', error: error }
+    }
+  }
 })
 
-const httpRequest= defineChatSessionFunction({
-    description: "perform an http request (GET, POST, PUT, DELETE,...)",
-    params: {
-      type: "object",
-      properties: {
-        url: {
-            type: "url",
-            description: "url to perform the request"
-        }
-      }
-    },
-    handler(params) {
+// chat_functions['evalJavaScript'] = evalJavaScript
+chat_functions['httpRequest'] = httpRequest
 
-      try {
-        const response = axios.get(params.url, {
-          // params: {
-          //   ID: 12345
-          // }
-        })
-         console.log(response)
-        return {"status": "ok cool", response:response}
-      } catch (error) {
-        // console.error(error)
-        return {"status": "ko", error: error}
-      }
+const llama = await getLlama()
+// { gpu: false }
 
-    }
-  })
-
-
-chat_functions['evalJavaScript'] = evalJavaScript;
-chat_functions['httpRequest'] = httpRequest;
-
-const llama = await getLlama();
-
-console.log(chalk.yellow("Loading model..."));
+console.log(chalk.yellow('Loading model...'))
 const model = await llama.loadModel({
-    // modelPath: path.join(modelsFolderDirectory, "functionary-small-v3.2.F16.gguf")
-    modelPath: path.join(__dirname, "../../../../igora/models", "llama-pro-8b-instruct.Q2_K.gguf")
-});
+  // modelPath: path.join(modelsFolderDirectory, "functionary-small-v3.2.F16.gguf")
+  // modelPath: path.join(__dirname, '../../../../igora/models', 'llama-pro-8b-instruct.Q2_K.gguf')
+  // modelPath: path.join(
+  //   __dirname,
+  //   '../../../../igora/models',
+  //   'Meta-Llama-3.1-8B-Instruct.Q2_K.gguf'
+  // )
+  modelPath: path.join(
+    __dirname,
+    '../../../../igora/models',
+    'Meta-Llama-3.1-8B-Instruct.Q4_K_M.gguf'
+  )
+})
 
-console.log(chalk.yellow("Creating context..."));
-const context = await model.createContext();
+console.log(chalk.yellow('Creating context...'))
+const context = await model.createContext()
 
 const session = new LlamaChatSession({
-    contextSequence: context.getSequence(),
-    chatWrapper: new Llama3_1ChatWrapper() //https://github.com/withcatai/node-llama-cpp/issues/299
-});
-console.log();
+  contextSequence: context.getSequence(),
+  chatWrapper: new Llama3_1ChatWrapper() //https://github.com/withcatai/node-llama-cpp/issues/299
+})
+console.log()
 
 const q1 = `Can you try to retrieve a list of the containers at http://localhost:3000/`
 // const q1 = `
 // Can you try evaluating this javascript code?
 
 // Math.round(Math.random() * 100)`.trim();
-console.log(chalk.yellow("User: ") + q1);
+console.log(chalk.yellow('User: ') + q1)
 
-process.stdout.write(chalk.yellow("AI: "));
+process.stdout.write(chalk.yellow('AI: '))
 const a1 = await session.prompt(q1, {
-    functions: chat_functions,
-    onTextChunk(chunk) {
-        // stream the response to the console as it's being generated
-        process.stdout.write(chunk);
-    }
-});
-process.stdout.write("\n");
-console.log(chalk.yellow("Consolidated AI answer: ") + a1);
-console.log();
+  functions: chat_functions,
+  onTextChunk(chunk) {
+    // stream the response to the console as it's being generated
+    process.stdout.write(chunk)
+  }
+})
+process.stdout.write('\n')
+console.log(chalk.yellow('Consolidated AI answer: ') + a1)
+console.log()
 
-process.exit(0);
+process.exit(0)
