@@ -131,8 +131,10 @@ const session = new LlamaChatSession({
   chatWrapper: new Llama3_1ChatWrapper() //https://github.com/withcatai/node-llama-cpp/issues/299
 })
 console.log()
+// const q1 = `Explore http://localhost:3000/ et trouve la fiancée de BioThek, où travaille-t-elle et qui sont ses collègues ?
+// trouve aussi qui travaille à l'atelier.`
 
-const q1 = `Can you try to retrieve a list of the containers at http://localhost:3000/ and find who is BioThek fiancée?`
+const q1 = `Explore http://localhost:3000/ et trouve la fiancée de BioThek, où travaille-t-elle et qui sont ses collègues ?`
 // const q1 = `
 // Can you try evaluating this javascript code?
 

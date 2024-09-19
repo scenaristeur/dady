@@ -187,6 +187,10 @@ parle en français . tu es un assistant expert en LinkedData, nous avons un serv
 d'autres ressources. Tout ceci est au format jsonld. Pour accéder aux ressources (voir le contenu d'un conteneur/container) ou les informations d'une ressources, tu utilisera la fonction http_request.
 baseURL= "http://localhost:3000/", plus d'infos sur les containers : http://localhost:3000/.meta
 
+# todo should take a look at
+
+- https://gitlab.stuq.ceshiren.com/seveniruby/dify
+
 # redo
 
 - npm create vue@latest
