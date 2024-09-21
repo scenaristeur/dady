@@ -12,6 +12,58 @@ import {
 import { url } from 'inspector'
 import inquirer from 'inquirer'
 
+// import minimist from 'minimist'
+
+// const argv = minimist(process.argv.slice(2))
+// console.log(argv)
+// console.log('config', argv.config)
+// console.log('plan', argv.plan)
+
+// https://github.com/tj/commander.js
+
+// node parametrized.js -p --config holacratie
+
+import { Command } from 'commander'
+const program = new Command()
+
+program
+  .name('string-util')
+  .description('CLI to some JavaScript string utilities')
+  .version('0.8.0')
+  .option('--config <file>', 'config file')
+  .option('-p, --plan', 'show plan or not (default: false)')
+
+// program
+//   .command('split')
+//   .description('Split a string into substrings and display as an array')
+//   .argument('<string>', 'string to split')
+//   .option('--first', 'display just the first substring')
+//   .option('-s, --separator <char>', 'separator character', ',')
+//   .action((str, options) => {
+//     const limit = options.first ? 1 : undefined
+//     console.log(str.split(options.separator, limit))
+//   })
+
+// program.name('config').description('CLI to some JavaScript string utilities').version('0.8.0')
+
+// program
+//   .command('split')
+//   .description('Split a string into substrings and display as an array')
+//   .argument('<string>', 'string to split')
+//   .option('--first', 'display just the first substring')
+//   .option('-s, --separator <char>', 'separator character', ',')
+//   .action((str, options) => {
+//     const limit = options.first ? 1 : undefined
+//     console.log(str.split(options.separator, limit))
+//   })
+
+program.parse()
+
+const options = program.opts()
+console.log(options)
+// const limit = options.first ? 1 : undefined
+// console.log(program.args[0].split(options.separator, limit))
+
 const __dirname = path.dirname(fileURLToPath(import.meta.url))
 // const modelsFolderDirectory = path.join(__dirname, '..', 'models')
 // const chat_functions: { [function_name: string]: ChatSessionModelFunction<any> } = {};
@@ -105,10 +157,10 @@ const httpRequest = defineChatSessionFunction({
     } else {
       let options = {
         method: params.method,
-        // headers: {
-        //   // Accept: 'application/ld+json',
-        //   'Content-Type': 'application/ld+json'
-        // },
+        headers: {
+          Accept: 'application/ld+json',
+          'Content-Type': 'application/ld+json'
+        },
         body: params.data
       }
 
@@ -168,7 +220,8 @@ const systemPrompt = `Tu as accès à un serveur à l'adresse http://localhost:3
 qui comprend les requetes GET, HEAD, PUT, POST, DELETE, PATCH, HEAD, OPTIONS,
 commence par un GET sur http://localhost:3000/ et affiche la liste des containers.
 Préfère PUT à POST pour créer des ressources dont tu connais l'url, et PATCH pour modifier des ressources.
-Fais un plan d'execution, demande l'accord à l'utilisateur et execute le, si accord.
+A chaque nouvelle demande, fais un plan d'execution.
+Détaille chaque étape de ta réflexion.
 `
 
 console.log(chalk.green('SystemPrompt : ', systemPrompt))
@@ -181,7 +234,7 @@ const session = new LlamaChatSession({
 console.log()
 
 async function infinite_run() {
-  let input_message = `Bonjour, que puis-je faire pour toi, aujourd'hui ?`
+  let input_message = `Bonjour, que puis-je faire pour toi, aujourd'hui ? VEux-tu que je créé une ressource events/connexions/[timestamp], et inclus dedans les paramètres d'initialisation de cette conversation, comme la date et le systemPrompt?`
 
   // const q1 = `Explore http://localhost:3000/ et trouve la fiancée de BioThek, où travaille-t-elle et qui sont ses collègues ?`
   // // const q1 = `
@@ -253,120 +306,4 @@ async function infinite_run() {
   await discuss()
 }
 
-//infinite_run()
-//inspirattion infinite_run replaced by chat from cli command
-
-// let initialPrompt = 'Tu es une grenouille et tu commences toutes tes phrases par COA COA'
-let initialPrompt = `Créé une ressource events/connexions/[timestamp], et inclus dedans les paramètres d'initialisation de cette conversation, comme la date et le systemPrompt.`
-
-const chat = async () => {
-  //   if (systemInfo)
-  //     console.log(llama.systemInfo);
-  // if (systemPromptFile != null && systemPromptFile !== "") {
-  //     if (systemPrompt != null && systemPrompt !== "" && systemPrompt !== defaultChatSystemPrompt)
-  //         console.warn(chalk.yellow("Both `systemPrompt` and `systemPromptFile` were specified. `systemPromptFile` will be used."));
-  //     systemPrompt = await fs.readFile(path.resolve(process.cwd(), systemPromptFile), "utf8");
-  // }
-  // if (promptFile != null && promptFile !== "") {
-  //     if (prompt != null && prompt !== "")
-  //         console.warn(chalk.yellow("Both `prompt` and `promptFile` were specified. `promptFile` will be used."));
-  //     prompt = await fs.readFile(path.resolve(process.cwd(), promptFile), "utf8");
-  // }
-  // if (batchSize != null && contextSize != null && batchSize > contextSize) {
-  //     console.warn(chalk.yellow("Batch size is greater than the context size. Batch size will be set to the context size."));
-  //     batchSize = contextSize;
-  // }
-
-  // this is for ora to not interfere with readline
-  // await new Promise(resolve => setTimeout(resolve, 1));
-  // const replHistory = await ReplHistory.load(chatCommandHistoryFilePath, !noHistory);
-  // async function getPrompt() {
-  //     const rl = readline.createInterface({
-  //         input: process.stdin,
-  //         output: process.stdout,
-  //         history: replHistory.history.slice()
-  //     });
-  //     const res = await new Promise((accept) => rl.question(chalk.yellow("> "), accept));
-  //     rl.close();
-  //     return res;
-  // }
-  // void session.preloadPrompt("")
-  //     .catch(() => void 0); // don't throw an error if preloading fails because a real prompt is sent early
-  // // eslint-disable-next-line no-constant-condition
-  while (true) {
-    let hadNoWhitespaceTextInThisIteration = false
-    let nextPrintLeftovers = ''
-    const input = initialPrompt
-    // != null
-    //     ? initialPrompt
-    //     : await getPrompt();
-    if (initialPrompt != null) {
-      console.log(chalk.green('> ') + initialPrompt)
-      initialPrompt = null
-    }
-    // else
-    //     await replHistory.add(input);
-    if (input === '.exit') break
-    process.stdout.write(chalk.yellow('AI: '))
-    const [startColor, endColor] = chalk.blue('MIDDLE').split('MIDDLE')
-    process.stdout.write(startColor)
-    await session.prompt(input, {
-      // grammar: grammar, // this is a workaround to allow passing both `functions` and `grammar`
-      // temperature,
-      // minP,
-      // topK,
-      // topP,
-      // repeatPenalty: {
-      //     penalty: repeatPenalty,
-      //     frequencyPenalty: repeatFrequencyPenalty != null ? repeatFrequencyPenalty : undefined,
-      //     presencePenalty: repeatPresencePenalty != null ? repeatPresencePenalty : undefined,
-      //     penalizeNewLine: penalizeRepeatingNewLine,
-      //     lastTokens: lastTokensRepeatPenalty
-      // },
-      // maxTokens: maxTokens === -1
-      //     ? context.contextSize
-      //     : maxTokens <= 0
-      //         ? undefined
-      //         : maxTokens,
-      onTextChunk(chunk) {
-        let text = nextPrintLeftovers + chunk
-        nextPrintLeftovers = ''
-        // if (trimWhitespace) {
-        //     if (!hadNoWhitespaceTextInThisIteration) {
-        //         text = text.trimStart();
-        //         if (text.length > 0)
-        //             hadNoWhitespaceTextInThisIteration = true;
-        //     }
-        //     const textWithTrimmedEnd = text.trimEnd();
-        //     if (textWithTrimmedEnd.length < text.length) {
-        //         nextPrintLeftovers = text.slice(textWithTrimmedEnd.length);
-        //         text = textWithTrimmedEnd;
-        //     }
-        // }
-        process.stdout.write(text)
-      },
-      functions: chat_functions
-      // functions: (grammar == null && environmentFunctions)
-      //     ? defaultEnvironmentFunctions
-      //     : undefined,
-      // trimWhitespaceSuffix: trimWhitespace
-    })
-    process.stdout.write(endColor)
-    console.log()
-    // if (printTimings) {
-    //     if (LlamaLogLevelGreaterThan(llama.logLevel, LlamaLogLevel.info))
-    //         llama.logLevel = LlamaLogLevel.info;
-    //     await context.printTimings();
-    //     await new Promise((accept) => setTimeout(accept, 0)); // wait for logs to finish printing
-    //     llama.logLevel = llamaLogLevel;
-    // }
-    // if (meter) {
-    //     const newTokenMeterState = contextSequence.tokenMeter.getState();
-    //     const tokenMeterDiff = TokenMeter.diff(newTokenMeterState, lastTokenMeterState);
-    //     lastTokenMeterState = newTokenMeterState;
-    //     console.info(`${chalk.dim("Input tokens:")} ${String(tokenMeterDiff.usedInputTokens).padEnd(5, " ")}  ${chalk.dim("Output tokens:")} ${tokenMeterDiff.usedOutputTokens}`);
-    // }
-  }
-}
-
-chat()
+infinite_run()
