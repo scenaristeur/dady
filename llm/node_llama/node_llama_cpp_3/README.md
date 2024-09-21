@@ -14,3 +14,7 @@ AI: The list of containers at http://localhost:3000/ includes index.html, person
 Consolidated AI answer: The list of containers at http://localhost:3000/ includes index.html, personnages/, lieux/, and objets/. BioThek's fiancée is Anne_Prop.
 
 ```
+
+# chat cli model
+
+dans node_modules/node-llama-cpp/llama.cpp/dist/cli/ChatCommand.js
