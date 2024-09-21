@@ -18,3 +18,11 @@ Consolidated AI answer: The list of containers at http://localhost:3000/ include
 # chat cli model
 
 dans node_modules/node-llama-cpp/llama.cpp/dist/cli/ChatCommand.js
+
+#
+
+✔ Bonjour, que puis-je faire pour toi, aujourd'hui ? créé un rdv dans events, basé sur activity streams: Yoga à 18h
+lundi, parc Blandan, participants : BioThek et Anne But (dans personnages)
+User: créé un rdv dans events, basé sur activity streams: Yoga à 18h lundi, parc Blandan, participants : BioThek et Anne But (dans personnages)
+
+créé un rdv dans events: "Cerf Volant" à 17h lundi, parc Blandan, participants : BioThek et Anne But (dans personnages)

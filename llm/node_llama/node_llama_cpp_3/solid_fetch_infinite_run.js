@@ -93,44 +93,45 @@ const httpRequest = defineChatSessionFunction({
     //   }
     // }
   },
-  async handler(params = { url: 'http://localhost:3000/', method: 'GET', data: '{}' }) {
-    // try {
-    if (params.method == 'GET' || params.method == 'HEAD' || params.method == 'OPTIONS') {
-      const response = await fetch(params.url)
-      if (response.ok) {
-        return response.text()
+  async handler(params = { url: 'http://localhost:3000/', method: 'GET', data: null }) {
+    try {
+      if (params.method == 'GET' || params.method == 'HEAD' || params.method == 'OPTIONS') {
+        const response = await fetch(params.url)
+        if (response.ok) {
+          return response.text()
+        } else {
+          return `Error fetching ${url}: ${response.statusText}, check the root directory http://localhost:3000/ to find the good container`
+        }
       } else {
-        return `Error fetching ${url}: ${response.statusText}, check the root directory http://localhost:3000/ to find the good container`
-      }
-    } else {
-      let options = {
-        method: params.method,
-        headers: {
-          Accept: 'application/ld+json',
-          'Content-Type': 'application/ld+json'
-        },
-        body: params.data
-      }
+        let data = JSON.parse(JSON.stringify(params.data))
+        let options = {
+          method: params.method,
+          headers: {
+            Accept: 'application/ld+json',
+            'Content-Type': 'application/ld+json'
+          },
+          body: data
+        }
 
-      const response = await fetch(params.url, options)
-      if (response.ok) {
-        return response.text()
-      } else {
-        return `Error fetching ${url}: ${response.statusText}, check the root directory http://localhost:3000/ to find the good container`
+        const response = await fetch(params.url, options)
+        if (response.ok) {
+          return response.text()
+        } else {
+          return `Error fetching ${url}: ${response.statusText}, check the root directory http://localhost:3000/ to find the good container`
+        }
+      }
+    } catch (error) {
+      console.error(error)
+      return {
+        status: 'ko',
+        code: error.status,
+        error: error.message,
+        err: error,
+        url: params.url,
+        data: params.data,
+        method: params.method
       }
     }
-    // } catch (error) {
-    //   console.error(error)
-    //   return {
-    //     status: 'ko',
-    //     code: error.status,
-    //     error: error.message,
-    //     err: error,
-    //     url: params.url,
-    //     payload: params.payload,
-    //     method: params.method
-    //   }
-    // }
   }
 })
 
@@ -164,13 +165,15 @@ const context = await model.createContext()
 // commence par explorer ce serveur et affiche la liste des containers.
 // des exemples de requetes sont accessible à cette adresse https://raw.githubusercontent.com/CommunitySolidServer/CommunitySolidServer/refs/heads/main/documentation/markdown/usage/example-requests.md.
 // on va aussi s'intéresser à l'Holacratie https://raw.githubusercontent.com/holacracyone/Holacracy-Constitution-5.0-FRENCH/main/Holacracy-Constitution.md`
-const systemPrompt = `Tu as accès à un serveur à l'adresse http://localhost:3000/ 
-qui comprend les requetes GET, HEAD, PUT, POST, DELETE, PATCH, HEAD, OPTIONS,
-commence par un GET sur http://localhost:3000/ et affiche la liste des containers.
-Préfère PUT à POST pour créer des ressources dont tu connais l'url, et PATCH pour modifier des ressources.
-A chaque nouvelle demande, fais un plan d'execution.
-Détaille chaque étape de ta réflexion.
+let systemPrompt = `Tu as accès à un serveur à l'adresse http://localhost:3000/ 
+qui comprend les requetes GET, HEAD, PUT, POST, DELETE, PATCH, HEAD, OPTIONS.
+La syntaxe pour patcher les ressources est à cette adresse https://communitysolidserver.github.io/CommunitySolidServer/latest/usage/example-requests/#patch-modifying-resources.
+la clé '@id' d'une ressource est toujours son url.
+Les données envoyées à httpRequest sont des strings au formatjsonld, valide en json, et lorsque cela est possible, basé sur activity streams
 `
+
+// systemPrompt += `commence par un GET sur http://localhost:3000/ et affiche la liste des containers. Préfère PUT à POST pour créer des ressources dont tu connais l'url, et PATCH pour modifier des ressources.`
+// systemPrompt += `A chaque nouvelle demande, fais un plan d'execution. Détaille chaque étape de ta réflexion.`
 
 console.log(chalk.green('SystemPrompt : ', systemPrompt))
 
@@ -182,7 +185,8 @@ const session = new LlamaChatSession({
 console.log()
 
 async function infinite_run() {
-  let input_message = `Bonjour, que puis-je faire pour toi, aujourd'hui ? VEux-tu que je créé une ressource events/connexions/[timestamp], et inclus dedans les paramètres d'initialisation de cette conversation, comme la date et le systemPrompt?`
+  let input_message = `Bonjour, que puis-je faire pour toi, aujourd'hui ?`
+  // input_message += ` VEux-tu que je créé une ressource events/connexions/[timestamp], et inclus dedans les paramètres d'initialisation de cette conversation, comme la date et le systemPrompt?`
 
   // const q1 = `Explore http://localhost:3000/ et trouve la fiancée de BioThek, où travaille-t-elle et qui sont ses collègues ?`
   // // const q1 = `
