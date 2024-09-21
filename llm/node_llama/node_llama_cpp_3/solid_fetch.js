@@ -204,16 +204,16 @@ async function infinite_run() {
   // console.log()
 
   const discuss = async () => {
-    let controller = new AbortController()
-    const { signal } = controller
-    process.on('SIGINT', function () {
-      console.log('Caught interrupt signal')
+    // let controller = new AbortController()
+    // const { signal } = controller
+    // process.on('SIGINT', function () {
+    //   console.log('Caught interrupt signal')
 
-      controller.abort()
-      // controller = null
-      // if (i_should_exit)
-      //     process.exit();
-    })
+    //   controller.abort()
+    //   // controller = null
+    //   // if (i_should_exit)
+    //   //     process.exit();
+    // })
     inquirer.prompt([{ name: 'user_input', message: input_message }]).then(async (response) => {
       // console.log('user_input', response, response.user_input)
 
@@ -230,14 +230,14 @@ async function infinite_run() {
           onTextChunk(chunk) {
             // stream the response to the console as it's being generated
             process.stdout.write(chunk)
-          },
-          signal: signal,
-          onAbort: async () => {
-            /// pas utilisé
-            console.log('#######################Abort')
-            await discuss()
-          },
-          stopOnAbortSignal: true
+          }
+          // signal: signal,
+          // onAbort: async () => {
+          //   /// pas utilisé
+          //   console.log('#######################Abort')
+          //   await discuss()
+          // },
+          // stopOnAbortSignal: true
         })
         // console.log('END2', chunk, 'END2')
         // process.stdout.write(chunk)
