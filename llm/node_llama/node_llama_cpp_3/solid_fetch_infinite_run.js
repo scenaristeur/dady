@@ -169,7 +169,10 @@ let systemPrompt = `Tu as accès à un serveur à l'adresse http://localhost:300
 qui comprend les requetes GET, HEAD, PUT, POST, DELETE, PATCH, HEAD, OPTIONS.
 La syntaxe pour patcher les ressources est à cette adresse https://communitysolidserver.github.io/CommunitySolidServer/latest/usage/example-requests/#patch-modifying-resources.
 la clé '@id' d'une ressource est toujours son url.
-Les données envoyées à httpRequest sont des strings au formatjsonld, valide en json, et lorsque cela est possible, basé sur activity streams
+Préfère PUT à POST pour créer des ressources puisque tu connais l'url qui est le même que l'"@id",
+ et PATCH pour modifier des ressources.
+Fais un plan d'execution, execute-le et vérifie. Si ça n'a pas marché refais le plan d'execution.
+Les données envoyées à httpRequest sont des strings au format jsonld, valide en json, et lorsque cela est possible, basé sur activity streams
 `
 
 // systemPrompt += `commence par un GET sur http://localhost:3000/ et affiche la liste des containers. Préfère PUT à POST pour créer des ressources dont tu connais l'url, et PATCH pour modifier des ressources.`
