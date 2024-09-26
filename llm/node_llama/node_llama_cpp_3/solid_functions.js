@@ -21,10 +21,13 @@ const __dirname = path.dirname(fileURLToPath(import.meta.url))
 // const chat_functions: { [function_name: string]: ChatSessionModelFunction<any> } = {};
 const chat_functions = {}
 
-// import { httpRequest } from './functions/httpRequest.js'
+import { httpRequest } from './functions/httpRequest.js'
 import { PUT } from './functions/PUT.js'
+import { PATCH } from './functions/PATCH.js'
 
 chat_functions['PUT'] = PUT
+chat_functions['PATCH'] = PATCH
+chat_functions['httpRequest'] = httpRequest
 
 const llama = await getLlama()
 // { gpu: false }
@@ -56,11 +59,12 @@ const context = await model.createContext()
 // on va aussi s'intéresser à l'Holacratie https://raw.githubusercontent.com/holacracyone/Holacracy-Constitution-5.0-FRENCH/main/Holacracy-Constitution.md`
 const systemPrompt = `Tu as accès à un serveur à l'adresse http://localhost:3000/ 
 qui comprend les requetes GET, HEAD, PUT, POST, DELETE, PATCH, HEAD, OPTIONS,
-commence par un GET sur http://localhost:3000/ et affiche la liste des containers.
-Préfère PUT à POST pour créer des ressources puisque tu connais l'url qui est le même que l'"@id",
- et PATCH pour modifier des ressources.
-Fais un plan d'execution, execute-le et vérifie. Si ça n'a pas marché refais le plan d'execution.
+
 `
+// commence par un GET sur http://localhost:3000/ et affiche la liste des containers.
+// Préfère PUT à POST pour créer des ressources puisque tu connais l'url qui est le même que l'"@id",
+//  et PATCH pour modifier des ressources.
+// Fais un plan d'execution, execute-le et vérifie. Si ça n'a pas marché refais le plan d'execution.
 // , demande l'accord à l'utilisateur et execute le, si accord.
 
 console.log(chalk.green('SystemPrompt : ', systemPrompt))

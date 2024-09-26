@@ -9,8 +9,7 @@ export const PUT = defineChatSessionFunction({
     properties: {
       url: {
         type: 'string',
-        description:
-          'url to perform the request, e.g. http://localhost:3000/ to POST, PUT in the root container'
+        description: 'url to perform the request'
       },
       // contentType: {
       //   type: 'string',
@@ -19,40 +18,38 @@ export const PUT = defineChatSessionFunction({
       // },
       content: {
         type: 'string',
-        description: `(optional) data to send with the request au format jsonld avec un @id identique à l'url de la ressource.`
+        description: `data to send with the request au format jsonld avec un @id identique à l'url de la ressource.`
       }
     }
   },
-  async handler(params = { url: 'http://localhost:3000/', content: 'ola' }) {
-    // try {
+  async handler(params = { url: '', content: 'this is a test' }) {
+    try {
+      let options = {
+        method: 'PUT',
+        headers: {
+          Accept: 'application/ld+json',
+          'Content-Type': 'application/ld+json'
+        },
+        body: params.content
+      }
 
-    let options = {
-      method: 'PUT',
-      headers: {
-        Accept: 'application/ld+json',
-        'Content-Type': 'application/ld+json'
-      },
-      body: params.content
+      const response = await fetch(params.url, options)
+      if (response.ok) {
+        return response.text()
+      } else {
+        return `Error fetching ${url}: ${response.statusText}, check the root directory http://localhost:3000/ to find the good container`
+      }
+    } catch (error) {
+      console.error(error)
+      return {
+        status: 'ko',
+        code: error.status,
+        error: error.message,
+        err: error,
+        url: params.url,
+        content: params.content,
+        method: 'PUT'
+      }
     }
-
-    const response = await fetch(params.url, options)
-    if (response.ok) {
-      return response.text()
-    } else {
-      return `Error fetching ${url}: ${response.statusText}, check the root directory http://localhost:3000/ to find the good container`
-    }
-
-    // } catch (error) {
-    //   console.error(error)
-    //   return {
-    //     status: 'ko',
-    //     code: error.status,
-    //     error: error.message,
-    //     err: error,
-    //     url: params.url,
-    //     payload: params.payload,
-    //     method: params.method
-    //   }
-    // }
   }
 })
