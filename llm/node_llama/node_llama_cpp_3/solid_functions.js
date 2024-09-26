@@ -11,6 +11,7 @@ import {
 } from 'node-llama-cpp'
 // import { url } from 'inspector'
 import inquirer from 'inquirer'
+import fs from 'fs/promises'
 
 // choose chat mode : my infinite run or chat inspired by node-llama-cpp cli.
 // inifinite let you start the conversation
@@ -113,8 +114,16 @@ async function infinite_run() {
       // console.log('user_input', response, response.user_input)
 
       if (response.user_input == 'exit') {
-        console.log("tape 'exit' pour sortir")
+        console.log("tape 'exit' pour sortir, load & save pour history")
         process.exit(0)
+      } else if (response.user_input == 'save') {
+        const chatHistory = session.getChatHistory()
+        await fs.writeFile('chatHistory.json', JSON.stringify(chatHistory), 'utf8')
+        discuss()
+      } else if (response.user_input == 'load') {
+        const chatHistory = JSON.parse(await fs.readFile('chatHistory.json', 'utf8'))
+        session.setChatHistory(chatHistory)
+        discuss()
       } else {
         console.log(chalk.yellow('User: ') + response.user_input)
 
