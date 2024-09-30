@@ -26,3 +26,7 @@ lundi, parc Blandan, participants : BioThek et Anne But (dans personnages)
 User: créé un rdv dans events, basé sur activity streams: Yoga à 18h lundi, parc Blandan, participants : BioThek et Anne But (dans personnages)
 
 créé un rdv dans events: "Cerf Volant" à 17h lundi, parc Blandan, participants : BioThek et Anne But (dans personnages)
+
+# llama 3.2-1B-Instruct Q4_K_M.gguf
+
+https://huggingface.co/mradermacher/Llama-3.2-1B-Instruct-GGUF/tree/main

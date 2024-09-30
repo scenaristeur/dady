@@ -244,3 +244,15 @@ npm run lint
 ```
 
 `
+
+# vectordb
+
+Projects
+
+VectorDB.js is currently used in the following projects:
+
+    - AI.js — simple AI library https://aijs.themaximalist.com/
+    - Model Deployer — deploy AI models in production https://modeldeployer.com/
+    - HyperType — knowledge graph toolkit https://hypertypelang.com/
+    - HyperTyper — multidimensional mind mapping https://hypertyper.com/
+    - llm https://llmjs.themaximalist.com/
