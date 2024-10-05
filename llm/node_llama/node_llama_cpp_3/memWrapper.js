@@ -3,17 +3,20 @@ import path from 'path'
 import chalk from 'chalk'
 import {
   getLlama,
-  LlamaChatSession
+  LlamaChatSession,
   // ChatWrapper,
-  //Llama3_1ChatWrapper,
+  LlamaChat,
+  Llama3_1ChatWrapper,
+  defineChatSessionFunction
   // ChatWrapperSettings, ChatWrapperGenerateContextStateOptions,
   // ChatWrapperGeneratedContextState,
   //LlamaText
 } from 'node-llama-cpp'
 import inquirer from 'inquirer'
-import fs from 'fs/promises'
 
-import { MemWrapper } from './utils/MemWrapper.js'
+import { httpRequest } from './functions/httpRequest.js'
+
+// import { MemWrapper } from './utils/MemWrapper.js'
 
 // choose chat mode : my infinite run or chat inspired by node-llama-cpp cli.
 // inifinite let you start the conversation
@@ -27,15 +30,79 @@ const model = await llama.loadModel({
   modelPath: path.join(
     __dirname,
     '../../../../igora/models',
-    // 'Meta-Llama-3.1-8B-Instruct.Q4_K_M.gguf'
-    'Llama-3.2-1B-Instruct.Q8_0.gguf'
+    // 'Llama-3.2-3B-Instruct-uncensored.i1-Q4_K_M.gguf'
+    'Meta-Llama-3.1-8B-Instruct.Q4_K_M.gguf'
+    // 'Llama-3.2-1B-Instruct.Q8_0.gguf'
   )
 })
+
+async function memoryManager({
+  chatHistory,
+  maxTokensCount,
+  tokenizer,
+  chatWrapper,
+  lastShiftMetadata
+}) {
+  console.log('MEMORYMANAGER', {
+    chatHistory,
+    maxTokensCount,
+    tokenizer,
+    chatWrapper,
+    lastShiftMetadata
+  }) // console.log(lastShiftMetadata)
+
+  // console.log(chatHistory, maxTokensCount, tokenizer, chatWrapper, lastShiftMetadata)
+  let compressedChatHistory = chatWrapper.generateInitialChatHistory() //chatHistory
+  let newMetadata = { removedCharactersNumber: 10 }
+  return {
+    chatHistory: compressedChatHistory,
+    metadata: newMetadata
+  }
+}
+
 const context = await model.createContext()
+
+const contextShiftOptions = {
+  size: 5000, //Math.max(1, Math.floor(context.getSequence().context.contextSize / 10)),
+  strategy: memoryManager, //'nimp', //memoryManager
+  lastEvaluationMetadata: { removedCharactersNumber: 0 }
+}
+
 const session = new LlamaChatSession({
   contextSequence: context.getSequence(),
-  chatWrapper: new MemWrapper() // new MyCustomChatWrapper()
+  chatWrapper: new Llama3_1ChatWrapper(), //new MemWrapper() // new MyCustomChatWrapper()
+  contextShift: contextShiftOptions
 })
+
+const fruitPrices = {
+  apple: '$6',
+  banana: '$4'
+}
+const chat_functions = {
+  getFruitPrice: defineChatSessionFunction({
+    description: 'Get the price of a fruit',
+    params: {
+      type: 'object',
+      properties: {
+        name: {
+          type: 'string'
+        }
+      }
+    },
+    async handler(params) {
+      const name = params.name.toLowerCase()
+      if (Object.keys(fruitPrices).includes(name))
+        return {
+          name: name,
+          price: fruitPrices[name]
+        }
+
+      return `Unrecognized fruit "${params.name}"`
+    }
+  })
+}
+
+chat_functions['httpRequest'] = httpRequest
 
 async function infinite_run() {
   let input_message = `Bonjour, que puis-je faire pour toi, aujourd'hui ?`
@@ -72,7 +139,7 @@ async function infinite_run() {
     // })
     inquirer.prompt([{ name: 'user_input', message: input_message }]).then(async (response) => {
       // console.log('user_input', response, response.user_input)
-      // console.log(session)
+      console.log(session._lastEvaluation)
 
       if (response.user_input == 'exit') {
         console.log("tape 'exit' pour sortir, load & save pour history")
@@ -90,7 +157,7 @@ async function infinite_run() {
 
         process.stdout.write(chalk.yellow('AI: '))
         const a1 = await session.prompt(response.user_input, {
-          // functions: chat_functions,
+          functions: chat_functions,
           onTextChunk(chunk) {
             // stream the response to the console as it's being generated
 

@@ -7,6 +7,7 @@ import {
   // ChatWrapperGeneratedContextState,
   LlamaText
 } from 'node-llama-cpp'
+import fs from 'fs/promises'
 
 export class MemWrapper extends Llama3_1ChatWrapper {
   // Llama3_1ChatWrapper
@@ -25,6 +26,9 @@ export class MemWrapper extends Llama3_1ChatWrapper {
       }
     )
 
+    console.log(historyWithFunctions)
+    fs.writeFile('content.json', JSON.stringify(historyWithFunctions), 'utf8')
+
     const texts = historyWithFunctions.map((item, index) => {
       if (item.type === 'system') {
         if (index === 0) return LlamaText([LlamaText.fromJSON(item.text)])
@@ -38,9 +42,11 @@ export class MemWrapper extends Llama3_1ChatWrapper {
       // or TypeScript will throw an error
       return item //satisfies never;
     })
-    console.log(texts)
+    let contextText = LlamaText.joinValues('\n\n', texts)
+    console.log(contextText)
     return {
-      contextText: LlamaText.joinValues('\n\n', texts),
+      contextText: contextText,
+      //   availableFunctions: availableFunctions,
 
       // if the model generates any of these texts,
       // the completion will stop, and the text will not
