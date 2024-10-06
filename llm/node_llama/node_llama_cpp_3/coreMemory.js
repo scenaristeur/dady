@@ -5,7 +5,7 @@ import {
   getLlama,
   LlamaChatSession,
   // ChatWrapper,
-  LlamaText,
+  // LlamaText,
   Llama3_1ChatWrapper,
   defineChatSessionFunction
   // ChatWrapperSettings, ChatWrapperGenerateContextStateOptions,
@@ -17,6 +17,13 @@ import fs from 'fs/promises'
 
 import { httpRequest } from './functions/httpRequest.js'
 import { getPageContent } from './functions/getPageContent.js'
+import { Persister } from './utils/persister.js'
+let persister = new Persister({promptBase: './mem/prompts/memgpt_chat_compressed.txt', personaFile: './mem/prompts/persona_sam.txt', humanFile: './mem/prompts/human_chad.txt'})
+await persister.init()
+let systemPrompt = await persister.prompt()
+console.log(systemPrompt)
+
+
 
 
 // import { MemWrapper } from './utils/MemWrapper.js'
@@ -38,6 +45,11 @@ const model = await llama.loadModel({
     // 'Llama-3.2-1B-Instruct.Q8_0.gguf'
   )
 })
+
+
+
+
+
 
 async function memoryManager({
   chatHistory,
@@ -127,9 +139,13 @@ const contextShiftOptions = {
 
 const session = new LlamaChatSession({
   contextSequence: context.getSequence(),
+  systemPrompt: systemPrompt,
   chatWrapper: new Llama3_1ChatWrapper(), //new MemWrapper() // new MyCustomChatWrapper()
   contextShift: contextShiftOptions
 })
+
+persister.setSession(session) 
+
 
 const fruitPrices = {
   apple: '$6',
@@ -161,6 +177,7 @@ const chat_functions = {
 
 chat_functions['httpRequest'] = httpRequest
 chat_functions['getPageContent'] = getPageContent
+chat_functions['coreMemoryAppend'] = persister.coreMemoryAppend
 
 async function infinite_run() {
   let input_message = `Bonjour, que puis-je faire pour toi, aujourd'hui ?`
@@ -197,7 +214,8 @@ async function infinite_run() {
     // })
     inquirer.prompt([{ name: 'user_input', message: input_message }]).then(async (response) => {
       // console.log('user_input', response, response.user_input)
-      console.log(session._lastEvaluation)
+      // console.log(session._lastEvaluation)
+      persister.run()
 
       if (response.user_input == 'exit') {
         console.log("tape 'exit' pour sortir, load & save pour history")

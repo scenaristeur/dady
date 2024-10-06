@@ -1,5 +1,5 @@
 import { defineChatSessionFunction } from 'node-llama-cpp'
-import { url } from 'inspector'
+
 
 export const httpRequest = defineChatSessionFunction({
   description:
@@ -57,7 +57,7 @@ export const httpRequest = defineChatSessionFunction({
       if (response.ok) {
         return response.text()
       } else {
-        return `Error fetching ${url}: ${response.statusText}, check the root directory http://localhost:3000/ to find the good container`
+        return `Error fetching ${params.url}: ${response.statusText}, check the root directory http://localhost:3000/ to find the good container`
       }
     } else {
       let options = {
@@ -73,7 +73,7 @@ export const httpRequest = defineChatSessionFunction({
       if (response.ok) {
         return response.text()
       } else {
-        return `Error fetching ${url}: ${response.statusText}, check the root directory http://localhost:3000/ to find the good container`
+        return `Error fetching ${params.url}: ${response.statusText}, check the root directory http://localhost:3000/ to find the good container`
       }
     }
     // } catch (error) {
