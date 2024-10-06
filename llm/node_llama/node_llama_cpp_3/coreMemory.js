@@ -18,7 +18,9 @@ import fs from 'fs/promises'
 import { httpRequest } from './functions/httpRequest.js'
 import { getPageContent } from './functions/getPageContent.js'
 import { Persister } from './utils/persister.js'
-let persister = new Persister({promptBase: './mem/prompts/memgpt_chat_compressed.txt', personaFile: './mem/prompts/persona_sam.txt', humanFile: './mem/prompts/human_chad.txt'})
+
+let persister = new Persister({promptBase: './mem/prompts/memgpt_base.txt', personaFile: './mem/prompts/persona_sam.txt', humanFile: './mem/prompts/human_chad.txt'})
+// let persister = new Persister({promptBase: './mem/prompts/memgpt_chat_compressed.txt', personaFile: './mem/prompts/persona_sam.txt', humanFile: './mem/prompts/human_chad.txt'})
 await persister.init()
 let systemPrompt = await persister.prompt()
 console.log(systemPrompt)
@@ -70,6 +72,12 @@ async function memoryManager({
   // console.log(lastShiftMetadata)
 
   // let charactersLeftToRemove = 100
+
+// EDIT CHAT HISTORY
+//https://node-llama-cpp.withcat.ai/guide/chat-session#prompt-without-updating-chat-history
+// const initialChatHistory = session .getChatHistory ();
+ // session.setChatHistory(initialChatHistory);
+
 
   const res = chatHistory.map((item) => structuredClone(item))
   console.log(res)
@@ -177,7 +185,9 @@ const chat_functions = {
 
 chat_functions['httpRequest'] = httpRequest
 chat_functions['getPageContent'] = getPageContent
-chat_functions['coreMemoryAppend'] = persister.coreMemoryAppend
+// chat_functions['coreMemoryGet'] = persister.coreMemoryGet
+// chat_functions['coreMemoryAppend'] = persister.coreMemoryAppend
+// chat_functions['coreMemoryReplace'] = persister.coreMemoryReplace
 
 async function infinite_run() {
   let input_message = `Bonjour, que puis-je faire pour toi, aujourd'hui ?`
