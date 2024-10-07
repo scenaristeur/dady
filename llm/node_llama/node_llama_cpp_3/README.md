@@ -1,5 +1,22 @@
 https://github.com/withcatai/node-llama-cpp/pull/105
 
+```nvm use 20```
+
+
+```
+# run Solid community server
+ npx @solid/community-server
+
+# init data
+../ & npm run dev
+# click init cdr data
+
+# run llm against solid community server
+node solid_fetch.js```
+
+# download model
+- https://huggingface.co/mradermacher/Meta-Llama-3.1-8B-Instruct-GGUF/blob/main/Meta-Llama-3.1-8B-Instruct.Q4_K_M.gguf
+
 - function calling chat session https://github.com/withcatai/node-llama-cpp/issues/101
 
 ```

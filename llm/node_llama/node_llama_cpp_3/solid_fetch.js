@@ -136,8 +136,9 @@ const httpRequest = defineChatSessionFunction({
 
 chat_functions['httpRequest'] = httpRequest
 
-const llama = await getLlama()
+const llama = await getLlama(
 // { gpu: false }
+)
 
 console.log(chalk.yellow('Loading model...'))
 const model = await llama.loadModel({
@@ -148,10 +149,15 @@ const model = await llama.loadModel({
   //   '../../../../igora/models',
   //   'Meta-Llama-3.1-8B-Instruct.Q2_K.gguf'
   // )
+  // modelPath: path.join(
+  //   __dirname,
+  //   '../../../../igora/models',
+  //   'Meta-Llama-3.1-8B-Instruct.Q4_K_M.gguf'
+  // )
   modelPath: path.join(
     __dirname,
     '../../../../igora/models',
-    'Meta-Llama-3.1-8B-Instruct.Q4_K_M.gguf'
+    'Meta-Llama-3.1-8B-Instruct.Q2_K.gguf'
   )
 })
 

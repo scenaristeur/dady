@@ -11,7 +11,12 @@ const model = await llama.loadModel({
   // modelPath: path.join(__dirname, "../../../../igora/models", "llama-pro-8b-instruct.Q2_K.gguf")
   // modelPath: path.join(__dirname, "../../../../igora/models", "Meta-Llama-3-8B.Q2_K.gguf")
   // modelPath: path.join(__dirname, "../../../../igora/models", "dolphin-2.2.1-mistral-7b.Q2_K.gguf")
-  modelPath: path.join(__dirname, "../../../../igora/models", "albertlight-7b.Q2_K.gguf")
+  // modelPath: path.join(__dirname, "../../../../igora/models", "albertlight-7b.Q2_K.gguf")
+  modelPath: path.join(
+    __dirname,
+    '../../../../igora/models',
+    'Meta-Llama-3.1-8B-Instruct.Q4_K_M.gguf'
+  )
 });
 const context = await model.createContext();
 const functions = {
