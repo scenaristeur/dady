@@ -1,6 +1,5 @@
 import { defineChatSessionFunction } from 'node-llama-cpp'
 
-
 export const httpRequest = defineChatSessionFunction({
   description:
     'Perform an http request (GET, HEAD,  PUT, POST, DELETE, PATCH, OPTIONS...) and return the response. It is an asynchronous function.',
@@ -21,6 +20,13 @@ export const httpRequest = defineChatSessionFunction({
         type: 'string',
         description:
           '(optional) data to send with the request au format jsonld avec un @id identique au url de la ressource'
+      },
+      contentType: {
+        type: 'string',
+        description: `(optional) Content-Type pour les requêtes PATCH 
+          exemple : 
+          "text/n3" pour une réquête du style "@prefix solid: <http://www.w3.org/ns/solid/terms#>. _:rename a solid:InsertDeletePatch; solid:inserts { <ex:s2> <ex:p2> <ex:o2>. }."
+          ou "application/sparql-update" pour une requête SPARQL du type "INSERT DATA { <ex:s2> <ex:p2> <ex:o2> }".`
       }
     }
     // properties: {
@@ -50,43 +56,53 @@ export const httpRequest = defineChatSessionFunction({
     //   }
     // }
   },
-  async handler(params = { url: 'http://localhost:3000/', method: 'GET', data: '{}' }) {
-    // try {
-    if (params.method == 'GET' || params.method == 'HEAD' || params.method == 'OPTIONS') {
-      const response = await fetch(params.url)
-      if (response.ok) {
-        return response.text()
+  async handler(
+    params = { url: 'http://localhost:3000/', method: 'GET', data: '{}', contentType: '' }
+  ) {
+    try {
+      if (params.method == 'GET' || params.method == 'HEAD' || params.method == 'OPTIONS') {
+        const response = await fetch(params.url)
+        if (response.ok) {
+          return response.text()
+        } else {
+          return `Error fetching ${params.url}: ${response.statusText}, check the root directory http://localhost:3000/ to find the good container`
+        }
       } else {
-        return `Error fetching ${params.url}: ${response.statusText}, check the root directory http://localhost:3000/ to find the good container`
-      }
-    } else {
-      let options = {
-        method: params.method,
-        // headers: {
-        //   // Accept: 'application/ld+json',
-        //   'Content-Type': 'application/ld+json'
-        // },
-        body: params.data
-      }
+        let options = {
+          method: params.method,
+          // headers: {
+          //   // Accept: 'application/ld+json',
+          //   'Content-Type': 'application/ld+json'
+          // },
+          body: params.data
+        }
 
-      const response = await fetch(params.url, options)
-      if (response.ok) {
-        return response.text()
-      } else {
-        return `Error fetching ${params.url}: ${response.statusText}, check the root directory http://localhost:3000/ to find the good container`
+        if (params.contentType) {
+          options.headers = {
+            'Content-Type': params.contentType
+          }
+        }
+
+        const response = await fetch(params.url, options)
+        if (response.ok) {
+          let resp = await response.text()
+          console.log(resp)
+          return resp
+        } else {
+          return `Error fetching ${params.url}: ${response.statusText}, check the root directory http://localhost:3000/ to find the good container`
+        }
+      }
+    } catch (error) {
+      console.error(error)
+      return {
+        status: 'ko',
+        code: error.status,
+        error: error.message,
+        err: error,
+        url: params.url,
+        payload: params.payload,
+        method: params.method
       }
     }
-    // } catch (error) {
-    //   console.error(error)
-    //   return {
-    //     status: 'ko',
-    //     code: error.status,
-    //     error: error.message,
-    //     err: error,
-    //     url: params.url,
-    //     payload: params.payload,
-    //     method: params.method
-    //   }
-    // }
   }
 })

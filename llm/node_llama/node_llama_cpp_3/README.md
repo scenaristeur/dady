@@ -30,3 +30,11 @@ créé un rdv dans events: "Cerf Volant" à 17h lundi, parc Blandan, participant
 # llama 3.2-1B-Instruct Q4_K_M.gguf
 
 https://huggingface.co/mradermacher/Llama-3.2-1B-Instruct-GGUF/tree/main
+
+# llama 3.2 1B et 3B functions
+
+- https://www.llama.com/docs/model-cards-and-prompt-formats/llama3_2/
+
+# 8GB swapfile
+
+https://askubuntu.com/questions/178712/how-to-increase-swap-space

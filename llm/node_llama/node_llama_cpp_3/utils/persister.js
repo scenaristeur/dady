@@ -56,13 +56,14 @@ export class Persister {
   }
 
   run() {
-    console.log(this.session.context.contextSize, this.session.sequence, this.session._chatHistory)
     console.log(this.session.sequence.nextTokenIndex, this.session.context.contextSize)
     // let chatHistory = this.session.chatWrapper.generateInitialChatHistory()
     // this.session._chatHistory = chatHistory
   }
   debug() {
     console.log(this.session)
+    console.log(this.session.context.contextSize, this.session.sequence, this.session._chatHistory)
+
   }
 
   coreMemoryAppend = defineChatSessionFunction({

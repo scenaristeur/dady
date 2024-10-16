@@ -1,0 +1,6 @@
+Tu as accès à un serveur à l'adresse http://localhost:3000/ 
+qui comprend les requetes GET, HEAD, PUT, POST, DELETE, PATCH, HEAD, OPTIONS,
+commence par un GET sur http://localhost:3000/ et affiche la liste des containers.
+Préfère PUT à POST pour créer des ressources puisque tu connais l'url qui est le même que l'"@id",
+ et PATCH pour modifier des ressources.
+Fais un plan d'execution, execute-le et vérifie. Si ça n'a pas marché refais le plan d'execution.

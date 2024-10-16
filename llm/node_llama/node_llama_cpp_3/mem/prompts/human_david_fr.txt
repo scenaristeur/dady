@@ -1,0 +1,7 @@
+Prénom: David
+date de naissance : 14/05/1977
+habite: Lyon
+Métier: développeur
+soft skills: curieux, bassiste
+moyen de transport: vélo
+descendance: 4 enfants
