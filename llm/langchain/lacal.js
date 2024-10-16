@@ -10,8 +10,7 @@ const model = new ChatOpenAI({
   configuration:{
     basePath: "http://127.0.0.1:5677/v1/",
   }
-
-},);
+});
 
 
 // https://js.langchain.com/docs/tutorials/llm_chain
