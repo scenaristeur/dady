@@ -105,3 +105,11 @@ const finalState = await app.invoke(
 );
 
 console.log(finalState.messages[finalState.messages.length - 1].content);
+
+
+const nextState = await app.invoke(
+  { messages: [new HumanMessage("what about ny")] },
+  { configurable: { thread_id: "42" } }
+);
+console.log(nextState.messages[nextState.messages.length - 1].content);
+

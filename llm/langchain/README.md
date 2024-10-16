@@ -8,6 +8,11 @@ cd backEndTest/
 python3 -m llama_cpp.server --model ./models/Llama-3.2-1B-Instruct.i1-Q4_K_M.gguf --port 5677 --host 0.0.0.0
 ```
 
+# llama 3.2 sans fonctions
+python3 -m llama_cpp.server --model ./models/Llama-3.2-1B-Instruct.i1-Q4_K_M.gguf --port 5677 --host 0.0.0.0
+
+# llama 3.1 functions
+python3 -m llama_cpp.server --model ./models/Meta-Llama-3.1-8B-Instruct.Q4_K_M.gguf --port 5677 --host 0.0.0.0
 
 
 
