@@ -1,0 +1,33 @@
+{
+  "name": "langchain",
+  "version": "1.0.0",
+  "description": "- https://js.langchain.com/docs/how_to/qa_chat_history_how_to/",
+  "main": "ollam.js",
+  "type": "module",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@langchain/community": "^0.3.5",
+    "@langchain/core": "^0.3.11",
+    "@langchain/langgraph": "^0.2.15",
+    "@langchain/ollama": "^0.1.0",
+    "@langchain/openai": "^0.3.7",
+    "cheerio": "^1.0.0",
+    "node-llama-cpp": "^3.1.1"
+  },
+  "resolutions": {
+    "@langchain/core": "^0.3.11"
+  },
+  "overrides": {
+    "@langchain/core": "^0.3.11"
+  },
+  "pnpm": {
+    "overrides": {
+      "@langchain/core": "^0.3.11"
+    }
+  }
+}
