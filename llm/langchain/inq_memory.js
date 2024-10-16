@@ -4,6 +4,8 @@
 // import inquirer from 'inquirer'
 import { input } from '@inquirer/prompts'
 import chalk from 'chalk'
+import fs from 'fs/promises'
+
 // MODEL
 
 import { InMemoryStore } from '@langchain/langgraph'
@@ -82,10 +84,11 @@ const graph = builder.compile({
 
 // CHAT LOOP
 
+let config = { configurable: { thread_id: 'conversation 1', userId: 'user 1' } }
 let threads = {}
 let users = {}
-let config = { configurable: { thread_id: '1', userId: '1' } }
-
+threads[config.configurable.thread_id] = Date.now()
+users[config.configurable.userId] = Date.now()
 // Clear the screen
 process.stdout.write('\u001b[2J\u001b[0;0H')
 
@@ -107,7 +110,8 @@ process.stdin.on('keypress', (_, key) => {
 console.log('"/t Ma conversation" pour changer de conversation"')
 console.log("'/u Bob' pour changer d'utilisateur")
 console.log("'/l' pour lister les utilisateurs et les conversations")
-console.log("'/f' pour pour voir la memoire")
+console.log("'remember' dans l'input pour que le LLM sauvegarde des infos de l'utilisateur")
+console.log("'/f' pour voir la memoire")
 console.log('touche Echap ou Tape exit pour quitter')
 
 const user_input = () => {
@@ -123,7 +127,7 @@ const main = async () => {
   while (loop) {
     // await showMenu()
     await user_input().then(async (answer) => {
-      console.log(answer)
+      // console.log(answer)
       if (answer == 'exit') {
         console.log('save & exit')
         loop = false
@@ -133,12 +137,12 @@ const main = async () => {
 
         switch (answer.substring(0, 3)) {
           case '/t ':
-            console.log('t')
+            // console.log('t')
             config.configurable.thread_id = answer.substring(3)
             threads[config.configurable.thread_id] = Date.now()
             break
           case '/u ':
-            console.log('u')
+            // console.log('u')
             config.configurable.userId = answer.substring(3)
             users[config.configurable.userId] = Date.now()
             break
@@ -152,6 +156,20 @@ const main = async () => {
             for (const memory of memories) {
               console.log(await memory.value)
             }
+            break
+          case '/s':
+            await fs.writeFile(
+              'mem/' + config.configurable?.userId + '.json',
+              JSON.stringify(graph.checkpointer, null, 2),
+              'utf8'
+            )
+            break
+          case '/u':
+            console.log('u')
+            graph.checkpointer = JSON.parse(
+              await fs.readFile('mem/' + config.configurable?.userId + '.json', 'utf8')
+            )
+            console.log(graph.checkpointer)
 
             break
           default:
