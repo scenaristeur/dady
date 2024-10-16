@@ -27,15 +27,20 @@ let infinite = true
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url))
 
-const llama = await getLlama()
+const llama = await getLlama({
+  gpu: false
+})
 const model = await llama.loadModel({
   // modelPath: path.join(__dirname, "models", "Meta-Llama-3-8B-Instruct.Q4_K_M.gguf")
   modelPath: path.join(
     __dirname,
     '../../../../igora/models',
+    // 'Meta-Llama-3.1-8B-Instruct.Q4_K_M.gguf'
+    // 'Meta-Llama-3.1-8B-Instruct.Q2_K.gguf'
     // 'Llama-3.2-3B-Instruct-uncensored.i1-Q4_K_M.gguf'
-    'Meta-Llama-3.1-8B-Instruct.Q4_K_M.gguf'
+    // 'Meta-Llama-3.1-8B-Instruct.Q4_K_M.gguf'
     // 'Llama-3.2-1B-Instruct.Q8_0.gguf'
+    'Llama-3.2-1B-Instruct.i1-Q4_K_M.gguf'
   )
 })
 
