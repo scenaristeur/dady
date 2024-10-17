@@ -1,7 +1,7 @@
 // https://langchain-ai.github.io/langgraphjs/how-tos/cross-thread-persistence/?ref=blog.langchain.dev
 // https://stackoverflow.com/questions/61417816/how-do-i-invoke-inquirer-js-menu-in-a-loop-using-promises
 
-import inquirer from 'inquirer'
+// import inquirer from 'inquirer'
 import { input } from '@inquirer/prompts'
 import chalk from 'chalk'
 import fs from 'fs/promises'
@@ -102,27 +102,9 @@ function exit() {
 
 // close inquirer input if user press "escape" key
 process.stdin.on('keypress', (_, key) => {
-
-switch(key.name){
-case 'escape':
-  exit()
-  break
-  // case 'up':
-  //   // inquirer.prompt({
-  //   //   type: 'list',
-  //   //   name: 'beverage',
-  //   //   message: 'And your favorite beverage?',
-  //   //   choices: ['Pepsi', 'Coke', '7up', 'Mountain Dew', 'Red Bull']
-  //   // });
-  // break
-  // case 'down':
-
-  // break
-  // default: 
-  // console.log(key.name)
-}
-
-
+  if (key.name === 'escape') {
+    exit()
+  }
 })
 
 console.log('"/t Ma conversation" pour changer de conversation"')
