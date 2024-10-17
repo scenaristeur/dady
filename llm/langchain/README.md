@@ -35,3 +35,7 @@ python3 -m llama_cpp.server --model ./models/Meta-Llama-3.1-8B-Instruct.Q4_K_M.g
 # interessant
 
 - https://www.together.ai/pricing
+
+# multi-agents
+
+- https://langchain-ai.github.io/langgraphjs/concepts/multi_agent/?h=multi#supervisor

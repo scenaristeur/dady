@@ -2,7 +2,7 @@
   "name": "langchain",
   "version": "1.0.0",
   "description": "- https://js.langchain.com/docs/how_to/qa_chat_history_how_to/",
-  "main": "ollam.js",
+  "main": "index.js",
   "type": "module",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -17,10 +17,15 @@
     "@langchain/langgraph": "^0.2.15",
     "@langchain/ollama": "^0.1.0",
     "@langchain/openai": "^0.3.7",
+    "canvas": "^2.11.2",
     "chalk": "^5.3.0",
     "cheerio": "^1.0.0",
+    "d3": "^7.9.0",
+    "dotenv": "^16.4.5",
+    "esm-hook": "^0.1.4",
     "inquirer": "^12.0.0",
-    "node-llama-cpp": "^3.1.1"
+    "node-llama-cpp": "^3.1.1",
+    "tslab": "^1.0.22"
   },
   "resolutions": {
     "@langchain/core": "^0.3.11"
