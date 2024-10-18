@@ -31,12 +31,13 @@ import * as d3 from 'd3'
 // -----------------------------
 import { createCanvas } from 'canvas'
 import { z } from 'zod'
-import * as tslab from 'tslab'
+// import * as tslab from 'tslab'
+import fs from 'fs/promises'
 
 const chartTool = new DynamicStructuredTool({
   name: 'generate_bar_chart',
   description:
-    'Generates a bar chart from an array of data points using D3.js and displays it for the user.',
+    "Génère un graphique en barres à partir d'un tableau de points de données en utilisant D3.js et l'affiche pour l'utilisateur.",
   schema: z.object({
     data: z
       .object({
@@ -111,8 +112,9 @@ const chartTool = new DynamicStructuredTool({
       ctx.stroke()
       ctx.fillText(d.toString(), margin.left - 8, yCoord)
     })
-    await tslab.display.png(canvas.toBuffer())
-    return 'Chart has been generated and displayed to the user!'
+    // await tslab.display.png(canvas.toBuffer())
+    await fs.writeFile('chart.png', canvas.toBuffer())
+    return "Le graphique a été généré et affiché à l'utilisateur!"
   }
 })
 
@@ -127,11 +129,11 @@ import { ChatPromptTemplate, MessagesPlaceholder } from '@langchain/core/prompts
 const members = ['researcher', 'chart_generator']
 
 const systemPrompt =
-  'You are a supervisor tasked with managing a conversation between the' +
-  ' following workers: {members}. Given the following user request,' +
-  ' respond with the worker to act next. Each worker will perform a' +
-  ' task and respond with their results and status. When finished,' +
-  ' respond with FINISH.'
+  'Vous êtes un superviseur chargé de gérer une conversation entre les' +
+  ' travailleurs suivants: {members}. Étant donné la requête utilisateur' +
+  ' suivante, répondez avec le travailleur qui devrait agir en suivant.' +
+  ' Chaque travailleur effectuera une tâche et répondra avec ses résultats' +
+  ' et son statut. Lorsque vous avez terminé, répondez avec FINISH.'
 const options = [END, ...members]
 
 // Define the routing function
@@ -148,8 +150,8 @@ const prompt = ChatPromptTemplate.fromMessages([
   new MessagesPlaceholder('messages'),
   [
     'system',
-    'Given the conversation above, who should act next?' +
-      ' Or should we FINISH? Select one of: {options}'
+    'Étant donné la conversation ci-dessus, qui devrait agir en suivant?' +
+      " Ou devrions-nous FINISH? Sélectionnez l'un des suivants: {options}"
   ]
 ])
 
@@ -262,7 +264,7 @@ let streamResults = graph.stream(
   {
     messages: [
       new HumanMessage({
-        content: 'What were the 3 most popular tv shows in 2023?'
+        content: 'Quels étaient les 3 émissions de télévision les plus populaires en 2023 ?'
       })
     ]
   },
@@ -280,7 +282,8 @@ streamResults = graph.stream(
   {
     messages: [
       new HumanMessage({
-        content: 'Generate a bar chart of the US GDP growth from 2021-2023.'
+        content:
+          'Génère un graphique en barres de la croissance du PIB des États-Unis de 2021 à 2023.'
       })
     ]
   },
