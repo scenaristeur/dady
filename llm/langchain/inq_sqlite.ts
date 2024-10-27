@@ -2,6 +2,7 @@
 // https://stackoverflow.com/questions/61417816/how-do-i-invoke-inquirer-js-menu-in-a-loop-using-promises
 // lancement serveur python http://127.0.0.1:5677 :
 //  depuis igora-reloaded : python3 -m llama_cpp.server --model ./models/Llama-3.2-1B-Instruct.Q4_K_M.gguf --port 5677 --host 0.0.0.0
+// persistence sqlite saver https://github.com/langchain-ai/langgraphjs/tree/main/libs/checkpoint-sqlite
 
 import inquirer from 'inquirer'
 import { input } from '@inquirer/prompts'
@@ -15,17 +16,21 @@ import { InMemoryStore } from '@langchain/langgraph'
 const inMemoryStore = new InMemoryStore()
 
 import { v4 as uuidv4 } from 'uuid'
-// import { ChatOpenAI } from '@langchain/openai'
-import { ChatAnthropic } from '@langchain/anthropic'
+import { ChatOpenAI } from '@langchain/openai'
+// import { ChatAnthropic } from "@langchain/anthropic";
 // import { BaseMessage } from "@langchain/core/messages";
 import {
   Annotation,
   StateGraph,
   START,
-  MemorySaver,
+  // MemorySaver,
   //   LangGraphRunnableConfig,
   messagesStateReducer
 } from '@langchain/langgraph'
+
+import { SqliteSaver } from '@langchain/langgraph-checkpoint-sqlite'
+// const checkpointer = SqliteSaver.fromConnString(':memory:')
+const checkpointer = SqliteSaver.fromConnString('./memory.db')
 
 const StateAnnotation = Annotation.Root({
   messages: Annotation({
@@ -34,15 +39,17 @@ const StateAnnotation = Annotation.Root({
   })
 })
 
-const model = new ChatAnthropic({ modelName: 'claude-3-5-sonnet-20240620' })
-// const model = new ChatOpenAI({
-//   model: 'Llama 3.2 1B Instruct',
-//   temperature: 0,
-//   openAIApiKey: 'EMPTY',
-//   configuration: {
-//     basePath: 'http://127.0.0.1:5677/v1/'
-//   }
-// })
+// const model = new ChatAnthropic({ modelName: "claude-3-5-sonnet-20240620" });
+const model = new ChatOpenAI({
+  model: 'Llama 3.2 1B Instruct',
+  temperature: 0,
+  openAIApiKey: 'EMPTY',
+
+  maxTokens: 2048,
+  configuration: {
+    basePath: 'http://127.0.0.1:5677/v1/'
+  }
+})
 
 // NOTE: we're passing the Store param to the node --
 // this is the Store we compile the graph with
@@ -80,7 +87,7 @@ const builder = new StateGraph(StateAnnotation)
 
 // NOTE: we're passing the store object here when compiling the graph
 const graph = builder.compile({
-  checkpointer: new MemorySaver(),
+  checkpointer: checkpointer, //new MemorySaver(),
   store: inMemoryStore
 })
 

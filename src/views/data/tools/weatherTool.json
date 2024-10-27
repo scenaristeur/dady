@@ -1,0 +1,12 @@
+{
+    "@context": "https://json-ld.org/contexts/person.jsonld",
+    "@id": "http://localhost:3000/tools/weatherTool",
+    "@type": "Tool",
+    "name": "weather",
+    "description": "Call to get the current weather for a location.",
+    "params": [
+        "query"
+    ],
+    "schema": "z.object({query: z.string().describe('The query to use in your search.')})",
+    "return": "if (query.toLowerCase().includes('sf') || query.toLowerCase().includes('san francisco')) {return \"It's 67 degrees and foggy.\"}else{ return \"It's 97 degrees and sunny.\"}"
+}

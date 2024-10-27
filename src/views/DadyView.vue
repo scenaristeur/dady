@@ -32,6 +32,8 @@ console.log("CdrLieux raw", CdrLieux);
 import CdrObjets from "./data/chateau_des_robots/objets.json";
 console.log("CdrObjets raw", CdrObjets);
 
+import WeatherRaw from "./data/tools/weatherTool.json";
+
 // import SolidToolRaw from "./data/classes/SolidTool.js?raw";
 // console.log("SolidTool Class raw", SolidToolRaw)
 
@@ -131,6 +133,20 @@ export default {
             }`,
           "Content-Type": "application/ld+json",
         },
+        {
+          name: "Weather Tools JS",
+          path: "tools/WeatherTool",
+          content: `{
+          "@context": "https://json-ld.org/contexts/person.jsonld",
+          "@id": "http://localhost:3000/tools/WeatherTool",
+          "name": "Weather Tools JS",
+          "created": "1940-10-09",
+          "todo": "should upgrade code from one level to root ? ",
+          "code": ${JSON.stringify(WeatherRaw)}
+            }`,
+          "Content-Type": "application/ld+json",
+        },
+
         // Person.js editable file + Jsonld referencing it
         {
           name: "Javascript SolidTool",
