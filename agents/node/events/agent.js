@@ -3,58 +3,67 @@ import { EventEmitter } from 'node:events'
 // https://nodejs.org/en/learn/asynchronous-work/event-loop-timers-and-nexttick#why-use-processnexttick
 
 export class Agent extends EventEmitter {
-  constructor() {
+  constructor(options) {
     super()
+    this.name = options.name
 
     this.on('create', this.create)
-    this.on('mount', this.mount)
-    this.on('run', this.run)
-    this.on('unmount', this.unmount)
 
     // use nextTick to emit the event once a handler is assigned
     process.nextTick(() => {
       this.emit('create')
     })
   }
-  create() {
-    console.log('create!')
+  async create() {
+    const self = this
+    this.on('mount', this.mount)
+    this.on('run', this.run)
+    this.on('unmount', this.unmount)
+    this.log('start creation!')
 
-    process.nextTick(() => {
-      this.emit('mount')
-    })
+    await setTimeout(function () {
+      self.log('CREATION done')
+      process.nextTick(() => {
+        self.emit('mount')
+      })
+    }, 2000)
   }
 
-  mount() {
-    console.log('mount!')
+  async mount() {
+    this.log('mount!')
 
     process.nextTick(() => {
       this.emit('run')
     })
   }
 
-  run() {
+  async run() {
     const self = this
-    console.log('run!')
-    console.log('HELLO')
-    setTimeout(function () {
-      console.log('THIS IS')
+    this.log('run!')
+    this.log('HELLO')
+    await setTimeout(function () {
+      self.log('THIS IS')
       process.nextTick(() => {
         self.emit('unmount')
       })
     }, 2000)
-    console.log('DOG')
+    this.log('DOG')
   }
 
-  unmount() {
-    console.log('unmount!')
+  async unmount() {
+    this.log('unmount!')
 
     // process.nextTick(() => {
     //     this.emit('mount')
     //   })
   }
+
+  log(message) {
+    console.log('[' + this.name + ']', message)
+  }
 }
 
 // const myEmitter = new MyEmitter();
 // myEmitter.on('event', () => {
-//   console.log('an event occurred!');
+//   this.log('an event occurred!');
 // });
