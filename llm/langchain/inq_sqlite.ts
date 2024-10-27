@@ -3,6 +3,7 @@
 // lancement serveur python http://127.0.0.1:5677 :
 //  depuis igora-reloaded : python3 -m llama_cpp.server --model ./models/Llama-3.2-1B-Instruct.Q4_K_M.gguf --port 5677 --host 0.0.0.0
 // persistence sqlite saver https://github.com/langchain-ai/langgraphjs/tree/main/libs/checkpoint-sqlite
+// https://teetracker.medium.com/langchain-multi-user-conversation-1ea1c8671e33
 
 import inquirer from 'inquirer'
 import { input } from '@inquirer/prompts'
@@ -136,6 +137,8 @@ console.log("'/u Bob' pour changer d'utilisateur")
 console.log("'/l' pour lister les utilisateurs et les conversations")
 console.log("'remember' dans l'input pour que le LLM sauvegarde des infos de l'utilisateur")
 console.log("'/f' pour voir la memoire")
+console.log("'/g' pour voir graph stream")
+console.log("'/m' pour voir tuples")
 console.log('touche Echap ou Tape exit pour quitter')
 
 const user_input = () => {
@@ -160,6 +163,19 @@ const main = async () => {
         const memories = await inMemoryStore.search(['memories', config.configurable?.userId])
 
         switch (answer.substring(0, 3)) {
+          case '/g':
+            console.log('graph stream')
+            for await (const chunk of await graph.stream(
+              { messages: [inputMessage] },
+              { ...config, streamMode: 'values' }
+            )) {
+              console.log(chunk.messages[chunk.messages.length - 1])
+            }
+            break
+          case '/m':
+            console.log('tuples')
+            console.log(checkpointer.list(config))
+            break
           case '/t ':
             // console.log('t')
             config.configurable.thread_id = answer.substring(3)
@@ -194,8 +210,8 @@ const main = async () => {
               await fs.readFile('mem/' + config.configurable?.userId + '.json', 'utf8')
             )
             console.log(graph.checkpointer)
-
             break
+
           default:
             inputMessage = { type: 'user', content: answer }
             // inputs = { messages: [{ role: 'user', content: answer }] }
