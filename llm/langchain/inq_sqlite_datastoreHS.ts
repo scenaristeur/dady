@@ -12,9 +12,18 @@ import fs from 'fs/promises'
 
 // MODEL
 
-import { InMemoryStore } from '@langchain/langgraph'
+// import { InMemoryStore } from '@langchain/langgraph'
+//https://js.langchain.com/docs/integrations/memory/ipfs_datastore/
 
-const inMemoryStore = new InMemoryStore()
+// const inMemoryStore = new InMemoryStore()
+
+import { FsDatastore } from 'datastore-fs'
+import { IPFSDatastoreChatMessageHistory } from '@langchain/community/stores/message/ipfs_datastore'
+
+const datastore = new FsDatastore('path/to/store')
+// const sessionId = "my-session";
+
+// const history = new IPFSDatastoreChatMessageHistory({ datastore, sessionId });
 
 import { v4 as uuidv4 } from 'uuid'
 import { ChatOpenAI } from '@langchain/openai'
@@ -89,7 +98,7 @@ const builder = new StateGraph(StateAnnotation)
 // NOTE: we're passing the store object here when compiling the graph
 const graph = builder.compile({
   checkpointer: checkpointer, //new MemorySaver(),
-  store: inMemoryStore
+  store: datastore //inMemoryStore
 })
 
 // CHAT LOOP

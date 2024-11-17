@@ -67,8 +67,8 @@ console.log('Document:', topSimilarDocument)
 console.log(similarDocuments)
 
 // Exemple de vecteur de flottants signés entre -1.0 et 1.0
-const arr = [-0.8, 0.3, -0.5, 0.9]
-// let arr = Array.from(queryEmbedding.vector)
+// const arr = [-0.8, 0.3, -0.5, 0.9]
+let arr = Array.from(queryEmbedding.vector)
 
 fs.writeFile(
   'vec.json',
@@ -151,3 +151,95 @@ function convertirHexEnVecteur(vecteurHex) {
 // Utilisation de la fonction pour convertir la chaîne hexadécimale en vecteur de flottants
 const vecteur_restore = convertirHexEnVecteur(vecteurHex)
 console.log(vecteur_restore)
+
+import getBounds from 'array-bounds'
+
+function normalize2(arr, dim, bounds) {
+  if (!arr || arr.length == null) throw Error('Argument should be an array')
+
+  if (dim == null) dim = 1
+  if (bounds == null) bounds = getBounds(arr, dim)
+
+  for (var offset = 0; offset < dim; offset++) {
+    var max = bounds[dim + offset],
+      min = bounds[offset],
+      i = offset,
+      l = arr.length,
+      range
+
+    if (max === Infinity && min === -Infinity) {
+      for (i = offset; i < l; i += dim) arr[i] = arr[i] === max ? 1 : arr[i] === min ? 0 : 0.5
+    } else if (max === Infinity) {
+      for (i = offset; i < l; i += dim) arr[i] = arr[i] === max ? 1 : 0
+    } else if (min === -Infinity) {
+      for (i = offset; i < l; i += dim) arr[i] = arr[i] === min ? 0 : 1
+    } else if (min === max) {
+      for (i = offset; i < l; i += dim) if (!isNaN(arr[i])) arr[i] = 0.5
+    } else if (min === 0) {
+      for (i = offset; i < l; i += dim) arr[i] = arr[i] / max
+    } else {
+      for (i = offset, range = max - min; i < l; i += dim) arr[i] = (arr[i] - min) / range
+    }
+  }
+  console.log(min, max, range, dim, bounds)
+  return { arr, bounds }
+}
+
+// let vecteurB = [0, 1, 1.5, 0.5]
+
+let vecteurB = [1.236, -2.36, 1.0005, -0.5]
+console.log(vecteurB)
+let nor = normalize2(vecteurB)
+console.log('normalize', nor)
+
+let hax = convertirVecteurEnHex(nor.arr)
+console.log(hax)
+
+let back = convertirHexEnVecteur(hax)
+console.log(back)
+
+function denormalize2(arr, bounds) {
+  const min = bounds[0]
+  const max = bounds[1]
+  const range = max - min
+
+  // Vérifie que les bornes ne sont pas infinies et que max != min
+  if (max === Infinity || min === -Infinity || min === max) {
+    throw Error('Impossible de dénormaliser avec des bornes infinies ou max = min')
+  }
+
+  // Applique la dénormalisation à chaque élément
+  for (let i = 0; i < arr.length; i++) {
+    arr[i] = arr[i] * range + min
+  }
+
+  return arr
+}
+
+// Exemple d'utilisation
+// const arr = [0.25, 0.5, 0.75]; // Exemple de tableau normalisé
+// const bounds = [-1, 1];         // Min et max utilisés lors de la normalisation
+
+// Dé-normalisation pour retrouver les valeurs d'origine
+const originalArr = denormalize2(back, nor.bounds)
+console.log(originalArr)
+
+// float to 32bitHex https://stackoverflow.com/questions/47164675/convert-float-to-32bit-hex-string-in-javascript
+const getHex = (i) => ('00' + i.toString(16)).slice(-2)
+
+var view = new DataView(new ArrayBuffer(4)),
+  result
+
+// view.setFloat32(0, 45.839152);
+view.setFloat32(0, vecteurB[0])
+
+result = Array.apply(null, { length: 4 })
+  .map((_, i) => getHex(view.getUint8(i)))
+  .join('')
+
+console.log(result)
+
+// norm arr
+let quer = normalize2(arr)
+
+console.log(quer)

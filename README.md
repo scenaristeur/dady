@@ -1,5 +1,7 @@
 # dady
 
+-kaibanjs agents : https://docs.kaibanjs.com
+
 ![dady_demo](doc/dady_demo.png)
 
 ## use it with solid community server

@@ -1,2 +1,4 @@
 .env
 memory.db*
+./mem/*
+README.my.md

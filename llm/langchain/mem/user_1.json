@@ -1,0 +1,11 @@
+{
+  "serde": {},
+  "db": {
+    "name": "./memory.db",
+    "open": true,
+    "inTransaction": false,
+    "readonly": false,
+    "memory": false
+  },
+  "isSetup": true
+}

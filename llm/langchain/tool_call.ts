@@ -93,7 +93,8 @@ const modelWithTools = new ChatOpenAI({
   temperature: 0,
   openAIApiKey: 'EMPTY',
   configuration: {
-    basePath: 'http://127.0.0.1:5677/v1/'
+    // basePath: 'http://127.0.0.1:5677/v1/'
+    basePath: 'http://192.168.1.48:5677/v1/'
   }
 }).bindTools(tools)
 
